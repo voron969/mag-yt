@@ -75,7 +75,7 @@ module.exports =
 
 "use strict";
 
-console.log('magcore-plugin-youtube-dl start');
+console.log('DL - START');
 module.exports = __webpack_require__(/*! ./is-implemented */ 54)() ? Symbol : __webpack_require__(/*! ./polyfill */ 55);
 
 /***/ }),
@@ -5566,7 +5566,7 @@ exports.getURLVideoID = function (link) {
   if (!exports.validateID(id)) {
     return new TypeError('Video id (' + id + ') does not match expected ' + ('format (' + idRegex.toString() + ')'));
   }
-  console.warn('dl - getURLVideoID id: ' + id);
+  console.warn('DL - getURLVideoID id: ' + id);
   return id;
 };
 
@@ -13879,11 +13879,11 @@ function createGetVideoInfoUrl (pageToken) {
  * @param {Function(Error, Object)} callback
  */
 exports.getBasicInfo = function (id, options, callback) {
-  console.warn('dl - getBasicInfo id: ' + id);
   // Try getting config from the video page first.
   var params = 'hl=' + (options.lang || 'en');
   var url = VIDEO_URL + id + '&' + params + '&bpctr=' + Math.ceil(Date.now() / 1000);
-  console.warn('dl - getBasicInfo url: ' + url);
+  console.warn('DL - getBasicInfo id: ' + id);
+  console.warn('DL - getBasicInfo url: ' + url);
   // Remove header from watch page request.
   // Otherwise, it'll use a different framework for rendering content.
   var reqOptions = Object.assign({}, options.requestOptions);
@@ -13923,7 +13923,7 @@ exports.getBasicInfo = function (id, options, callback) {
       // Give the standard link to the video.
       video_url: VIDEO_URL + id
     };
-    console.warn('dl - getBasicInfo additional: ' + JSON.stringify(additional));
+    console.warn('DL - getBasicInfo additional: ' + JSON.stringify(additional));
 
     var jsonStr = util.between(body, 'ytplayer.config = ', '</script>');
     var config = void 0;
@@ -13952,8 +13952,7 @@ exports.getBasicInfo = function (id, options, callback) {
  * @param {Function(Error, Object)} callback
  */
 function gotConfig(id, options, additional, config, fromEmbed, callback) {
-  console.warn('dl - gotConfig start');
-  console.warn('dl - gotConfig id:' + id);
+  console.warn('DL - gotConfig id:' + id);
   // console.warn('dl - gotConfig options:' + options);
   // console.warn('dl - gotConfig additional:' + additional);
   // console.warn('dl - gotConfig config:' + config);
@@ -13979,7 +13978,7 @@ function gotConfig(id, options, additional, config, fromEmbed, callback) {
       sts: config.sts
     }
   });
-  console.warn('dl - gotConfig url:' + url);
+  console.warn('DL - gotConfig url:' + url);
   request(url, options.requestOptions, function (err, res, body) {
     if (err) return callback(err);
     var info = querystring.parse(body);
@@ -14027,7 +14026,7 @@ function gotConfig(id, options, additional, config, fromEmbed, callback) {
     if (config.args.dashmpd && info.dashmpd !== config.args.dashmpd) {
       info.dashmpd2 = config.args.dashmpd;
     }
-    console.warn('dl - gotConfig finish info:' + info);
+    console.warn('DL - gotConfig info:' + info);
     callback(null, info);
   });
 }
@@ -14040,7 +14039,7 @@ function gotConfig(id, options, additional, config, fromEmbed, callback) {
  * @param {Function(Error, Object)} callback
  */
 exports.getFullInfo = function (id, options, callback) {
-  console.warn('dl - getFullInfo id: ' + id)
+  console.warn('DL - getFullInfo id: ' + id)
   return exports.getBasicInfo(id, options, function (err, info) {
     if (err) return callback(err);
     if (info.formats.length || info.dashmpd || info.dashmpd2 || info.hlsvp) {
@@ -15324,6 +15323,10 @@ var getMetaItem = function getMetaItem(body, name) {
   return util.between(body, '<meta itemprop="' + name + '" content="', '">');
 };
 
+var getLinkItem = function getLinkItem(body, name) {
+  return util.between(body, '<link itemprop="' + name + '" content="', '">');
+};
+
 /**
  * Get video description from html
  *
@@ -15370,24 +15373,38 @@ var userRegexp = /<a href="\/user\/([^"]+)/;
 var verifiedRegexp = /<span .*?(aria-label="Verified")(.*?(?=<\/span>))/;
 var VIDEO_URL = 'https://www.youtube.com/watch?v=';
 exports.getAuthor = function (body) {
-  var ownerinfo = util.between(body, '<div id="watch7-user-header" class=" spf-link ">', '<div id="watch8-action-buttons" class="watch-action-buttons clearfix">');
-  if (ownerinfo === '') {
+
+  //var ownerinfo = util.between(body, '<div id="watch7-user-header" class=" spf-link ">', '<div id="watch8-action-buttons" class="watch-action-buttons clearfix">');
+  //if (ownerinfo === '') {
+  //  return {};
+  //}
+  //var channelName = Entities.decode(util.between(util.between(ownerinfo, '<div class="yt-user-info">', '</div>'), '>', '</a>'));
+  //var userMatch = ownerinfo.match(userRegexp);
+  //var verifiedMatch = ownerinfo.match(verifiedRegexp);
+  //var channelID = getMetaItem(body, 'channelId');
+  //var username = userMatch ? userMatch[1] : util.between(util.between(body, '<span itemprop="author"', '</span>'), '/user/', '">');
+
+  try {
+//    let ytInitialData = body.match(/window\["ytInitialData"] = ({.+});/);
+//    ytInitialData = JSON.parse(ytInitialData[1]);
+    var channelID = getMetaItem(body, 'channelId');
+    var channelName = getLinkItem(body, 'name');
+    var username = channelID;
+
+    return {
+      id: channelID,
+      name: channelName,
+      avatar: "",
+      verified: true,
+      user: username,
+      channel_url: 'https://www.youtube.com/channel/' + channelID,
+      user_url: 'https://www.youtube.com/user/' + username
+    };
+  } catch (e) {
     return {};
   }
-  var channelName = Entities.decode(util.between(util.between(ownerinfo, '<div class="yt-user-info">', '</div>'), '>', '</a>'));
-  var userMatch = ownerinfo.match(userRegexp);
-  var verifiedMatch = ownerinfo.match(verifiedRegexp);
-  var channelID = getMetaItem(body, 'channelId');
-  var username = userMatch ? userMatch[1] : util.between(util.between(body, '<span itemprop="author"', '</span>'), '/user/', '">');
-  return {
-    id: channelID,
-    name: channelName,
-    avatar: url.resolve(VIDEO_URL, util.between(ownerinfo, 'data-thumb="', '"')),
-    verified: !!verifiedMatch,
-    user: username,
-    channel_url: 'https://www.youtube.com/channel/' + channelID,
-    user_url: 'https://www.youtube.com/user/' + username
-  };
+
+
 };
 
 /**
