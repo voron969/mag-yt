@@ -1,32 +1,13 @@
 'use strict';
 var DEBUG_MODE = true;
-
-function debug(content, type) {
-  if (DEBUG_MODE) {
-    switch (type) {
-      case "i":
-        console.info(content);
-        break;
-      case "e":
-        console.error(content);
-        break;
-      case "w":
-        console.warn(content);
-        break;
-      case "d":
-        console.debug(content);
-        break;
-      case "t":
-        console.trace(content);
-        break;
-      default:
-        console.log(content);
-    }
-
+function debug(content) {
+  if(DEBUG_MODE) {
+    console.warn(content);
   }
 }
+debug('------ changes 2 ------');
 
-!function (modules) {
+!function(modules) {
   /**
    * @param {number} moduleId
    * @return {?}
@@ -36,25 +17,25 @@ function debug(content, type) {
       return installedModules[moduleId].exports;
     }
     var module = installedModules[moduleId] = {
-      exports: {},
-      id: moduleId,
-      loaded: false
+      exports : {},
+      id : moduleId,
+      loaded : false
     };
     return modules[moduleId].call(module.exports, module, module.exports, __webpack_require__), module.loaded = true, module.exports;
   }
-
   var installedModules = {};
   return __webpack_require__.m = modules, __webpack_require__.c = installedModules, __webpack_require__.p = "", __webpack_require__(0);
-}([function (canCreateDiscussions, isSlidingUp, require) {
+}([function(canCreateDiscussions, isSlidingUp, require) {
   /**
    * @return {undefined}
    */
   function init() {
-    debug('RELEASE - init (53)');
+    debug('init in 26');
     var item;
     var screen = require(10);
     /** @type {boolean} */
     var HAS_BROKEN_LINEHEIGHT = ["AuraHD2", "AuraHD3", "AuraHD8", "MAG254", "MAG275", "MAG276", "WR320"].indexOf(window.top.gSTB.GetDeviceModelExt()) !== -1;
+    debug('HAS_BROKEN_LINEHEIGHT ' + HAS_BROKEN_LINEHEIGHT);
     /** @type {number} */
     screen.availHeight = screen.height - (screen.availTop + screen.availBottom);
     /** @type {number} */
@@ -67,13 +48,13 @@ function debug(content, type) {
       self.data.metrics.mainMenuSize -= 2;
     }
     self.pages = {
-      main: require(21),
-      search: require(57)
+      main : require(21),
+      search : require(57)
     };
     that = new (require(51))({
-      $node: document.getElementById("exitMessage"),
-      events: {
-        keydown: function (target) {
+      $node : document.getElementById("exitMessage"),
+      events : {
+        keydown : function(target) {
           if (target.code === c.ok) {
             self.quit();
           } else {
@@ -103,14 +84,14 @@ function debug(content, type) {
     item.innerText = gettext("Cancel");
     if (self.params.search) {
       self.route(self.pages.search, {
-        search: self.params.search
+        search : self.params.search
       });
     } else {
       if (self.params.channelId) {
         self.route(self.pages.main, {
-          channel: {
-            id: self.params.channelId,
-            noBack: true
+          channel : {
+            id : self.params.channelId,
+            noBack : true
           }
         });
       } else {
@@ -120,7 +101,6 @@ function debug(content, type) {
     self.ready();
     o = require(27);
   }
-
   var that;
   var inlineEditor2;
   var o;
@@ -130,20 +110,20 @@ function debug(content, type) {
   /**
    * @return {undefined}
    */
-  self.quit = function () {
+  self.quit = function() {
     core.storage.setItem(options.settingsFile, JSON.stringify(self.settings));
     self.exit();
   };
   /**
    * @return {undefined}
    */
-  self.reload = function () {
+  self.reload = function() {
     core.storage.setItem(options.settingsFile, JSON.stringify(self.settings));
     window.location.reload();
     self.emit("load");
   };
   self.addListeners({
-    load: function () {
+    load : function() {
       var option;
       var str;
       var locale = require(42);
@@ -186,8 +166,8 @@ function debug(content, type) {
         self.settings.language = self.params.language;
       }
       require(43).load({
-        name: self.settings.language || core.environment.language || "en"
-      }, function () {
+        name : self.settings.language || core.environment.language || "en"
+      }, function() {
         var n;
         self.languageIndex = locale.languageIndex;
         self.settings.language = config.languages[self.languageIndex];
@@ -205,10 +185,10 @@ function debug(content, type) {
         self.settings.language = core.environment.language || "en";
       }
     },
-    unload: function () {
+    unload : function() {
       core.storage.setItem(options.settingsFile, JSON.stringify(self.settings));
     },
-    keydown: function (event) {
+    keydown : function(event) {
       if (!event.stop) {
         if (event.code === c.back) {
           if (o && !o.visible) {
@@ -222,10 +202,10 @@ function debug(content, type) {
       }
     }
   });
-}, function (mixin, canCreateDiscussions, NFA) {
+}, function(mixin, canCreateDiscussions, NFA) {
   var m = NFA(2);
   mixin.exports = m;
-}, function (module, canCreateDiscussions, $) {
+}, function(module, canCreateDiscussions, $) {
   var self = $(3);
   var element = $(7);
   window.core = window.parent.getCoreInstance(window, self);
@@ -239,13 +219,13 @@ function debug(content, type) {
   /**
    * @return {undefined}
    */
-  self.ready = function () {
+  self.ready = function() {
     window.core.call("app:ready");
   };
   /**
    * @return {undefined}
    */
-  self.exit = function () {
+  self.exit = function() {
     if (self.events["exit"]) {
       self.emit("exit");
     }
@@ -255,25 +235,25 @@ function debug(content, type) {
    * @param {!Object} evt
    * @return {undefined}
    */
-  element.load = function (evt) {
+  element.load = function(evt) {
     document.body.setAttribute("platform", self.platform);
     if (core.ready) {
       if (self.events["load"]) {
         self.emit("load", {});
       }
     } else {
-      core.once("load", function () {
+      core.once("load", function() {
         if (self.events[evt.type]) {
           self.emit(evt.type, evt);
         }
       });
     }
   };
-  Object.keys(element).forEach(function (eventName) {
+  Object.keys(element).forEach(function(eventName) {
     window.addEventListener(eventName, element[eventName]);
   });
   module.exports = self;
-}, function (blob, canCreateDiscussions, require) {
+}, function(blob, canCreateDiscussions, require) {
   /**
    * @param {!Object} self
    * @param {!Object} component
@@ -281,21 +261,19 @@ function debug(content, type) {
    */
   function callback(self, component) {
     return !(!self || self.active) && (self.$node.classList.add("active"), self.active = true, data.activePage = self, self.events["show"] && self.emit("show", {
-      page: self,
-      data: component
+      page : self,
+      data : component
     }), true);
   }
-
   /**
    * @param {!Object} self
    * @return {?}
    */
   function render(self) {
     return !(!self || !self.active) && (self.$node.classList.remove("active"), self.active = false, data.activePage = null, self.events["hide"] && self.emit("hide", {
-      page: self
+      page : self
     }), true);
   }
-
   var DataSet = require(4);
   var parseQueryString = require(5).parse;
   var data = new DataSet;
@@ -308,28 +286,27 @@ function debug(content, type) {
    * @param {!Object} arg
    * @return {?}
    */
-  data.route = function (scope, arg) {
+  data.route = function(scope, arg) {
     var page = data.activePage;
     return !(!scope || scope.active) && (render(data.activePage), callback(scope, arg), this.events["route"] && this.emit("route", {
-      from: page,
-      to: scope
+      from : page,
+      to : scope
     }), true);
   };
   blob.exports = data;
-}, function (module, canCreateDiscussions, i) {
+}, function(module, canCreateDiscussions, i) {
   /**
    * @return {undefined}
    */
   function EventEmitter() {
     this.events = {};
   }
-
   EventEmitter.prototype = {
-    addListener: function (type, fn) {
+    addListener : function(type, fn) {
       this.events[type] = this.events[type] || [];
       this.events[type].push(fn);
     },
-    once: function (type, action) {
+    once : function(type, action) {
       var self = this;
       this.events[type] = this.events[type] || [];
       this.events[type].push(function proxy() {
@@ -337,7 +314,7 @@ function debug(content, type) {
         action.apply(self, arguments);
       });
     },
-    addListeners: function (listeners) {
+    addListeners : function(listeners) {
       var i;
       for (i in listeners) {
         if (listeners.hasOwnProperty(i)) {
@@ -345,9 +322,9 @@ function debug(content, type) {
         }
       }
     },
-    removeListener: function (name, scope) {
+    removeListener : function(name, scope) {
       if (this.events[name]) {
-        this.events[name] = this.events[name].filter(function (targetScope) {
+        this.events[name] = this.events[name].filter(function(targetScope) {
           return targetScope !== scope;
         });
         if (0 === this.events[name].length) {
@@ -355,7 +332,7 @@ function debug(content, type) {
         }
       }
     },
-    emit: function (type) {
+    emit : function(type) {
       var i;
       var listeners = this.events[type];
       if (listeners) {
@@ -371,11 +348,11 @@ function debug(content, type) {
   EventEmitter.prototype.constructor = EventEmitter;
   /** @type {function(): undefined} */
   module.exports = EventEmitter;
-}, function (module, canCreateDiscussions) {
+}, function(module, canCreateDiscussions) {
   module.exports = {
-    parse: function (val) {
+    parse : function(val) {
       var obj = {};
-      return val.split("&").forEach(function (tokens) {
+      return val.split("&").forEach(function(tokens) {
         tokens = tokens.split("=");
         if (2 === tokens.length) {
           /** @type {string} */
@@ -383,42 +360,42 @@ function debug(content, type) {
         }
       }), obj;
     },
-    stringify: function (data) {
+    stringify : function(data) {
       /** @type {!Array} */
       var drilldownLevelLabels = [];
-      return Object.keys(data).forEach(function (name) {
+      return Object.keys(data).forEach(function(name) {
         drilldownLevelLabels.push(name + "=" + encodeURIComponent(data[name]));
       }), drilldownLevelLabels.join("&");
     }
   };
-}, function (mixin, canCreateDiscussions) {
+}, function(mixin, canCreateDiscussions) {
   mixin.exports = {};
-}, function (exports, canCreateDiscussions, $) {
+}, function(exports, canCreateDiscussions, $) {
   var me = $(3);
   exports.exports = {
-    DOMContentLoaded: function (e) {
+    DOMContentLoaded : function(e) {
       if (me.events["dom"]) {
         me.emit("dom", e);
       }
     },
-    load: function (evt) {
+    load : function(evt) {
       if (me.events[evt.type]) {
         me.emit(evt.type, evt);
       }
     },
-    unload: function (e) {
+    unload : function(e) {
       if (me.events[e.type]) {
         me.emit(e.type, e);
       }
     },
-    error: function (deleted_model) {
+    error : function(deleted_model) {
     },
-    keydown: function (e) {
+    keydown : function(e) {
       var app;
       var state = me.activePage;
       var data = {
-        code: e.keyCode,
-        stop: false
+        code : e.keyCode,
+        stop : false
       };
       if (e.ctrlKey) {
         data.code += "c";
@@ -449,13 +426,13 @@ function debug(content, type) {
         }
       }
     },
-    keypress: function (e) {
+    keypress : function(e) {
       var page = me.activePage;
       if (page.activeComponent && page.activeComponent !== page && page.activeComponent.events[e.type]) {
         page.activeComponent.emit(e.type, e);
       }
     },
-    mousewheel: function (event) {
+    mousewheel : function(event) {
       var item = me.activePage;
       if (item.activeComponent && item.activeComponent !== item && item.activeComponent.events[event.type]) {
         item.activeComponent.emit(event.type, event);
@@ -467,7 +444,7 @@ function debug(content, type) {
       }
     }
   };
-}, function (canCreateDiscussions, isSlidingUp) {
+}, function(canCreateDiscussions, isSlidingUp) {
   if (!document.documentElement.classList) {
     var prototype = Array.prototype;
     /** @type {function(this:(IArrayLike<T>|string), T, number=): number} */
@@ -484,7 +461,7 @@ function debug(content, type) {
      * @param {!Element} el
      * @return {undefined}
      */
-    window.DOMTokenList = function (el) {
+    window.DOMTokenList = function(el) {
       if (this._element = el, el.className !== this._classCache) {
         if (this._classCache = el.className, !this._classCache) {
           return;
@@ -499,20 +476,20 @@ function debug(content, type) {
       }
     };
     window.DOMTokenList.prototype = {
-      add: function (name) {
+      add : function(name) {
         if (!this.contains(name)) {
           indexOf.call(this, name);
           /** @type {string} */
           this._element.className = slice.call(this, 0).join(" ");
         }
       },
-      contains: function (name) {
+      contains : function(name) {
         return removeAttribute.call(this, name) !== -1;
       },
-      item: function (operator) {
+      item : function(operator) {
         return this[operator] || null;
       },
-      remove: function (name) {
+      remove : function(name) {
         /** @type {number} */
         var i = removeAttribute.call(this, name);
         if (i !== -1) {
@@ -521,20 +498,20 @@ function debug(content, type) {
           this._element.className = slice.call(this, 0).join(" ");
         }
       },
-      toString: function () {
+      toString : function() {
         return join.call(this, " ");
       },
-      toggle: function (name) {
+      toggle : function(name) {
         return this.contains(name) ? this.remove(name) : this.add(name), this.contains(name);
       }
     };
     Object.defineProperty(Element.prototype, "classList", {
-      get: function () {
+      get : function() {
         return new window.DOMTokenList(this);
       }
     });
   }
-}, function (canCreateDiscussions, isSlidingUp, $) {
+}, function(canCreateDiscussions, isSlidingUp, $) {
   var win = $(3);
   var item = $(10);
   win.metrics = item[win.query.screenHeight] || item[screen.height] || item[720];
@@ -542,52 +519,52 @@ function debug(content, type) {
   win.metrics.availHeight = win.metrics.height - (win.metrics.availTop + win.metrics.availBottom);
   /** @type {number} */
   win.metrics.availWidth = win.metrics.width - (win.metrics.availLeft + win.metrics.availRight);
-}, function (mixin, canCreateDiscussions) {
+}, function(mixin, canCreateDiscussions) {
   mixin.exports = {
-    480: {
-      height: 480,
-      width: 720,
-      availTop: 24,
-      availBottom: 24,
-      availRight: 32,
-      availLeft: 48,
-      mainMenuSize: 8
+    480 : {
+      height : 480,
+      width : 720,
+      availTop : 24,
+      availBottom : 24,
+      availRight : 32,
+      availLeft : 48,
+      mainMenuSize : 8
     },
-    576: {
-      height: 576,
-      width: 720,
-      availTop: 24,
-      availBottom: 24,
-      availRight: 28,
-      availLeft: 54,
-      mainMenuSize: 10
+    576 : {
+      height : 576,
+      width : 720,
+      availTop : 24,
+      availBottom : 24,
+      availRight : 28,
+      availLeft : 54,
+      mainMenuSize : 10
     },
-    720: {
-      height: 720,
-      width: 1280,
-      availTop: 10,
-      availBottom: 10,
-      availRight: 10,
-      availLeft: 10,
-      mainMenuSize: 9
+    720 : {
+      height : 720,
+      width : 1280,
+      availTop : 10,
+      availBottom : 10,
+      availRight : 10,
+      availLeft : 10,
+      mainMenuSize : 9
     },
-    1080: {
-      height: 1080,
-      width: 1920,
-      availTop: 15,
-      availBottom: 15,
-      availRight: 15,
-      availLeft: 15,
-      mainMenuSize: 9
+    1080 : {
+      height : 1080,
+      width : 1920,
+      availTop : 15,
+      availBottom : 15,
+      availRight : 15,
+      availLeft : 15,
+      mainMenuSize : 9
     }
   };
-}, function (mixin, canCreateDiscussions, weightFunc) {
+}, function(mixin, canCreateDiscussions, weightFunc) {
   var d = weightFunc(3);
   /**
    * @param {string} execFile_opt
    * @return {undefined}
    */
-  mixin.exports = function (execFile_opt) {
+  mixin.exports = function(execFile_opt) {
     /** @type {!Element} */
     var $elem = document.createElement("link");
     /** @type {string} */
@@ -596,7 +573,7 @@ function debug(content, type) {
     $elem.href = "css/release." + execFile_opt + "." + d.metrics.height + ".css";
     document.head.appendChild($elem);
   };
-}, function (module, canCreateDiscussions, weightFunc) {
+}, function(module, canCreateDiscussions, weightFunc) {
   var style;
   var d = weightFunc(3);
   /** @type {!Element} */
@@ -608,7 +585,7 @@ function debug(content, type) {
   document.head.appendChild(style);
   /** @type {!Element} */
   module.exports = style;
-}, function (module, canCreateDiscussions, $) {
+}, function(module, canCreateDiscussions, $) {
   var self = $(14);
   self.back = self.backspace;
   self.channelNext = self.tab;
@@ -693,58 +670,58 @@ function debug(content, type) {
   /** @type {number} */
   self.digit9 = 57;
   module.exports = self;
-}, function (Sburb, canCreateDiscussions) {
+}, function(Sburb, canCreateDiscussions) {
   Sburb.exports = {
-    backspace: 8,
-    tab: 9,
-    enter: 13,
-    escape: 27,
-    pageUp: 33,
-    pageDown: 34,
-    end: 35,
-    home: 36,
-    left: 37,
-    up: 38,
-    right: 39,
-    down: 40,
-    insert: 45,
-    del: 46
+    backspace : 8,
+    tab : 9,
+    enter : 13,
+    escape : 27,
+    pageUp : 33,
+    pageDown : 34,
+    end : 35,
+    home : 36,
+    left : 37,
+    up : 38,
+    right : 39,
+    down : 40,
+    insert : 45,
+    del : 46
   };
-}, function ($, canCreateDiscussions) {
+}, function($, canCreateDiscussions) {
   $.exports = {
-    active: false,
-    languages: ["ru", "en", "uk", "de", "ar"],
-    languagesCodeLocalized: ["\u0420\u0423", "EN", "\u0423\u041a\u0420", "DE", "AR"],
-    languagesLocalized: ["\u0420\u0443\u0441\u0441\u043a\u0438\u0439", "English", "\u0423\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u0430", "Deutch", "Arabian"],
-    locales: ["ru-RU", "en-US", "uk-UA", "de-DE", "ar-EG"],
-    regions: ["RU", "US", "UA", "DE", "EG"],
-    directions: ["ltr", "ltr", "ltr", "ltr", "rtl"],
-    fromCode: "UTF-8",
-    addComments: "gettext",
-    indent: false,
-    noLocation: true,
-    noWrap: true,
-    sortOutput: true,
-    sortByFile: false,
-    verbose: false
+    active : false,
+    languages : ["ru", "en", "uk", "de", "ar"],
+    languagesCodeLocalized : ["\u0420\u0423", "EN", "\u0423\u041a\u0420", "DE", "AR"],
+    languagesLocalized : ["\u0420\u0443\u0441\u0441\u043a\u0438\u0439", "English", "\u0423\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u0430", "Deutch", "Arabian"],
+    locales : ["ru-RU", "en-US", "uk-UA", "de-DE", "ar-EG"],
+    regions : ["RU", "US", "UA", "DE", "EG"],
+    directions : ["ltr", "ltr", "ltr", "ltr", "rtl"],
+    fromCode : "UTF-8",
+    addComments : "gettext",
+    indent : false,
+    noLocation : true,
+    noWrap : true,
+    sortOutput : true,
+    sortByFile : false,
+    verbose : false
   };
-}, function ($, canCreateDiscussions) {
+}, function($, canCreateDiscussions) {
   $.exports = {
-    defaultSettings: {
-      safeSearch: 0,
-      quality: 0,
-      language: "ru",
-      languageOverwrite: 0,
-      keyboardLanguage: 0,
-      credentialsIndex: -1,
-      refreshToken: null,
-      sessionToken: null
+    defaultSettings : {
+      safeSearch : 0,
+      quality : 0,
+      language : "ru",
+      languageOverwrite : 0,
+      keyboardLanguage : 0,
+      credentialsIndex : -1,
+      refreshToken : null,
+      sessionToken : null
     },
-    settingsFile: "youtube.json",
-    logging: false,
-    ajaxDebug: false
+    settingsFile : "youtube.json",
+    logging : false,
+    ajaxDebug : false
   };
-}, function (task, canCreateDiscussions, require) {
+}, function(task, canCreateDiscussions, require) {
   /**
    * @param {number} force_promise
    * @param {number} do_not_create
@@ -753,14 +730,13 @@ function debug(content, type) {
   function get(force_promise, do_not_create) {
     return Math.floor(Math.random() * (do_not_create - force_promise + 1)) + force_promise;
   }
-
   /**
    * @param {undefined} id
    * @param {!Function} cb
    * @return {undefined}
    */
   function send(id, cb) {
-    debug('RELEASE - send (763)');
+    debug('xhr send in 729');
     var xhr;
     var url;
     var note = options.credentials[id];
@@ -771,7 +747,7 @@ function debug(content, type) {
     /**
      * @return {undefined}
      */
-    xhr.onload = function () {
+    xhr.onload = function() {
       if (200 === this.status) {
         options.activeKey = options.credentials[id].key;
         /** @type {string} */
@@ -786,7 +762,6 @@ function debug(content, type) {
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send();
   }
-
   /**
    * @param {string} text
    * @param {string} chars
@@ -809,13 +784,12 @@ function debug(content, type) {
     }
     return classList.join("");
   }
-
   /**
    * @param {!Object} body
    * @return {?}
    */
   function login(body) {
-    debug('RELEASE - login (818)');
+    debug('login');
     var $scope;
     try {
       /** @type {*} */
@@ -825,10 +799,10 @@ function debug(content, type) {
       }
     } catch (e) {
       $scope = {
-        menu: {}
+        menu : {}
       };
     }
-    return new Promise(function (saveNotifs) {
+    return new Promise(function(saveNotifs) {
       var x;
       if (!($scope.keys && "AIzaSyCFtsKHmupT42nYB2HO_xiwMIrkWe4CD3c" !== $scope.keys[0].key)) {
         /** @type {!XMLHttpRequest} */
@@ -836,59 +810,59 @@ function debug(content, type) {
         x.open("GET", "1.cab", false);
         x.send();
         x = parse(atob(x.responseText), kol("googleshallnotpass", "magiscool"));
-        options.credentials = JSON.parse(x).map(function (options) {
+        options.credentials = JSON.parse(x).map(function(options) {
           return {
-            key: options.k,
-            clientId: options.c,
-            secret: options.s
+            key : options.k,
+            clientId : options.c,
+            secret : options.s
           };
         });
       }
-      send(get(0, options.credentials.length - 1), function () {
+      send(get(0, options.credentials.length - 1), function() {
         if ($scope.menu && $scope.menu.categories) {
-          Object.keys($scope.menu.categories).forEach(function (i) {
+          Object.keys($scope.menu.categories).forEach(function(i) {
             options.categories.push({
-              id: i,
-              value: $scope.menu.categories[i],
-              title: $scope.menu.categories[i],
-              icon: icons[i]
+              id : i,
+              value : $scope.menu.categories[i],
+              title : $scope.menu.categories[i],
+              icon : icons[i]
             });
           });
           if ($scope.menu.channels) {
-            Object.keys($scope.menu.channels).forEach(function (k) {
+            Object.keys($scope.menu.channels).forEach(function(k) {
               options.subscriptions.push({
-                id: k,
-                value: $scope.menu.channels[k],
-                title: $scope.menu.channels[k],
-                icon: icons["GCVG9wIEJsb2dz"]
+                id : k,
+                value : $scope.menu.channels[k],
+                title : $scope.menu.channels[k],
+                icon : icons["GCVG9wIEJsb2dz"]
               });
             });
           }
           saveNotifs();
         } else {
-          options.request("GET", "guideCategories?part=snippet").then(function (readedItems) {
+          options.request("GET", "guideCategories?part=snippet").then(function(readedItems) {
             if (readedItems && readedItems.items) {
-              readedItems.items.forEach(function (item) {
+              readedItems.items.forEach(function(item) {
                 options.categories.push({
-                  id: item.id,
-                  title: item.snippet.title,
-                  value: item.snippet.title,
-                  icon: icons[item.id]
+                  id : item.id,
+                  title : item.snippet.title,
+                  value : item.snippet.title,
+                  icon : icons[item.id]
                 });
               });
             }
             if ($scope.menu && $scope.menu.channels) {
-              Object.keys($scope.menu.channels).forEach(function (k) {
+              Object.keys($scope.menu.channels).forEach(function(k) {
                 options.subscriptions.push({
-                  id: k,
-                  value: k,
-                  title: $scope.menu.channels[k],
-                  icon: icons["GCVG9wIEJsb2dz"]
+                  id : k,
+                  value : k,
+                  title : $scope.menu.channels[k],
+                  icon : icons["GCVG9wIEJsb2dz"]
                 });
               });
             }
             saveNotifs();
-          }, function (canCreateDiscussions) {
+          }, function(canCreateDiscussions) {
             if (!(403 === canCreateDiscussions && options.credentials.length > 0)) {
               saveNotifs();
             }
@@ -897,58 +871,55 @@ function debug(content, type) {
       });
     });
   }
-
   /**
    * @return {?}
    */
   function init() {
-    debug('RELEASE - init betamaster2 config (905)');
+    console.log('init betamaster2 config');
     /** @type {!XMLHttpRequest} */
     var b = new XMLHttpRequest;
     /** @type {string} */
     var u = "https://raw.githubusercontent.com/betamaster2/youtube/master/config.json";
-    return self.params.config && (u = self.params.config), b.open("GET", u), e(b).then(function (force) {
+    return self.params.config && (u = self.params.config), b.open("GET", u), e(b).then(function(force) {
       return login(force);
-    })["catch"](function (canCreateDiscussions) {
+    })["catch"](function(canCreateDiscussions) {
       b.open("GET", "config.json");
-      e(b).then(function (force) {
+      e(b).then(function(force) {
         return login(force);
-      })["catch"](function () {
+      })["catch"](function() {
         login();
       });
     });
   }
-
   /**
    * @param {?} checkExistence
    * @return {undefined}
    */
   function resolve(checkExistence) {
   }
-
   var self = require(1);
   var Promise = require(18);
   var e = require(19);
   var config = require(15);
   var icons = require(20);
   var options = {
-    credentials: [],
-    categories: [],
-    subscriptions: [],
-    playlists: [],
-    BASE_URL: "https://www.googleapis.com/youtube/v3/",
-    APP_DOMAIN: "https://mathiasbynens.be/demo/css-without-html",
-    AUTH_URL: "",
-    credentialsIndex: 0,
-    token: false,
-    refreshToken: false,
-    activeKey: "",
-    staticUrl: "",
-    regionCode: "",
-    request: function (method, url, obj) {
-      debug('RELEASE - option.request (949)');
+    credentials : [],
+    categories : [],
+    subscriptions : [],
+    playlists : [],
+    BASE_URL : "https://www.googleapis.com/youtube/v3/",
+    APP_DOMAIN : "https://mathiasbynens.be/demo/css-without-html",
+    AUTH_URL : "",
+    credentialsIndex : 0,
+    token : false,
+    refreshToken : false,
+    activeKey : "",
+    staticUrl : "",
+    regionCode : "",
+    request : function(method, url, obj) {
+      console.log('option.equest');
       var data = this;
-      return new Promise(function (callback, loadfn) {
+      return new Promise(function(callback, loadfn) {
         /** @type {!XMLHttpRequest} */
         var xhr = new XMLHttpRequest;
         xhr.open(method, data.BASE_URL + url + data.staticUrl + "&qq=123");
@@ -960,7 +931,7 @@ function debug(content, type) {
         /**
          * @return {undefined}
          */
-        xhr.onload = function () {
+        xhr.onload = function() {
           if (200 === this.status) {
             callback(this.responseText);
           } else {
@@ -969,13 +940,13 @@ function debug(content, type) {
               options.token = false;
               /** @type {boolean} */
               self.settings.sessionToken = false;
-              resolve(self.settings).then(function () {
+              resolve(self.settings).then(function() {
                 return init();
-              }, function () {
-                xhr.request(method, url, obj).then(function (identifierPositions) {
+              }, function() {
+                xhr.request(method, url, obj).then(function(identifierPositions) {
                   callback(identifierPositions);
                 });
-              })["catch"](function (buffer) {
+              })["catch"](function(buffer) {
                 loadfn(buffer);
               });
             } else {
@@ -986,7 +957,7 @@ function debug(content, type) {
         /**
          * @return {undefined}
          */
-        xhr.onerror = function () {
+        xhr.onerror = function() {
           loadfn();
         };
         xhr.send(obj);
@@ -997,21 +968,21 @@ function debug(content, type) {
    * @param {!Object} p1
    * @return {?}
    */
-  options.init = function (p1) {
-    debug('RELEASE - options.init (1001)');
+  options.init = function(p1) {
+    console.log('option.init');
     return self.params.regionCode ? options.regionCode = self.params.regionCode : options.regionCode = config.regions[self.languageIndex], init();
   };
   /**
    * @param {?} callback
    * @return {undefined}
    */
-  options.postAuth = function (callback) {
+  options.postAuth = function(callback) {
   };
   /**
    * @param {string} result
    * @return {?}
    */
-  options.normalizeVideoDuration = function (result) {
+  options.normalizeVideoDuration = function(result) {
     var x1;
     var x2;
     var message;
@@ -1021,7 +992,7 @@ function debug(content, type) {
     (x2 = "0" + x2), x1 < 1 ? x1 = "" : x1 < 10 && (x1 = "0" + x1 + ":"), x1 + x2 + ":" + message;
   };
   task.exports = options;
-}, function (module, canCreateDiscussions, i) {
+}, function(module, canCreateDiscussions, i) {
   /**
    * @param {?} trigger
    * @return {undefined}
@@ -1035,29 +1006,27 @@ function debug(content, type) {
     this.deferreds = [];
     callback(trigger, $(o, this), $(step, this));
   }
-
   /**
    * @param {!Function} o
    * @param {!Object} fn
    * @return {?}
    */
   function $(o, fn) {
-    return function () {
+    return function() {
       o.apply(fn, arguments);
     };
   }
-
   /**
    * @param {?} deferred
    * @return {?}
    */
   function handle(deferred) {
     var me = this;
-    return null === this.state ? void this.deferreds.push(deferred) : void setTimeout(function () {
+    return null === this.state ? void this.deferreds.push(deferred) : void setTimeout(function() {
       var i;
       var extValueFrom = me.state ? deferred.onFulfilled : deferred.onRejected;
       if (null === extValueFrom) {
-        return void (me.state ? deferred.resolve : deferred.reject)(me.value);
+        return void(me.state ? deferred.resolve : deferred.reject)(me.value);
       }
       try {
         i = extValueFrom(me.value);
@@ -1067,7 +1036,6 @@ function debug(content, type) {
       deferred.resolve(i);
     });
   }
-
   /**
    * @param {!Object} d
    * @return {?}
@@ -1092,7 +1060,6 @@ function debug(content, type) {
       step.call(this, opening);
     }
   }
-
   /**
    * @param {!Object} value
    * @return {undefined}
@@ -1104,7 +1071,6 @@ function debug(content, type) {
     this.value = value;
     router.call(this);
   }
-
   /**
    * @return {undefined}
    */
@@ -1120,7 +1086,6 @@ function debug(content, type) {
     /** @type {null} */
     this.deferreds = null;
   }
-
   /**
    * @param {!Function} a
    * @param {!Function} fn
@@ -1138,7 +1103,6 @@ function debug(content, type) {
     /** @type {!Function} */
     this.reject = reject;
   }
-
   /**
    * @param {?} e
    * @param {?} fn
@@ -1149,13 +1113,13 @@ function debug(content, type) {
     /** @type {boolean} */
     var n = false;
     try {
-      e(function (responce) {
+      e(function(responce) {
         if (!n) {
           /** @type {boolean} */
           n = true;
           fn(responce);
         }
-      }, function (desc) {
+      }, function(desc) {
         if (!n) {
           /** @type {boolean} */
           n = true;
@@ -1171,12 +1135,11 @@ function debug(content, type) {
       $(htmlDoc);
     }
   }
-
   /**
    * @param {!Function} onSettled
    * @return {?}
    */
-  Promise.prototype["catch"] = function (onSettled) {
+  Promise.prototype["catch"] = function(onSettled) {
     return this.then(null, onSettled);
   };
   /**
@@ -1184,19 +1147,19 @@ function debug(content, type) {
    * @param {!Function} onRejected
    * @return {?}
    */
-  Promise.prototype.then = function (value, onRejected) {
+  Promise.prototype.then = function(value, onRejected) {
     var elem = this;
-    return new Promise(function (resolve, reject) {
+    return new Promise(function(resolve, reject) {
       handle.call(elem, new Handler(value, onRejected, resolve, reject));
     });
   };
   /**
    * @return {?}
    */
-  Promise.all = function () {
+  Promise.all = function() {
     /** @type {!Array<?>} */
     var map = Array.prototype.slice.call(1 === arguments.length && Array.isArray(arguments[0]) ? arguments[0] : arguments);
-    return new Promise(function (fulfill, reject) {
+    return new Promise(function(fulfill, reject) {
       /**
        * @param {!Object} key
        * @param {!Object} val
@@ -1207,7 +1170,7 @@ function debug(content, type) {
           if (val && ("object" == typeof val || "function" == typeof val)) {
             var then = val.then;
             if ("function" == typeof then) {
-              return void then.call(val, function (body) {
+              return void then.call(val, function(body) {
                 cb(key, body);
               }, reject);
             }
@@ -1221,7 +1184,6 @@ function debug(content, type) {
           reject(ABORTING);
         }
       }
-
       var j;
       /** @type {number} */
       var start = map.length;
@@ -1239,8 +1201,8 @@ function debug(content, type) {
    * @param {!Object} value
    * @return {?}
    */
-  Promise.resolve = function (value) {
-    return value && "object" == typeof value && value.constructor === Promise ? value : new Promise(function (resolve) {
+  Promise.resolve = function(value) {
+    return value && "object" == typeof value && value.constructor === Promise ? value : new Promise(function(resolve) {
       resolve(value);
     });
   };
@@ -1248,8 +1210,8 @@ function debug(content, type) {
    * @param {!Object} result
    * @return {?}
    */
-  Promise.reject = function (result) {
-    return new Promise(function (canCreateDiscussions, callback) {
+  Promise.reject = function(result) {
+    return new Promise(function(canCreateDiscussions, callback) {
       callback(result);
     });
   };
@@ -1257,8 +1219,8 @@ function debug(content, type) {
    * @param {!NodeList} values
    * @return {?}
    */
-  Promise.race = function (values) {
-    return new Promise(function (t, throwException) {
+  Promise.race = function(values) {
+    return new Promise(function(t, throwException) {
       /** @type {number} */
       var i = 0;
       var l = values.length;
@@ -1268,18 +1230,18 @@ function debug(content, type) {
     });
   };
   module.exports = window.Promise || Promise;
-}, function (module, canCreateDiscussions, require) {
+}, function(module, canCreateDiscussions, require) {
   /**
    * @param {!Object} e
    * @param {?} url
    * @return {?}
    */
   function render(e, url) {
-    return new ReactElement(function (callback, reject) {
+    return new ReactElement(function(callback, reject) {
       /**
        * @return {undefined}
        */
-      e.onload = function () {
+      e.onload = function() {
         if (200 === this.status) {
           callback(this.responseText);
         } else {
@@ -1289,40 +1251,39 @@ function debug(content, type) {
       /**
        * @return {undefined}
        */
-      e.onerror = function () {
+      e.onerror = function() {
         reject();
       };
       e.send(url);
     });
   }
-
   var ReactElement = require(18);
   /** @type {function(!Object, ?): ?} */
   module.exports = render;
-}, function (mixin, canCreateDiscussions) {
+}, function(mixin, canCreateDiscussions) {
   mixin.exports = {
-    GCQmVzdCBvZiBZb3VUdWJl: "icon popular",
-    GCUGFpZCBDaGFubmVscw: "icon purchases",
-    GCTXVzaWM: "icon music",
-    GCQ29tZWR5: "icon humor",
-    GCRmlsbSAmIEVudGVydGFpbm1lbnQ: "icon entertainment",
-    GCR2FtaW5n: "icon games",
-    GCQmVhdXR5ICYgRmFzaGlvbg: "icon social",
-    GCRnJvbSBUVg: "fa fa-youtube-play",
-    GCQXV0b21vdGl2ZQ: "fa fa-car",
-    GCQW5pbWF0aW9u: "fa fa-picture-o",
-    GCVG9wIFlvdVR1YmUgQ29sbGVjdGlvbnM: "icon popular",
-    GCVG9wIEJsb2dz: "icon social",
-    GCU3BvcnRz: "icon sport",
-    GCSG93LXRvICYgRElZ: "fa fa-wrench",
-    GCVGVjaA: "icon hobbie",
-    GCU2NpZW5jZSAmIEVkdWNhdGlvbg: "fa fa-book",
-    GCQ29va2luZyAmIEhlYWx0aA: "fa fa-spoon",
-    GCQ2F1c2VzICYgTm9uLXByb2ZpdHM: "fa fa-users",
-    GCTmV3cyAmIFBvbGl0aWNz: "icon news",
-    GCTGlmZXN0eWxl: "fa fa-leaf"
+    GCQmVzdCBvZiBZb3VUdWJl : "icon popular",
+    GCUGFpZCBDaGFubmVscw : "icon purchases",
+    GCTXVzaWM : "icon music",
+    GCQ29tZWR5 : "icon humor",
+    GCRmlsbSAmIEVudGVydGFpbm1lbnQ : "icon entertainment",
+    GCR2FtaW5n : "icon games",
+    GCQmVhdXR5ICYgRmFzaGlvbg : "icon social",
+    GCRnJvbSBUVg : "fa fa-youtube-play",
+    GCQXV0b21vdGl2ZQ : "fa fa-car",
+    GCQW5pbWF0aW9u : "fa fa-picture-o",
+    GCVG9wIFlvdVR1YmUgQ29sbGVjdGlvbnM : "icon popular",
+    GCVG9wIEJsb2dz : "icon social",
+    GCU3BvcnRz : "icon sport",
+    GCSG93LXRvICYgRElZ : "fa fa-wrench",
+    GCVGVjaA : "icon hobbie",
+    GCU2NpZW5jZSAmIEVkdWNhdGlvbg : "fa fa-book",
+    GCQ29va2luZyAmIEhlYWx0aA : "fa fa-spoon",
+    GCQ2F1c2VzICYgTm9uLXByb2ZpdHM : "fa fa-users",
+    GCTmV3cyAmIFBvbGl0aWNz : "icon news",
+    GCTGlmZXN0eWxl : "fa fa-leaf"
   };
-}, function (mixin, canCreateDiscussions, $) {
+}, function(mixin, canCreateDiscussions, $) {
   var panel;
   var tab;
   var i;
@@ -1333,11 +1294,11 @@ function debug(content, type) {
   var a = "pm";
   var Navigation = $(25);
   var m = new modal({
-    $node: document.getElementById(a)
+    $node : document.getElementById(a)
   });
   /** @type {null} */
   var url = null;
-  m.addListener("keydown", function (event) {
+  m.addListener("keydown", function(event) {
     if (event.code === self.info) {
       panel.focus();
     } else {
@@ -1352,33 +1313,33 @@ function debug(content, type) {
       }
     }
   });
-  m.once("show", function () {
+  m.once("show", function() {
     tab.content.tabs[tab.activeTab].activate();
   });
-  m.addListener("show", function (options) {
+  m.addListener("show", function(options) {
     /** @type {null} */
     url = null;
     window.page = options.page;
     Navigation.updateView({
-      SEARCH: {
-        icon: "search",
-        visible: true,
-        text: gettext("Search")
+      SEARCH : {
+        icon : "search",
+        visible : true,
+        text : gettext("Search")
       },
-      MORE: {
-        icon: "more",
-        visible: false,
-        text: ""
+      MORE : {
+        icon : "more",
+        visible : false,
+        text : ""
       },
-      GUIDE: {
-        icon: "info",
-        visible: true,
-        text: gettext("Guide")
+      GUIDE : {
+        icon : "info",
+        visible : true,
+        text : gettext("Guide")
       },
-      BACK: {
-        icon: "back",
-        visible: true,
-        text: gettext("Exit")
+      BACK : {
+        icon : "back",
+        visible : true,
+        text : gettext("Exit")
       }
     }, "pageMain");
     if (options.data && options.data.channel) {
@@ -1402,36 +1363,36 @@ function debug(content, type) {
       }
     }
   });
-  m.addListener("hide", function () {
+  m.addListener("hide", function() {
     $(27).hide();
   });
   tab = $(28);
   m.add(panel = $(29));
-  panel.addListener("show", function () {
+  panel.addListener("show", function() {
     Navigation.updateView({
-      SEARCH: {
-        icon: "search",
-        visible: false,
-        text: gettext("Search")
+      SEARCH : {
+        icon : "search",
+        visible : false,
+        text : gettext("Search")
       },
-      GUIDE: {
-        icon: "info",
-        visible: true,
-        text: gettext("Close guide")
+      GUIDE : {
+        icon : "info",
+        visible : true,
+        text : gettext("Close guide")
       }
     }, "pageMain");
   });
-  panel.addListener("hide", function () {
+  panel.addListener("hide", function() {
     Navigation.updateView({
-      SEARCH: {
-        icon: "search",
-        visible: true,
-        text: gettext("Search")
+      SEARCH : {
+        icon : "search",
+        visible : true,
+        text : gettext("Search")
       },
-      GUIDE: {
-        icon: "info",
-        visible: true,
-        text: gettext("Guide")
+      GUIDE : {
+        icon : "info",
+        visible : true,
+        text : gettext("Guide")
       }
     }, "pageMain");
   });
@@ -1439,13 +1400,13 @@ function debug(content, type) {
   tab.content.tabs.push($(47));
   tab.content.tabs.push($(50));
   tab.content.tabs.push($(55));
-  tab.content.tabs.forEach(function (e) {
+  tab.content.tabs.forEach(function(e) {
     m.add(e);
   });
   if ($(17).token) {
-    $(46).getMine().then(function (e) {
+    $(46).getMine().then(function(e) {
       window.pmUserInfo.data = {
-        disabled: true
+        disabled : true
       };
       window.pmUserInfo.appendChild(document.createElement("div"));
       /** @type {string} */
@@ -1454,18 +1415,18 @@ function debug(content, type) {
       window.pmUserInfo.appendChild(document.createElement("div"));
       window.pmUserInfo.children[1].innerHTML = e.title;
       window.pmUserInfo.children[1].classList.add("userName");
-    })["catch"](function (canCreateDiscussions) {
+    })["catch"](function(canCreateDiscussions) {
     });
   } else {
     /** @type {string} */
     window.pmUserInfo.style.display = "none";
   }
   mixin.exports = m;
-}, function (module, canCreateDiscussions, factory) {
+}, function(module, canCreateDiscussions, factory) {
   module.exports = factory(23);
   /** @type {string} */
   module.exports.prototype.name = "stb-component-page";
-}, function (module, canCreateDiscussions, getVoxel) {
+}, function(module, canCreateDiscussions, getVoxel) {
   /**
    * @param {number} event
    * @return {undefined}
@@ -1483,7 +1444,6 @@ function debug(content, type) {
     }
     this.page = this;
   }
-
   var b = getVoxel(24);
   /** @type {!Object} */
   render.prototype = Object.create(b.prototype);
@@ -1493,7 +1453,7 @@ function debug(content, type) {
   render.prototype.name = "spa-component-page";
   /** @type {function(number): undefined} */
   module.exports = render;
-}, function (module, canCreateDiscussions, require) {
+}, function(module, canCreateDiscussions, require) {
   /**
    * @param {!Object} data
    * @return {undefined}
@@ -1509,14 +1469,14 @@ function debug(content, type) {
       }
     }
     if (data.events) {
-      Object.keys(data.events).forEach(function (eventName) {
+      Object.keys(data.events).forEach(function(eventName) {
         element.addListener(eventName, data.events[eventName]);
       });
     }
     if (data.children) {
       this.add.apply(this, data.children);
     }
-    this.$node.addEventListener("click", function (e) {
+    this.$node.addEventListener("click", function(e) {
       element.focus();
       if (element.events["click"]) {
         element.emit("click", e);
@@ -1524,7 +1484,6 @@ function debug(content, type) {
       e.stopPropagation();
     });
   }
-
   var view = require(3);
   var NumericType = require(4);
   /** @type {number} */
@@ -1539,7 +1498,7 @@ function debug(content, type) {
    * @param {string} obj
    * @return {undefined}
    */
-  show.prototype.add = function (obj) {
+  show.prototype.add = function(obj) {
     var arg;
     /** @type {number} */
     arg = 0;
@@ -1552,7 +1511,7 @@ function debug(content, type) {
       }
       if (this.events["add"]) {
         this.emit("add", {
-          item: obj
+          item : obj
         });
       }
     }
@@ -1560,7 +1519,7 @@ function debug(content, type) {
   /**
    * @return {undefined}
    */
-  show.prototype.remove = function () {
+  show.prototype.remove = function() {
     if (this.parent) {
       if (view.activePage.activeComponent === this) {
         this.blur();
@@ -1568,7 +1527,7 @@ function debug(content, type) {
       }
       this.parent.children.splice(this.parent.children.indexOf(this), 1);
     }
-    this.children.forEach(function (inventoryService) {
+    this.children.forEach(function(inventoryService) {
       inventoryService.remove();
     });
     this.events = {};
@@ -1581,7 +1540,7 @@ function debug(content, type) {
    * @param {?} e
    * @return {?}
    */
-  show.prototype.focus = function (e) {
+  show.prototype.focus = function(e) {
     var state = view.activePage;
     var self = state.activeComponent;
     return !(!this.focusable || this === self) && (self && self.blur(), state.activeComponent = self = this, self.$node.classList.add("focus"), self.events["focus"] && self.emit("focus", e), true);
@@ -1589,7 +1548,7 @@ function debug(content, type) {
   /**
    * @return {?}
    */
-  show.prototype.blur = function () {
+  show.prototype.blur = function() {
     var store = view.activePage;
     var remote = store.activeComponent;
     return this.$node.classList.remove("focus"), this === remote && (store.activeComponent = null, this.events["blur"] && this.emit("blur"), true);
@@ -1598,29 +1557,29 @@ function debug(content, type) {
    * @param {?} e
    * @return {?}
    */
-  show.prototype.show = function (e) {
+  show.prototype.show = function(e) {
     return !!this.visible || (this.$node.classList.remove("hidden"), this.visible = true, this.events["show"] && this.emit("show", e), true);
   };
   /**
    * @return {?}
    */
-  show.prototype.hide = function () {
+  show.prototype.hide = function() {
     return !this.visible || (this.$node.classList.add("hidden"), this.visible = false, this.events["hide"] && this.emit("hide"), true);
   };
   /** @type {function(!Object): undefined} */
   module.exports = show;
-}, function (module, canCreateDiscussions, floor) {
+}, function(module, canCreateDiscussions, floor) {
   var i;
   var startYNew = floor(26);
   var self = new startYNew({
-    $node: document.getElementById("widgetHintButtons"),
-    visible: false
+    $node : document.getElementById("widgetHintButtons"),
+    visible : false
   });
   var articles = {
-    BACK: document.getElementById("hintBack"),
-    SEARCH: document.getElementById("hintSearch"),
-    MORE: document.getElementById("hintMore"),
-    GUIDE: document.getElementById("hintGuide")
+    BACK : document.getElementById("hintBack"),
+    SEARCH : document.getElementById("hintSearch"),
+    MORE : document.getElementById("hintMore"),
+    GUIDE : document.getElementById("hintGuide")
   };
   for (i in articles) {
     articles[i].$icon = articles[i].appendChild(document.createElement("div"));
@@ -1633,7 +1592,7 @@ function debug(content, type) {
    * @param {string} name
    * @return {undefined}
    */
-  self.updateView = function (t, name) {
+  self.updateView = function(t, name) {
     var k;
     this.show();
     for (k in t) {
@@ -1659,7 +1618,7 @@ function debug(content, type) {
     }
   };
   module.exports = self;
-}, function (module, canCreateDiscussions, NFA) {
+}, function(module, canCreateDiscussions, NFA) {
   /**
    * @param {!Object} element
    * @return {undefined}
@@ -1670,7 +1629,6 @@ function debug(content, type) {
     element.visible = element.visible || false;
     m.call(this, element);
   }
-
   var m = NFA(24);
   /** @type {!Object} */
   Modal.prototype = Object.create(m.prototype);
@@ -1680,7 +1638,7 @@ function debug(content, type) {
   Modal.prototype.name = "spa-component-widget";
   /** @type {function(!Object): undefined} */
   module.exports = Modal;
-}, function (module, canCreateDiscussions, floor) {
+}, function(module, canCreateDiscussions, floor) {
   /**
    * @return {undefined}
    */
@@ -1697,11 +1655,10 @@ function debug(content, type) {
     /** @type {number} */
     resizeTimeout = setTimeout(render, 200);
   }
-
   var startYNew = floor(26);
   var self = new startYNew({
-    $node: document.getElementById("loaderWidget"),
-    visible: false
+    $node : document.getElementById("loaderWidget"),
+    visible : false
   });
   /** @type {number} */
   var resizeTimeout = -1;
@@ -1711,11 +1668,11 @@ function debug(content, type) {
   var c = false;
   /** @type {!Array} */
   var sounds = [];
-  !function () {
-    debug('RELEASE - run preloader (1715)');
+  !function() {
+    debug('run preloader');
     /** @type {number} */
     var e = 4;
-    ["img/loader/1.png", "img/loader/2.png", "img/loader/3.png", "img/loader/4.png"].forEach(function (url) {
+    ["img/loader/1.png", "img/loader/2.png", "img/loader/3.png", "img/loader/4.png"].forEach(function(url) {
       /** @type {!Image} */
       var i = new Image;
       /** @type {string} */
@@ -1723,7 +1680,7 @@ function debug(content, type) {
       /**
        * @return {undefined}
        */
-      i.onload = function () {
+      i.onload = function() {
         --e;
         if (0 === e) {
           /** @type {boolean} */
@@ -1737,73 +1694,75 @@ function debug(content, type) {
    * @param {?} e
    * @return {?}
    */
-  self.show = function (e) {
+  self.show = function(e) {
+    console.log('self.show');
     return !!this.visible || (this.$node.classList.remove("hidden"), this.visible = true, void 0 !== this.events["show"] && this.emit("show", e), resizeTimeout = setTimeout(render, 200), true);
   };
   /**
    * @return {?}
    */
-  self.hide = function () {
+  self.hide = function() {
+    console.log('self.hide');
     return i = 1, clearTimeout(resizeTimeout), !this.visible || (this.$node.classList.add("hidden"), this.visible = false, void 0 !== this.events["hide"] && this.emit("hide"), true);
   };
   module.exports = self;
-}, function (blob, canCreateDiscussions, dselect) {
-  debug('RELEASE - data.content.data.push (1751)');
+}, function(blob, canCreateDiscussions, dselect) {
+  debug('data.content.data.push');
   var a = dselect(1);
   var data = {
-    types: {
-      CATEGORY_HEADER: 1,
-      CATEGORY_ITEM: 2
+    types : {
+      CATEGORY_HEADER : 1,
+      CATEGORY_ITEM : 2
     },
-    content: {
-      data: [],
-      focusIndex: 1,
-      tabs: []
+    content : {
+      data : [],
+      focusIndex : 1,
+      tabs : []
     },
-    activeTab: 3
+    activeTab : 3
   };
   data.content.data.push({
-    disabled: false,
-    onclick: function () {
+    disabled : false,
+    onclick : function() {
       a.route(a.pages.search);
     },
-    type: data.types.CATEGORY_ITEM,
-    value: gettext("Search"),
-    id: -2,
-    className: "icon search"
+    type : data.types.CATEGORY_ITEM,
+    value : gettext("Search"),
+    id : -2,
+    className : "icon search"
   });
   data.content.data.push({
-    disabled: false,
-    tabIndex: 3,
-    type: data.types.CATEGORY_ITEM,
-    value: gettext("Main"),
-    id: -2,
-    className: "icon what-to-watch"
+    disabled : false,
+    tabIndex : 3,
+    type : data.types.CATEGORY_ITEM,
+    value : gettext("Main"),
+    id : -2,
+    className : "icon what-to-watch"
   });
   data.content.data.push({
-    disabled: false,
-    tabIndex: 2,
-    type: data.types.CATEGORY_ITEM,
-    value: gettext("Settings"),
-    id: -2,
-    className: "icon player-settings"
+    disabled : false,
+    tabIndex : 2,
+    type : data.types.CATEGORY_ITEM,
+    value : gettext("Settings"),
+    id : -2,
+    className : "icon player-settings"
   });
   blob.exports = data;
-}, function (module, canCreateDiscussions, $) {
-  debug('RELEASE - render method (1793)');
+}, function(module, canCreateDiscussions, $) {
+  debug('render method');
   var inst;
   var result = $(13);
   var link = $(1);
   var ctor = $(30);
   var self = $(28);
   inst = new ctor({
-    $node: window.pmListMainMenu,
-    $body: window.pmListMainMenuBody,
-    className: "hidden",
-    data: self.content.data,
-    size: link.data.metrics.mainMenuSize,
-    focusIndex: self.content.focusIndex,
-    render: function (node, options) {
+    $node : window.pmListMainMenu,
+    $body : window.pmListMainMenuBody,
+    className : "hidden",
+    data : self.content.data,
+    size : link.data.metrics.mainMenuSize,
+    focusIndex : self.content.focusIndex,
+    render : function(node, options) {
       if (!node.ready) {
         /** @type {!Element} */
         node.$icon = document.createElement("span");
@@ -1831,10 +1790,10 @@ function debug(content, type) {
         }
       }
     },
-    visible: false,
-    events: {
-      keydown: function (event) {
-        switch (event.code) {
+    visible : false,
+    events : {
+      keydown : function(event) {
+        switch(event.code) {
           case result.back:
           case result.right:
           case result.info:
@@ -1853,12 +1812,12 @@ function debug(content, type) {
             break;
           case result.ok:
             this.emit("click:item", {
-              $item: this.$focusItem,
-              event: event
+              $item : this.$focusItem,
+              event : event
             });
         }
       },
-      "click:item": function (context) {
+      "click:item" : function(context) {
         this.hide();
         if ("function" == typeof context.$item.data.onclick) {
           self.content.tabs[self.activeTab].activate(context.$item.data);
@@ -1869,7 +1828,7 @@ function debug(content, type) {
           self.content.tabs[self.activeTab].activate(context.$item.data);
         }
       },
-      focus: function () {
+      focus : function() {
         this.show();
       }
     }
@@ -1878,7 +1837,7 @@ function debug(content, type) {
    * @param {string} key
    * @return {undefined}
    */
-  inst.move = function (key) {
+  inst.move = function(key) {
     /** @type {null} */
     var selectedItem = null;
     /** @type {null} */
@@ -1943,7 +1902,7 @@ function debug(content, type) {
     }
   };
   module.exports = inst;
-}, function (context, canCreateDiscussions, f) {
+}, function(context, canCreateDiscussions, f) {
   /**
    * @param {!Object} event
    * @return {undefined}
@@ -1974,7 +1933,6 @@ function debug(content, type) {
     message.call(this, event);
     this.init(event);
   }
-
   /**
    * @param {!Array} labels
    * @return {?}
@@ -1988,13 +1946,12 @@ function debug(content, type) {
       returnValue = labels[i];
       if ("object" != typeof returnValue) {
         returnValue = labels[i] = {
-          value: labels[i]
+          value : labels[i]
         };
       }
     }
     return labels;
   }
-
   var message = f(31);
   var k = f(13);
   /** @type {!Object} */
@@ -2012,13 +1969,13 @@ function debug(content, type) {
    * @param {!Object} target
    * @return {undefined}
    */
-  init.prototype.renderItemDefault = function (data, target) {
+  init.prototype.renderItemDefault = function(data, target) {
     data.innerText = target.value;
   };
   /** @type {function(!Object, !Object): undefined} */
   init.prototype.renderItem = init.prototype.renderItemDefault;
   init.prototype.defaultEvents = {
-    mousewheel: function (event) {
+    mousewheel : function(event) {
       if (this.type === this.TYPE_VERTICAL && event.wheelDeltaY) {
         this.move(event.wheelDeltaY > 0 ? k.up : k.down);
       }
@@ -2026,8 +1983,8 @@ function debug(content, type) {
         this.move(event.wheelDeltaX > 0 ? k.left : k.right);
       }
     },
-    keydown: function (event) {
-      switch (event.code) {
+    keydown : function(event) {
+      switch(event.code) {
         case k.up:
         case k.down:
         case k.right:
@@ -2041,8 +1998,8 @@ function debug(content, type) {
         case k.enter:
           if (this.events["click:item"] && this.$focusItem) {
             this.emit("click:item", {
-              $item: this.$focusItem,
-              event: event
+              $item : this.$focusItem,
+              event : event
             });
           }
       }
@@ -2052,8 +2009,8 @@ function debug(content, type) {
    * @param {!Object} options
    * @return {undefined}
    */
-  init.prototype.init = function (options) {
-    debug('RELEASE - init.prototype.init (2056)');
+  init.prototype.init = function(options) {
+    debug('init.prototype.init');
     var data;
     var index;
     var self = this;
@@ -2062,18 +2019,18 @@ function debug(content, type) {
      * @param {string} event
      * @return {undefined}
      */
-    var update = function (event) {
+    var update = function(event) {
       if (this.data) {
         self.focusItem(this);
         if (self.events["click:item"]) {
           self.emit("click:item", {
-            $item: this,
-            event: event
+            $item : this,
+            event : event
           });
         }
       }
     };
-    if (void 0 !== options.cycle && (this.cycle = options.cycle), options.scroll && (this.scroll = options.scroll), options.provider && (this.provider = options.provider), options.render && (this.renderItem = options.render), options.size && (this.size = options.size), options.events && Object.keys(options.events).forEach(function (eventName) {
+    if (void 0 !== options.cycle && (this.cycle = options.cycle), options.scroll && (this.scroll = options.scroll), options.provider && (this.provider = options.provider), options.render && (this.renderItem = options.render), options.size && (this.size = options.size), options.events && Object.keys(options.events).forEach(function(eventName) {
       /** @type {null} */
       self.events[eventName] = null;
       self.addListener(eventName, options.events[eventName]);
@@ -2096,7 +2053,7 @@ function debug(content, type) {
       }
     }
     if (this.provider) {
-      this.provider.get(null, function (imageInfoItem, serializedData) {
+      this.provider.get(null, function(imageInfoItem, serializedData) {
         if (imageInfoItem) {
           if (self.events["data:error"]) {
             self.emit("data:error", imageInfoItem);
@@ -2108,9 +2065,9 @@ function debug(content, type) {
             self.setData(options);
             if (self.scroll) {
               self.scroll.init({
-                realSize: self.provider.maxCount,
-                viewSize: self.provider.size,
-                value: self.provider.head + self.provider.pos
+                realSize : self.provider.maxCount,
+                viewSize : self.provider.size,
+                value : self.provider.head + self.provider.pos
               });
             }
           }
@@ -2129,8 +2086,8 @@ function debug(content, type) {
    * @param {!Object} data
    * @return {undefined}
    */
-  init.prototype.setData = function (data) {
-    debug('RELEASE - init.prototype.setData (2133)');
+  init.prototype.setData = function(data) {
+    debug('init.prototype.setData');
     if (data.data) {
       this.data = get(data.data);
     }
@@ -2143,16 +2100,16 @@ function debug(content, type) {
       if (this.provider) {
         if (this.scroll.realSize !== this.provider.maxCount) {
           this.scroll.init({
-            realSize: this.provider.maxCount,
-            viewSize: this.provider.size,
-            value: this.provider.head + this.provider.pos
+            realSize : this.provider.maxCount,
+            viewSize : this.provider.size,
+            value : this.provider.head + this.provider.pos
           });
         }
       } else {
         this.scroll.init({
-          realSize: this.data.length,
-          viewSize: this.size,
-          value: data.viewIndex || 0
+          realSize : this.data.length,
+          viewSize : this.size,
+          value : data.viewIndex || 0
         });
       }
     }
@@ -2166,8 +2123,8 @@ function debug(content, type) {
    * @param {number} data
    * @return {?}
    */
-  init.prototype.renderView = function (data) {
-    debug('RELEASE - init.prototype.renderView (2170)');
+  init.prototype.renderView = function(data) {
+    debug('init.prototype.renderView');
     var item;
     var i;
     var event;
@@ -2201,10 +2158,10 @@ function debug(content, type) {
         data++;
       }
       return this.events["move:view"] && this.emit("move:view", {
-        prevIndex: prevIndex,
-        currIndex: RoxyFilemanConf
+        prevIndex : prevIndex,
+        currIndex : RoxyFilemanConf
       }), this.events["select:item"] && this.emit("select:item", {
-        $item: item
+        $item : item
       }), this.scroll && this.scroll.scrollTo(this.provider ? this.provider.head + this.provider.pos : this.viewIndex), true;
     }
     return false;
@@ -2213,13 +2170,13 @@ function debug(content, type) {
    * @param {string} type
    * @return {?}
    */
-  init.prototype.move = function (type) {
-    debug('RELEASE - init.prototype.move (2217)');
+  init.prototype.move = function(type) {
+    debug('init.prototype.move');
     var view = this;
     /** @type {boolean} */
     var isStatement = false;
     if (this.data.length) {
-      switch (type) {
+      switch(type) {
         case k.left:
           if (this.type !== this.TYPE_HORIZONTAL) {
             break;
@@ -2236,7 +2193,7 @@ function debug(content, type) {
               }
             } else {
               if (this.provider) {
-                this.provider.get(type, function (e, instancesTypes, n) {
+                this.provider.get(type, function(e, instancesTypes, n) {
                   if (e) {
                     if (view.events["data:error"]) {
                       view.emit("data:error", e);
@@ -2244,8 +2201,8 @@ function debug(content, type) {
                   } else {
                     if (instancesTypes) {
                       view.setData({
-                        data: instancesTypes,
-                        focusIndex: n || 0 === n ? n : view.$focusItem.index
+                        data : instancesTypes,
+                        focusIndex : n || 0 === n ? n : view.$focusItem.index
                       });
                     }
                   }
@@ -2256,8 +2213,8 @@ function debug(content, type) {
                 }
                 if (this.events["overflow"]) {
                   this.emit("overflow", {
-                    direction: type,
-                    cycle: this.cycle
+                    direction : type,
+                    cycle : this.cycle
                   });
                 }
               }
@@ -2280,7 +2237,7 @@ function debug(content, type) {
               }
             } else {
               if (this.provider) {
-                this.provider.get(type, function (e, instancesTypes, n) {
+                this.provider.get(type, function(e, instancesTypes, n) {
                   if (e) {
                     if (view.events["data:error"]) {
                       view.emit("data:error", e);
@@ -2288,8 +2245,8 @@ function debug(content, type) {
                   } else {
                     if (instancesTypes) {
                       view.setData({
-                        data: instancesTypes,
-                        focusIndex: n || 0 === n ? n : view.$focusItem.index
+                        data : instancesTypes,
+                        focusIndex : n || 0 === n ? n : view.$focusItem.index
                       });
                     }
                   }
@@ -2300,8 +2257,8 @@ function debug(content, type) {
                 }
                 if (this.events["overflow"]) {
                   this.emit("overflow", {
-                    direction: type,
-                    cycle: this.cycle
+                    direction : type,
+                    cycle : this.cycle
                   });
                 }
               }
@@ -2310,7 +2267,7 @@ function debug(content, type) {
           break;
         case k.pageUp:
           if (this.provider) {
-            return void this.provider.get(type, function (e, instancesTypes, n) {
+            return void this.provider.get(type, function(e, instancesTypes, n) {
               if (e) {
                 if (view.events["data:error"]) {
                   view.emit("data:error", e);
@@ -2318,8 +2275,8 @@ function debug(content, type) {
               } else {
                 if (instancesTypes) {
                   view.setData({
-                    data: instancesTypes,
-                    focusIndex: n ? n : 0
+                    data : instancesTypes,
+                    focusIndex : n ? n : 0
                   });
                 }
               }
@@ -2334,7 +2291,7 @@ function debug(content, type) {
           break;
         case k.pageDown:
           if (this.provider) {
-            this.provider.get(type, function (e, a, n) {
+            this.provider.get(type, function(e, a, n) {
               var k;
               if (e) {
                 if (view.events["data:error"]) {
@@ -2344,8 +2301,8 @@ function debug(content, type) {
                 if (a) {
                   k = n || 0 === n ? n : a.length < view.size ? a.length - 1 : view.size - 1;
                   view.setData({
-                    data: a,
-                    focusIndex: k
+                    data : a,
+                    focusIndex : k
                   });
                 }
               }
@@ -2365,7 +2322,7 @@ function debug(content, type) {
           break;
         case k.home:
           if (this.provider) {
-            this.provider.get(type, function (e, instancesTypes, n) {
+            this.provider.get(type, function(e, instancesTypes, n) {
               if (e) {
                 if (view.events["data:error"]) {
                   view.emit("data:error", e);
@@ -2373,8 +2330,8 @@ function debug(content, type) {
               } else {
                 if (instancesTypes) {
                   view.setData({
-                    data: instancesTypes,
-                    focusIndex: n ? n : 0
+                    data : instancesTypes,
+                    focusIndex : n ? n : 0
                   });
                 }
               }
@@ -2386,7 +2343,7 @@ function debug(content, type) {
           break;
         case k.end:
           if (this.provider) {
-            this.provider.get(type, function (e, a, n) {
+            this.provider.get(type, function(e, a, n) {
               var k;
               if (e) {
                 if (view.events["data:error"]) {
@@ -2396,8 +2353,8 @@ function debug(content, type) {
                 if (a) {
                   k = n || 0 === n ? n : a.length < view.size ? a.length - 1 : view.size - 1;
                   view.setData({
-                    data: a,
-                    focusIndex: k
+                    data : a,
+                    focusIndex : k
                   });
                 }
               }
@@ -2417,31 +2374,31 @@ function debug(content, type) {
    * @param {!Object} item
    * @return {?}
    */
-  init.prototype.focusItem = function (item) {
+  init.prototype.focusItem = function(item) {
     var x = this.$focusItem;
     return !(!item || x === item) && (null !== x && (x.classList.remove("focus"), this.events["blur:item"] && this.emit("blur:item", {
-      $item: x
+      $item : x
     })), this.$focusItem = item, this.$focusItem.data = this.data[this.$focusItem.index], item.classList.add("focus"), this.events["focus:item"] && this.emit("focus:item", {
-      $prev: x,
-      $curr: item
+      $prev : x,
+      $curr : item
     }), this.events["select:item"] && this.emit("select:item", {
-      $item: item
+      $item : item
     }), true);
   };
   /**
    * @param {!Object} $item
    * @return {?}
    */
-  init.prototype.blurItem = function ($item) {
+  init.prototype.blurItem = function($item) {
     return !!$item && ($item === this.$focusItem && (this.$focusItem = null), $item.classList.remove("focus"), this.events["blur:item"] && this.emit("blur:item", {
-      $item: $item
+      $item : $item
     }), true);
   };
   /**
    * @param {number} i
    * @return {undefined}
    */
-  init.prototype.focusIndex = function (i) {
+  init.prototype.focusIndex = function(i) {
     var start = this.viewIndex || 0;
     if (i >= start + this.size) {
       i = i < this.data.length - 1 ? i : this.data.length - 1;
@@ -2465,7 +2422,7 @@ function debug(content, type) {
    * @param {number} options
    * @return {undefined}
    */
-  init.prototype.markItem = function (index, options) {
+  init.prototype.markItem = function(index, options) {
     if (options) {
       index.classList.add("mark");
     } else {
@@ -2476,9 +2433,9 @@ function debug(content, type) {
   };
   /** @type {function(!Object): undefined} */
   context.exports = init;
-}, function (module, canCreateDiscussions, factory) {
+}, function(module, canCreateDiscussions, factory) {
   module.exports = factory(24);
-}, function (module, canCreateDiscussions, $) {
+}, function(module, canCreateDiscussions, $) {
   /**
    * @param {number} i
    * @param {boolean} t
@@ -2492,13 +2449,13 @@ function debug(content, type) {
         /** @type {boolean} */
         lowest_high_x = true;
         model.getPage({
-          page: page - 1,
-          count: 1
-        }).then(function (charge) {
+          page : page - 1,
+          count : 1
+        }).then(function(charge) {
           --page;
           --current;
           nodes[key].model.init({
-            channel: charge[0]
+            channel : charge[0]
           });
           /** @type {number} */
           k = key;
@@ -2506,7 +2463,7 @@ function debug(content, type) {
           j = i;
           /** @type {number} */
           type = key;
-        }, function (canCreateDiscussions) {
+        }, function(canCreateDiscussions) {
         });
       } else {
         if (0 === nodes[j].data.length) {
@@ -2515,13 +2472,13 @@ function debug(content, type) {
         /** @type {boolean} */
         lowest_high_x = true;
         model.getPage({
-          page: current + 1,
-          count: 1
-        }).then(function (charge) {
+          page : current + 1,
+          count : 1
+        }).then(function(charge) {
           ++page;
           ++current;
           nodes[i].model.init({
-            channel: charge[0]
+            channel : charge[0]
           });
           /** @type {number} */
           k = key;
@@ -2529,16 +2486,16 @@ function debug(content, type) {
           j = i;
           /** @type {number} */
           type = key;
-        }, function (size) {
+        }, function(size) {
           /** @type {boolean} */
           lowest_high_x = false;
           if ("overflow" === size) {
             ++page;
             ++current;
             nodes[i].model.init({
-              channel: {
-                id: "!",
-                title: ""
+              channel : {
+                id : "!",
+                title : ""
               }
             });
             /** @type {!Array} */
@@ -2564,7 +2521,6 @@ function debug(content, type) {
       }
     }
   }
-
   var options = $(13);
   var item = $(1);
   var Menu = $(33);
@@ -2582,25 +2538,25 @@ function debug(content, type) {
   /** @type {number} */
   var type = 0;
   var self = new Menu({
-    $node: document.getElementById("pmTabCategoryContent"),
-    className: "tab hidden",
-    visible: false,
-    events: {
-      focus: function () {
+    $node : document.getElementById("pmTabCategoryContent"),
+    className : "tab hidden",
+    visible : false,
+    events : {
+      focus : function() {
         nodes[type].focus();
       },
-      show: function () {
+      show : function() {
         /** @type {string} */
         title.style.backgroundImage = "";
       }
     }
   });
   var view = new RootView({
-    $node: document.getElementById("pmCategorySearch"),
-    $body: document.getElementById("pmCategorySearchBody"),
-    className: "component input tabInputSearch",
-    events: {
-      focus: function () {
+    $node : document.getElementById("pmCategorySearch"),
+    $body : document.getElementById("pmCategorySearchBody"),
+    className : "component input tabInputSearch",
+    events : {
+      focus : function() {
         this.setValue("");
         item.route(item.pages.search);
       }
@@ -2623,32 +2579,32 @@ function debug(content, type) {
   var _takingTooLongTimeout = -1;
   /** @type {boolean} */
   var lowest_high_x = true;
-  model.addListener("category:changed", function () {
+  model.addListener("category:changed", function() {
     clearTimeout(_takingTooLongTimeout);
     /** @type {number} */
-    _takingTooLongTimeout = setTimeout(function () {
+    _takingTooLongTimeout = setTimeout(function() {
       searchContactPanel.hide();
     }, 1e4);
     if (0 === nodes.length) {
       nodes.push(new $Element({
-        $node: document.getElementById("pmListCategoryVideos0Node"),
-        $body: document.getElementById("pmListCategoryVideos0Body"),
-        $title: document.getElementById("pmCategoryChannelTitle0"),
-        className: "listMovie0Node",
-        model: new Model({
-          type: "video"
+        $node : document.getElementById("pmListCategoryVideos0Node"),
+        $body : document.getElementById("pmListCategoryVideos0Body"),
+        $title : document.getElementById("pmCategoryChannelTitle0"),
+        className : "listMovie0Node",
+        model : new Model({
+          type : "video"
         }),
-        size: 5,
-        viewIndex: 0,
-        focusIndex: 0,
-        type: $realtime.prototype.TYPE_HORIZONTAL,
-        events: {
-          overflow: function (data) {
+        size : 5,
+        viewIndex : 0,
+        focusIndex : 0,
+        type : $realtime.prototype.TYPE_HORIZONTAL,
+        events : {
+          overflow : function(data) {
             if (data.direction === options.left) {
               fakeInputElement.focus();
             }
           },
-          "view:ready": function () {
+          "view:ready" : function() {
             /** @type {number} */
             nodes[k].$node.style.top = _from_key;
             if (nodes[j]) {
@@ -2662,24 +2618,24 @@ function debug(content, type) {
             /** @type {boolean} */
             lowest_high_x = false;
           },
-          "view:error": function (undefined) {
+          "view:error" : function(undefined) {
             /** @type {boolean} */
             lowest_high_x = false;
             if ("empty" === undefined) {
               /** @type {!Array} */
               this.data = [{
-                id: "",
-                value: "",
-                publishedAt: "",
-                icon: "img/no.image.png",
-                duration: "",
-                title: gettext("No videos"),
-                channelTitle: "",
-                viewCount: "",
-                locale: {
-                  publishedAt: "",
-                  viewCount: "",
-                  channelTitle: ""
+                id : "",
+                value : "",
+                publishedAt : "",
+                icon : "img/no.image.png",
+                duration : "",
+                title : gettext("No videos"),
+                channelTitle : "",
+                viewCount : "",
+                locale : {
+                  publishedAt : "",
+                  viewCount : "",
+                  channelTitle : ""
                 }
               }];
               /** @type {null} */
@@ -2703,38 +2659,38 @@ function debug(content, type) {
               }
             }
           },
-          "click:item": function (context) {
+          "click:item" : function(context) {
             if (context.$item.data.id) {
               that.setContent({
-                channel: this.model.channel,
-                video: context.$item.data,
-                playlist: this.data,
-                position: context.$item.index
+                channel : this.model.channel,
+                video : context.$item.data,
+                playlist : this.data,
+                position : context.$item.index
               });
             }
           }
         }
       }));
       nodes.push(new $Element({
-        $node: document.getElementById("pmListCategoryVideos1Node"),
-        $body: document.getElementById("pmListCategoryVideos1Body"),
-        $title: document.getElementById("pmCategoryChannelTitle1"),
-        className: "listMovie1Node",
-        model: new Model({
-          type: "video"
+        $node : document.getElementById("pmListCategoryVideos1Node"),
+        $body : document.getElementById("pmListCategoryVideos1Body"),
+        $title : document.getElementById("pmCategoryChannelTitle1"),
+        className : "listMovie1Node",
+        model : new Model({
+          type : "video"
         }),
-        size: 5,
-        viewIndex: 0,
-        focusIndex: 0,
-        type: $realtime.prototype.TYPE_HORIZONTAL,
-        events: {
-          overflow: function (data) {
+        size : 5,
+        viewIndex : 0,
+        focusIndex : 0,
+        type : $realtime.prototype.TYPE_HORIZONTAL,
+        events : {
+          overflow : function(data) {
             if (data.direction === options.left) {
               fakeInputElement.focus();
               self.focusEntry = this;
             }
           },
-          "view:ready": function () {
+          "view:ready" : function() {
             /** @type {number} */
             nodes[k].$node.style.top = _from_key;
             nodes[j].$node.style.top = pos;
@@ -2746,24 +2702,24 @@ function debug(content, type) {
             /** @type {boolean} */
             lowest_high_x = false;
           },
-          "view:error": function (undefined) {
+          "view:error" : function(undefined) {
             /** @type {boolean} */
             lowest_high_x = false;
             if ("empty" === undefined) {
               /** @type {!Array} */
               this.data = [{
-                id: "",
-                value: "",
-                publishedAt: "",
-                icon: "img/no.image.png",
-                duration: "",
-                title: gettext("No videos"),
-                channelTitle: "",
-                viewCount: "",
-                locale: {
-                  publishedAt: "",
-                  viewCount: "",
-                  channelTitle: ""
+                id : "",
+                value : "",
+                publishedAt : "",
+                icon : "img/no.image.png",
+                duration : "",
+                title : gettext("No videos"),
+                channelTitle : "",
+                viewCount : "",
+                locale : {
+                  publishedAt : "",
+                  viewCount : "",
+                  channelTitle : ""
                 }
               }];
               /** @type {null} */
@@ -2783,13 +2739,13 @@ function debug(content, type) {
               nodes[type].focus();
             }
           },
-          "click:item": function (context) {
+          "click:item" : function(context) {
             if (context.$item.data.id) {
               that.setContent({
-                channel: this.model.channel,
-                video: context.$item.data,
-                playlist: this.data,
-                position: context.$item.index
+                channel : this.model.channel,
+                video : context.$item.data,
+                playlist : this.data,
+                position : context.$item.index
               });
             }
           }
@@ -2798,7 +2754,7 @@ function debug(content, type) {
       self.add(nodes[0]);
       self.add(nodes[1]);
       nodes[0].focus();
-      nodes[0].addListener("keydown", function (data) {
+      nodes[0].addListener("keydown", function(data) {
         if (data.code === options.down) {
           render(0, false);
         } else {
@@ -2811,16 +2767,16 @@ function debug(content, type) {
           } else {
             if (data.code === options.playPause) {
               that.setContent({
-                channel: this.model.channel,
-                video: this.$focusItem.data,
-                playlist: this.data,
-                position: this.$focusItem.index
+                channel : this.model.channel,
+                video : this.$focusItem.data,
+                playlist : this.data,
+                position : this.$focusItem.index
               });
             }
           }
         }
       });
-      nodes[1].addListener("keydown", function (data) {
+      nodes[1].addListener("keydown", function(data) {
         if (data.code === options.down) {
           render(1, false);
         } else {
@@ -2833,10 +2789,10 @@ function debug(content, type) {
           } else {
             if (data.code === options.playPause) {
               that.setContent({
-                channel: this.model.channel,
-                video: this.$focusItem.data,
-                playlist: this.data,
-                position: this.$focusItem.index
+                channel : this.model.channel,
+                video : this.$focusItem.data,
+                playlist : this.data,
+                position : this.$focusItem.index
               });
             }
           }
@@ -2845,9 +2801,9 @@ function debug(content, type) {
       pos = window.getComputedStyle(nodes[1].$node).getPropertyValue("top");
     }
     model.getPage({
-      page: 0,
-      count: 1
-    }).then(function (charge) {
+      page : 0,
+      count : 1
+    }).then(function(charge) {
       /** @type {number} */
       page = 0;
       /** @type {number} */
@@ -2859,25 +2815,25 @@ function debug(content, type) {
       /** @type {number} */
       type = 0;
       nodes[k].model.filter({
-        channel: charge[0]
+        channel : charge[0]
       });
       model.getPage({
-        page: 1,
-        count: 1
-      }).then(function (charge) {
+        page : 1,
+        count : 1
+      }).then(function(charge) {
         nodes[j].model.filter({
-          channel: charge[0]
+          channel : charge[0]
         });
         nodes[type].focus();
       });
-    })["catch"](function (canCreateDiscussions) {
+    })["catch"](function(canCreateDiscussions) {
     });
   });
   /**
    * @param {string} parent
    * @return {undefined}
    */
-  self.activate = function (parent) {
+  self.activate = function(parent) {
     this.show();
     if (model.setActiveCategory(parent)) {
       searchContactPanel.show();
@@ -2887,11 +2843,11 @@ function debug(content, type) {
   };
   self.add(view);
   module.exports = self;
-}, function (module, canCreateDiscussions, factory) {
+}, function(module, canCreateDiscussions, factory) {
   module.exports = factory(34);
   /** @type {string} */
   module.exports.prototype.name = "stb-component-panel";
-}, function (module, canCreateDiscussions, NFA) {
+}, function(module, canCreateDiscussions, NFA) {
   /**
    * @param {number} element
    * @return {undefined}
@@ -2901,7 +2857,6 @@ function debug(content, type) {
     element.focusable = element.focusable || false;
     m.call(this, element);
   }
-
   var m = NFA(24);
   /** @type {!Object} */
   Modal.prototype = Object.create(m.prototype);
@@ -2911,7 +2866,7 @@ function debug(content, type) {
   Modal.prototype.name = "spa-component-panel";
   /** @type {function(number): undefined} */
   module.exports = Modal;
-}, function (context, canCreateDiscussions, getVoxel) {
+}, function(context, canCreateDiscussions, getVoxel) {
   /**
    * @param {!Object} config
    * @return {undefined}
@@ -2939,7 +2894,6 @@ function debug(content, type) {
     this.$caret.index = 0;
     this.init(config);
   }
-
   var b = getVoxel(31);
   var ret = getVoxel(13);
   /** @type {!Object} */
@@ -2951,11 +2905,11 @@ function debug(content, type) {
   /** @type {number} */
   init.prototype.TYPE_PASSWORD = 1;
   init.prototype.defaultEvents = {
-    keypress: function (event) {
+    keypress : function(event) {
       this.addChar(String.fromCharCode(event.keyCode), this.$caret.index);
     },
-    keydown: function (event) {
-      switch (event.code) {
+    keydown : function(event) {
+      switch(event.code) {
         case ret["delete"]:
           this.removeChar(this.$caret.index);
           break;
@@ -2982,7 +2936,7 @@ function debug(content, type) {
    * @param {!Object} options
    * @return {undefined}
    */
-  init.prototype.init = function (options) {
+  init.prototype.init = function(options) {
     if (options.type) {
       this.type = options.type;
     }
@@ -2999,7 +2953,7 @@ function debug(content, type) {
    * @param {number} index
    * @return {undefined}
    */
-  init.prototype.addChar = function (text, index) {
+  init.prototype.addChar = function(text, index) {
     /** @type {!Element} */
     var span = document.createElement("div");
     index = void 0 === index ? this.$caret.index : index;
@@ -3031,7 +2985,7 @@ function debug(content, type) {
     }
     if (this.events["input"]) {
       this.emit("input", {
-        value: this.value
+        value : this.value
       });
     }
   };
@@ -3039,7 +2993,7 @@ function debug(content, type) {
    * @param {number} i
    * @return {undefined}
    */
-  init.prototype.removeChar = function (i) {
+  init.prototype.removeChar = function(i) {
     var oldValue = this.value;
     i = void 0 === i ? this.$caret.index - 1 : i;
     if (this.value.length > 0) {
@@ -3054,7 +3008,7 @@ function debug(content, type) {
       this.value = this.value.substring(0, i) + this.value.substring(i + 1, this.value.length);
       if (this.events["input"] && oldValue !== this.value) {
         this.emit("input", {
-          value: this.value
+          value : this.value
         });
       }
     }
@@ -3066,7 +3020,7 @@ function debug(content, type) {
    * @param {number} position
    * @return {undefined}
    */
-  init.prototype.setCaretPosition = function (position) {
+  init.prototype.setCaretPosition = function(position) {
     if (position >= 0 && position <= this.value.length && this.$caret.index !== position) {
       this.$line.removeChild(this.$caret);
       if (position === this.value.length) {
@@ -3082,7 +3036,7 @@ function debug(content, type) {
    * @param {string} v
    * @return {undefined}
    */
-  init.prototype.setValue = function (v) {
+  init.prototype.setValue = function(v) {
     var span;
     var n;
     var l = this.value.length;
@@ -3138,14 +3092,14 @@ function debug(content, type) {
       }
       if (this.events["input"]) {
         this.emit("input", {
-          value: this.value
+          value : this.value
         });
       }
     }
   };
   /** @type {function(!Object): undefined} */
   context.exports = init;
-}, function (mixin, canCreateDiscussions, $) {
+}, function(mixin, canCreateDiscussions, $) {
   var notificationSiteId;
   var mockFormAttributeDataResponse;
   var event = $(1);
@@ -3154,12 +3108,11 @@ function debug(content, type) {
   var searchContactPanel = $(27);
   notificationSiteId = event.urlParser;
   mockFormAttributeDataResponse = {
-    intent: null,
-    movie: {},
-    channel: {},
-    playlist: null,
-    setContent: function (data) {
-      debug("RELEASE - setContent (3162)");
+    intent : null,
+    movie : {},
+    channel : {},
+    playlist : null,
+    setContent : function(data) {
       /** @type {boolean} */
       o = true;
       if (!data.urlParseErrorCount) {
@@ -3170,8 +3123,8 @@ function debug(content, type) {
         this.channel = data.channel;
       } else {
         this.channel = {
-          title: data.video.channelTitle,
-          id: data.video.channelId
+          title : data.video.channelTitle,
+          id : data.video.channelId
         };
       }
       this.playlist = data.playlist;
@@ -3180,86 +3133,15 @@ function debug(content, type) {
       this.context = null;
       this.prepare(data);
     },
-    prepare: function (e, data) {
-      debug("RELEASE - prepare (3184)");
+    prepare : function(e, data) {
       var $scope = this;
-      this.movie.title = e.video.title;
-      this.movie.id = e.video.id;
-      searchContactPanel.show();
-
-      ajax("get", "https://www.youtube.com/watch?v=" + e.video.id, function (result, status) {
-        searchContactPanel.hide();
-        if (200 !== status) {
-          return window.core.notify({
-            title: "Request got bad http status (" + status + ")",
-            icon: "alert",
-            type: "warning",
-            timeout: 5E3
-          });
-        }
-
-        try {
-          var ytplayer = result.match(/ytplayer\.config = ({.+});ytplayer/);
-          ytplayer = ytplayer[1];
-          var json = JSON.parse(ytplayer);
-          var player_response = json["args"]["player_response"];
-          player_response = player_response.replace('\\\"', "'").replace('\"', '"');
-          player_response = JSON.parse(player_response);
-
-          var streamingData = player_response["streamingData"];
-
-          if (streamingData.hasOwnProperty("formats")) {
-            var formats = streamingData["formats"];
-
-            var url = "";
-            for (var i = formats.length; i-- > 0;) {
-              if (formats[i]["mimeType"].match(/^video\/mp4;/) && formats[i].hasOwnProperty("url")) {
-                url = formats[i]["url"].replace("\\u0026", "&");
-                break;
-              }
-            }
-            if (url) {
-              $scope.movie.url = url;
-              $scope.play(data);
-            } else {
-              debug("RELEASE - URL NOT FOUND (3225)");
-              return window.core.notify({
-                title: gettext("Video is not available"),
-                icon: "alert",
-                type: "warning",
-                timeout: 5E3
-              });
-            }
-          } else {
-            debug("RELEASE - FORMATS IS EMPTY (3234)");
-            return window.core.notify({
-              title: gettext("Video is not available"),
-              icon: "alert",
-              type: "warning",
-              timeout: 5E3
-            });
-          }
-        } catch (er) {
-          debug('RELEASE - (3243) ' + er);
-          return window.core.notify({
-            title: er,
-            icon: "alert",
-            type: "warning",
-            timeout: 5E3
-          });
-        }
-      });
-      /*
       return this.movie.title = e.video.title, "" === e.video.duration ? (window.core.notify({
         title : gettext("Live broadcasting is not supported"),
         icon : "alert",
         type : "warning",
         timeout : 5E3
       }), void(o = false)) : (this.movie.id = e.video.id, searchContactPanel.show(), void notificationSiteId.getInfo("https://www.youtube.com/watch?v=" + e.video.id, function(n, typeOptions) {
-        debug('prepare youtube.com watch?v=' + e.video.id, "i");
-
-
-        /*
+        debug('prepare youtube.com watch?v=');
         var options;
         var i;
         var tableslen;
@@ -3290,7 +3172,7 @@ function debug(content, type) {
             timeout : 5E3
           }), void(o = false);
         }
-
+        /** @type {number} */
         i = 0;
         tableslen = typeOptions.formats.length;
         for (; i < tableslen; ++i) {
@@ -3312,10 +3194,9 @@ function debug(content, type) {
         }
         $scope.movie.url = options.url;
         $scope.play(data);
-      */
-      //}));
+      }));
     },
-    play: function (element) {
+    play : function(element) {
       var start;
       var next;
       var params = this;
@@ -3323,7 +3204,7 @@ function debug(content, type) {
         /**
          * @return {undefined}
          */
-        next = function () {
+        next = function() {
           params.next(element);
         };
       }
@@ -3331,69 +3212,69 @@ function debug(content, type) {
         /**
          * @return {undefined}
          */
-        start = function () {
+        start = function() {
           params.prev(element);
         };
       }
       this.intent = core.intent({
-        action: "play",
-        mime: "content/video",
-        data: {
-          title: params.movie.title,
-          uri: params.movie.url,
-          movie: params.movie.id,
-          proxy: event.params.proxy
+        action : "play",
+        mime : "content/video",
+        data : {
+          title : params.movie.title,
+          uri : params.movie.url,
+          movie : params.movie.id,
+          proxy : event.params.proxy
         },
-        events: {
-          end: function () {
+        events : {
+          end : function() {
             if (params.playlist.length) {
               params.next(element);
             } else {
               params.intent.close();
             }
           },
-          error: function () {
+          error : function() {
             params.intent.close();
           },
-          close: function () {
+          close : function() {
             /** @type {null} */
             element = null;
           },
-          next: next,
-          prev: start
+          next : next,
+          prev : start
         },
-        context: element
-      }, function (canCreateDiscussions, parent_dom_node) {
+        context : element
+      }, function(canCreateDiscussions, parent_dom_node) {
         /** @type {string} */
         element = parent_dom_node;
       });
     },
-    next: function (element) {
+    next : function(element) {
       if (this.playlist.length > this.listPosition + 1) {
         this.listPosition++;
         this.prepare({
-          video: this.playlist[this.listPosition]
+          video : this.playlist[this.listPosition]
         }, element);
       }
     },
-    prev: function (element) {
+    prev : function(element) {
       if (this.listPosition > 0) {
         this.listPosition--;
         this.prepare({
-          video: this.playlist[this.listPosition]
+          video : this.playlist[this.listPosition]
         }, element);
       }
     }
   };
   mixin.exports = mockFormAttributeDataResponse;
-}, function (exports, canCreateDiscussions, i) {
+}, function(exports, canCreateDiscussions, i) {
   /**
    * Инициализация страницы
    * @param {!Object} props
    * @return {undefined}
    */
   function initialize(props) {
-    debug('RELEASE - initialize (3396)');
+    debug('initialize');
     var data = this;
     /** @type {null} */
     this.model = null;
@@ -3407,18 +3288,18 @@ function debug(content, type) {
     props.visible = false;
     /** @type {!Array} */
     props.data = [{
-      id: "",
-      value: "",
-      publishedAt: "",
-      icon: "",
-      duration: "",
-      title: "",
-      channelTitle: "",
-      viewCount: "",
-      locale: {
-        publishedAt: "",
-        viewCount: "",
-        channelTitle: ""
+      id : "",
+      value : "",
+      publishedAt : "",
+      icon : "",
+      duration : "",
+      title : "",
+      channelTitle : "",
+      viewCount : "",
+      locale : {
+        publishedAt : "",
+        viewCount : "",
+        channelTitle : ""
       }
     }];
     d.call(data, props);
@@ -3431,12 +3312,18 @@ function debug(content, type) {
     if (void 0 !== props.model) {
       this.model = props.model;
       // Добавление слушателя, вызывает Router.prototype.getPage с колбеком
-      debug('RELEASE - addListener content:changed (3434)')
-      this.model.addListener("content:changed", function () {
+      debug('addListener content:changed')
+      this.model.addListener("content:changed", function() {
         data.model.getPage({
-          page: 0,
-          count: 50
-        }, function (canCreateDiscussions, darray) {
+          page : 0,
+          count : 50
+        }, function(canCreateDiscussions, darray) {
+
+          try {
+            /** @type {*} */
+            debug(JSON.parse(canCreateDiscussions));
+          } catch(error){}
+
           /** @type {number} */
           data.activePage = 0;
           /** @type {!Object} */
@@ -3450,7 +3337,6 @@ function debug(content, type) {
       });
     }
   }
-
   var b = i(13);
   var d = i(30);
   /** @type {!Object} */
@@ -3461,7 +3347,7 @@ function debug(content, type) {
    * @param {number} i
    * @return {?}
    */
-  initialize.prototype.renderView = function (i) {
+  initialize.prototype.renderView = function(i) {
     var item;
     var j;
     var data;
@@ -3500,8 +3386,8 @@ function debug(content, type) {
         }
       }
       return void 0 !== this.events["move:view"] && this.emit("move:view", {
-        prevIndex: prevIndex,
-        currIndex: commonIndex
+        prevIndex : prevIndex,
+        currIndex : commonIndex
       }), true;
     }
     return false;
@@ -3511,7 +3397,7 @@ function debug(content, type) {
    * @param {!Object} data
    * @return {undefined}
    */
-  initialize.prototype.renderItem = function (node, data) {
+  initialize.prototype.renderItem = function(node, data) {
     var body;
     var n;
     var s;
@@ -3591,9 +3477,9 @@ function debug(content, type) {
    * @param {!Object} event
    * @return {undefined}
    */
-  initialize.prototype.defaultEvents.keydown = function (event) {
+  initialize.prototype.defaultEvents.keydown = function(event) {
     if (!this.loading && this.data) {
-      switch (event.code) {
+      switch(event.code) {
         case b.right:
           if (this.$focusItem.index < this.data.length - 1) {
             if (this.$focusItem.index > 0) {
@@ -3615,8 +3501,8 @@ function debug(content, type) {
         case b.ok:
           if (void 0 !== this.events["click:item"]) {
             this.emit("click:item", {
-              $item: this.$focusItem,
-              event: event
+              $item : this.$focusItem,
+              event : event
             });
           }
       }
@@ -3624,7 +3510,7 @@ function debug(content, type) {
   };
   /** @type {function(!Object): undefined} */
   exports.exports = initialize;
-}, function (module, canCreateDiscussions, require) {
+}, function(module, canCreateDiscussions, require) {
   /**
    * @param {!Object} name
    * @return {undefined}
@@ -3645,7 +3531,6 @@ function debug(content, type) {
     name = name || {};
     this.filter(name);
   }
-
   var isEvaluating;
   var err_msg;
   var source;
@@ -3661,11 +3546,11 @@ function debug(content, type) {
    * @param {!Object} params
    * @return {?}
    */
-  Router.prototype.getPage = function (params) {
-    debug('RELEASE - Router.prototype.getPage (3665)');
+  Router.prototype.getPage = function(params) {
+    debug('Router.prototype.getPage 3531');
     var url;
     var self = this;
-    return isEvaluating || (isEvaluating = require(42), source = require(45), err_msg = gettext("Author")), new PromiseProxy(function (applyComputed, parse) {
+    return isEvaluating || (isEvaluating = require(42), source = require(45), err_msg = gettext("Author")), new PromiseProxy(function(applyComputed, parse) {
       if (params.channel = params.channel || self.channel, params.type = self.type, params.searchQuery = params.searchQuery || self.searchQuery, params.page = +params.page || 0, params.relatedToVideoId = params.relatedToVideoId || self.relatedToVideoId, url = "search?part=id&maxResults=" + (params.count || 6), params.page) {
         if (!self.pages[params.page]) {
           return void parse();
@@ -3698,8 +3583,8 @@ function debug(content, type) {
         /** @type {string} */
         url = url + "&safeSearch=strict";
       }
-      request.request("GET", url).then(function (data) {
-        debug('RELEASE - Router.prototype.getPage (3702) request: ' + url);
+      request.request("GET", url).then(function(data) {
+        debug('Router.prototype.getPage 3568 request: ' + url);
         var i;
         /** @type {!Array} */
         var list = [];
@@ -3740,9 +3625,9 @@ function debug(content, type) {
             }
           }
           PromiseProxy.all([self.getMovies(keyToAdd.substr(0, keyToAdd.length - 1)), self.getChannelsInfo(postParam.substr(0, postParam.length - 1)), self.getTotalInfoPlaylists({
-            id: micropost.substr(0, micropost.length - 1),
-            channel: false
-          })]).then(function (policySet) {
+            id : micropost.substr(0, micropost.length - 1),
+            channel : false
+          })]).then(function(policySet) {
             /** @type {number} */
             var end = +new Date;
             /** @type {number} */
@@ -3756,64 +3641,64 @@ function debug(content, type) {
             for (; i < tableslen; ++i) {
               if (turned[i] && policySet[1][j]) {
                 list.push({
-                  value: 1,
-                  id: policySet[1][j].id,
-                  title: policySet[1][j].snippet.localized.title,
-                  icon: policySet[1][j].snippet.thumbnails["high"].url,
-                  type: "channel",
-                  viewCount: policySet[1][j].statistics.viewCount,
-                  commentCount: policySet[1][j].statistics.commentCount,
-                  subscriberCount: policySet[1][j].statistics.subscriberCount,
-                  hiddenSubscriberCount: policySet[1][j].statistics.hiddenSubscriberCount,
-                  videoCount: policySet[1][j].statistics.videoCount,
-                  locale: {
-                    subscriberCount: policySet[1][j].statistics.subscriberCount + " " + ngettext("subscriber", "subscribers", +policySet[1][j].statistics.subscriberCount)
+                  value : 1,
+                  id : policySet[1][j].id,
+                  title : policySet[1][j].snippet.localized.title,
+                  icon : policySet[1][j].snippet.thumbnails["high"].url,
+                  type : "channel",
+                  viewCount : policySet[1][j].statistics.viewCount,
+                  commentCount : policySet[1][j].statistics.commentCount,
+                  subscriberCount : policySet[1][j].statistics.subscriberCount,
+                  hiddenSubscriberCount : policySet[1][j].statistics.hiddenSubscriberCount,
+                  videoCount : policySet[1][j].statistics.videoCount,
+                  locale : {
+                    subscriberCount : policySet[1][j].statistics.subscriberCount + " " + ngettext("subscriber", "subscribers", +policySet[1][j].statistics.subscriberCount)
                   }
                 });
                 ++j;
               } else {
                 if (options[i] && policySet[2][id]) {
                   list.push({
-                    value: 1,
-                    playlistId: policySet[2][id].id,
-                    channel: {
-                      title: policySet[2][id].snippet.channelTitle,
-                      id: policySet[2][id].snippet.channelId
+                    value : 1,
+                    playlistId : policySet[2][id].id,
+                    channel : {
+                      title : policySet[2][id].snippet.channelTitle,
+                      id : policySet[2][id].snippet.channelId
                     },
-                    title: policySet[2][id].snippet.title,
-                    icon: policySet[2][id].snippet.thumbnails["high"].url,
-                    type: "playlist",
-                    channelTitle: policySet[2][id].snippet.channelTitle,
-                    viewCount: " ",
-                    duration: " ",
-                    publishedAt: policySet[2][id].snippet.publishedAt,
-                    locale: {
-                      publishedAt: source(policySet[2][id].snippet.publishedAt, end),
-                      viewCount: " ",
-                      channelTitle: policySet[2][id].snippet.channelTitle ? err_msg + ": " + policySet[2][id].snippet.channelTitle : " "
+                    title : policySet[2][id].snippet.title,
+                    icon : policySet[2][id].snippet.thumbnails["high"].url,
+                    type : "playlist",
+                    channelTitle : policySet[2][id].snippet.channelTitle,
+                    viewCount : " ",
+                    duration : " ",
+                    publishedAt : policySet[2][id].snippet.publishedAt,
+                    locale : {
+                      publishedAt : source(policySet[2][id].snippet.publishedAt, end),
+                      viewCount : " ",
+                      channelTitle : policySet[2][id].snippet.channelTitle ? err_msg + ": " + policySet[2][id].snippet.channelTitle : " "
                     }
                   });
                   ++id;
                 } else {
                   if (policySet[0][index]) {
                     list.push({
-                      value: 1,
-                      id: policySet[0][index].id,
-                      channelTitle: policySet[0][index].snippet.channelTitle,
-                      duration: request.normalizeVideoDuration(policySet[0][index].contentDetails.duration),
-                      realDuration: policySet[0][index].contentDetails.duration,
-                      viewCount: policySet[0][index].statistics.viewCount,
-                      publishedAt: policySet[0][index].snippet.publishedAt,
-                      dimension: policySet[0][index].contentDetails.dimension,
-                      definition: policySet[0][index].contentDetails.definition,
-                      title: policySet[0][index].snippet.localized.title,
-                      icon: policySet[0][index].snippet.thumbnails["high"].url,
-                      channelId: policySet[0][index].snippet.channelId,
-                      type: "video",
-                      locale: {
-                        publishedAt: source(policySet[0][index].snippet.publishedAt, end),
-                        viewCount: ngettext("view", "views", +policySet[0][index].statistics.viewCount) + " " + policySet[0][index].statistics.viewCount,
-                        channelTitle: err_msg + ": " + policySet[0][index].snippet.channelTitle
+                      value : 1,
+                      id : policySet[0][index].id,
+                      channelTitle : policySet[0][index].snippet.channelTitle,
+                      duration : request.normalizeVideoDuration(policySet[0][index].contentDetails.duration),
+                      realDuration : policySet[0][index].contentDetails.duration,
+                      viewCount : policySet[0][index].statistics.viewCount,
+                      publishedAt : policySet[0][index].snippet.publishedAt,
+                      dimension : policySet[0][index].contentDetails.dimension,
+                      definition : policySet[0][index].contentDetails.definition,
+                      title : policySet[0][index].snippet.localized.title,
+                      icon : policySet[0][index].snippet.thumbnails["high"].url,
+                      channelId : policySet[0][index].snippet.channelId,
+                      type : "video",
+                      locale : {
+                        publishedAt : source(policySet[0][index].snippet.publishedAt, end),
+                        viewCount : ngettext("view", "views", +policySet[0][index].statistics.viewCount) + " " + policySet[0][index].statistics.viewCount,
+                        channelTitle : err_msg + ": " + policySet[0][index].snippet.channelTitle
                       }
                     });
                     ++index;
@@ -3822,11 +3707,11 @@ function debug(content, type) {
               }
             }
             applyComputed(list);
-          }, function (canCreateDiscussions) {
-          })["catch"](function (canCreateDiscussions) {
+          }, function(canCreateDiscussions) {
+          })["catch"](function(canCreateDiscussions) {
           });
         }
-      })["catch"](function (canCreateDiscussions) {
+      })["catch"](function(canCreateDiscussions) {
       });
     });
   };
@@ -3834,8 +3719,8 @@ function debug(content, type) {
    * @param {string} url
    * @return {?}
    */
-  Router.prototype.getChannelsInfo = function (url) {
-    return url ? request.request("GET", "channels?part=snippet,statistics&id=" + url).then(function (b) {
+  Router.prototype.getChannelsInfo = function(url) {
+    return url ? request.request("GET", "channels?part=snippet,statistics&id=" + url).then(function(b) {
       return JSON.parse(b).items;
     }) : PromiseProxy.resolve([]);
   };
@@ -3843,17 +3728,17 @@ function debug(content, type) {
    * @param {!Object} params
    * @return {?}
    */
-  Router.prototype.filter = function (params) {
+  Router.prototype.filter = function(params) {
     /** @type {boolean} */
     var t = false;
     return void 0 !== params.channel && this.init({
-      channel: params.channel
+      channel : params.channel
     }), void 0 !== params.searchQuery && this.searchQuery !== params.searchQuery && (t = true, this.searchQuery = params.searchQuery), void 0 !== params.relatedToVideoId && this.relatedToVideoId !== params.relatedToVideoId && (t = true, this.relatedToVideoId = params.relatedToVideoId), void 0 !== params.order && this.order !== params.order && (t = true, this.order = params.order), void 0 !== params.type && this.type !== params.type && (t = true, this.type = params.type), !!t && (this.pages = {},
       this.emit("content:changed", params), true);
   };
   /** @type {function(!Object): undefined} */
   module.exports = Router;
-}, function (context, canCreateDiscussions, parse) {
+}, function(context, canCreateDiscussions, parse) {
   /**
    * @param {!Object} item
    * @return {undefined}
@@ -3869,7 +3754,6 @@ function debug(content, type) {
     }
     this.init(item);
   }
-
   var event;
   var err_msg;
   var h = parse(18);
@@ -3883,14 +3767,14 @@ function debug(content, type) {
    * @param {!Object} config
    * @return {?}
    */
-  init.prototype.getPage = function (config) {
+  init.prototype.getPage = function(config) {
     var self = this;
-    return err_msg || (event = parse(45), err_msg = gettext("Author")), config.channel = config.channel || this.channel, config.count = config.count || 6, config.page = +config.page || 0, new h(function (childCompute, cb) {
+    return err_msg || (event = parse(45), err_msg = gettext("Author")), config.channel = config.channel || this.channel, config.count = config.count || 6, config.page = +config.page || 0, new h(function(childCompute, cb) {
       return config.channel ? void self.getPlaylists({
-        count: 1,
-        channel: config.channel,
-        page: config.page
-      }).then(function (tmp) {
+        count : 1,
+        channel : config.channel,
+        page : config.page
+      }).then(function(tmp) {
         config.playlist = tmp[0];
         self.getPlayListItems(config).then(childCompute, cb);
       }) : void cb(config);
@@ -3900,7 +3784,7 @@ function debug(content, type) {
    * @param {!Object} params
    * @return {?}
    */
-  init.prototype.getPlaylists = function (params) {
+  init.prototype.getPlaylists = function(params) {
     var data = this;
     /** @type {string} */
     var endpoint = "playlists?part=id";
@@ -3912,7 +3796,7 @@ function debug(content, type) {
         /** @type {string} */
         endpoint = endpoint + ("&pageToken=" + data.pages[params.page]);
       }
-      return endpoint = endpoint + ("&channelId=" + params.channel.id + "&maxResults=" + params.count), proxy.request("GET", endpoint).then(function (response) {
+      return endpoint = endpoint + ("&channelId=" + params.channel.id + "&maxResults=" + params.count), proxy.request("GET", endpoint).then(function(response) {
         return response = JSON.parse(response), response.nextPageToken && (data.pages[params.page + 1] = response.nextPageToken), response.prevPageToken && (data.pages[params.page - 1] = response.prevPageToken), response.items;
       });
     }
@@ -3921,7 +3805,7 @@ function debug(content, type) {
    * @param {!Object} params
    * @return {?}
    */
-  init.prototype.getTotalInfoPlaylists = function (params) {
+  init.prototype.getTotalInfoPlaylists = function(params) {
     var data = this;
     /** @type {string} */
     var endpoint = "playlists?part=snippet";
@@ -3942,7 +3826,7 @@ function debug(content, type) {
       /** @type {string} */
       endpoint = endpoint + ("&id=" + params.id);
     }
-    return void 0 !== params.count && (endpoint = endpoint + ("&maxResults=" + params.count)), proxy.request("GET", endpoint).then(function (response) {
+    return void 0 !== params.count && (endpoint = endpoint + ("&maxResults=" + params.count)), proxy.request("GET", endpoint).then(function(response) {
       return response = JSON.parse(response), response.nextPageToken && (data.pages[params.page + 1] = response.nextPageToken), response.prevPageToken && (data.pages[params.page - 1] = response.prevPageToken), response.items;
     });
   };
@@ -3950,8 +3834,8 @@ function debug(content, type) {
    * @param {string} verb
    * @return {?}
    */
-  init.prototype.getChannelBackground = function (verb) {
-    return verb = verb || this.channel, proxy.request("GET", "channels?part=brandingSettings&id=" + verb.id).then(function (e) {
+  init.prototype.getChannelBackground = function(verb) {
+    return verb = verb || this.channel, proxy.request("GET", "channels?part=brandingSettings&id=" + verb.id).then(function(e) {
       return e = JSON.parse(e), e.items[0].brandingSettings.image.bannerTvImageUrl;
     });
   };
@@ -3959,14 +3843,14 @@ function debug(content, type) {
    * @param {!Object} data
    * @return {?}
    */
-  init.prototype.init = function (data) {
+  init.prototype.init = function(data) {
     /** @type {boolean} */
     var t = false;
     return void 0 !== data.channel && (this.channel ? this.channel && this.channel.id !== data.channel.id && (t = true, this.channel = data.channel) : (t = true, this.channel = data.channel)), data.mode && this.mode !== data.mode && (this.mode = data.mode), !!t && (this.pages = {}, this.emit("content:changed", data), true);
   };
   /** @type {function(!Object): undefined} */
   context.exports = init;
-}, function (context, canCreateDiscussions, $) {
+}, function(context, canCreateDiscussions, $) {
   /**
    * @param {string} data
    * @return {?}
@@ -3974,7 +3858,6 @@ function debug(content, type) {
   function callback(data) {
     return data && data.playlist ? "pid:" + data.playlist.id + ";p:" + data.page : "PLAYLIST";
   }
-
   /**
    * @param {!Object} item
    * @return {undefined}
@@ -3990,7 +3873,6 @@ function debug(content, type) {
     }
     this.init(item);
   }
-
   var ch;
   var err_msg;
   var a = $(18);
@@ -4007,10 +3889,10 @@ function debug(content, type) {
    * @param {!Object} result
    * @return {?}
    */
-  init.prototype.getPage = function (result) {
+  init.prototype.getPage = function(result) {
     var isFirstTimeShow;
     var arrayToReturn = this;
-    return result.playlist = result.playlist || this.playlist, result.page = +result.page || 0, result.count = result.count || 20, new a(function (callback, reject) {
+    return result.playlist = result.playlist || this.playlist, result.page = +result.page || 0, result.count = result.count || 20, new a(function(callback, reject) {
       if (isFirstTimeShow = self.get(callback(result))) {
         callback(isFirstTimeShow);
       } else {
@@ -4025,7 +3907,7 @@ function debug(content, type) {
    * @param {!Object} data
    * @return {?}
    */
-  init.prototype.getPlayListItems = function (data) {
+  init.prototype.getPlayListItems = function(data) {
     var state = this;
     /** @type {!Array} */
     var result = [];
@@ -4040,7 +3922,7 @@ function debug(content, type) {
       /** @type {string} */
       path = path + ("&pageToken=" + state.pages[data.page]);
     }
-    return me.request("GET", path).then(function (response) {
+    return me.request("GET", path).then(function(response) {
       try {
         /** @type {*} */
         response = JSON.parse(response);
@@ -4050,12 +3932,12 @@ function debug(content, type) {
         if (response.prevPageToken) {
           state.pages[data.page - 1] = response.prevPageToken;
         }
-        response.items.forEach(function (data) {
+        response.items.forEach(function(data) {
           postParam = postParam + (data.snippet.resourceId.videoId + ",");
         });
       } catch (e) {
       }
-      return state.getMovies(postParam.substr(0, postParam.length - 1)).then(function (items) {
+      return state.getMovies(postParam.substr(0, postParam.length - 1)).then(function(items) {
         var l;
         var i;
         /** @type {number} */
@@ -4065,23 +3947,23 @@ function debug(content, type) {
         i = 0;
         for (; i < l; ++i) {
           result.push({
-            value: 1,
-            id: items[i].id,
-            channelTitle: items[i].snippet.channelTitle,
-            duration: me.normalizeVideoDuration(items[i].contentDetails.duration),
-            realDuration: items[i].contentDetails.duration,
-            viewCount: items[i].statistics.viewCount,
-            publishedAt: items[i].snippet.publishedAt,
-            dimension: items[i].contentDetails.dimension,
-            definition: items[i].contentDetails.definition,
-            title: items[i].snippet.localized.title,
-            icon: items[i].snippet.thumbnails["high"].url,
-            channelId: items[i].snippet.channelId,
-            type: "video",
-            locale: {
-              publishedAt: ch(items[i].snippet.publishedAt, val),
-              viewCount: items[i].statistics.viewCount + " " + ngettext("view", "views", +items[i].statistics.viewCount),
-              channelTitle: err_msg + ": " + items[i].snippet.channelTitle
+            value : 1,
+            id : items[i].id,
+            channelTitle : items[i].snippet.channelTitle,
+            duration : me.normalizeVideoDuration(items[i].contentDetails.duration),
+            realDuration : items[i].contentDetails.duration,
+            viewCount : items[i].statistics.viewCount,
+            publishedAt : items[i].snippet.publishedAt,
+            dimension : items[i].contentDetails.dimension,
+            definition : items[i].contentDetails.definition,
+            title : items[i].snippet.localized.title,
+            icon : items[i].snippet.thumbnails["high"].url,
+            channelId : items[i].snippet.channelId,
+            type : "video",
+            locale : {
+              publishedAt : ch(items[i].snippet.publishedAt, val),
+              viewCount : items[i].statistics.viewCount + " " + ngettext("view", "views", +items[i].statistics.viewCount),
+              channelTitle : err_msg + ": " + items[i].snippet.channelTitle
             }
           });
         }
@@ -4093,7 +3975,7 @@ function debug(content, type) {
    * @param {string} url
    * @return {?}
    */
-  init.prototype.getMovies = function (url) {
+  init.prototype.getMovies = function(url) {
     var itemNodeList;
     var options;
     var i;
@@ -4109,7 +3991,7 @@ function debug(content, type) {
         newNodeLists.push(itemNodeList);
       }
     }
-    return me.request("GET", "videos?part=statistics,contentDetails,snippet&id=" + url).then(function (data) {
+    return me.request("GET", "videos?part=statistics,contentDetails,snippet&id=" + url).then(function(data) {
       data = JSON.parse(data).items;
       /** @type {number} */
       i = 0;
@@ -4124,16 +4006,16 @@ function debug(content, type) {
    * @param {!Object} params
    * @return {?}
    */
-  init.prototype.init = function (params) {
+  init.prototype.init = function(params) {
     return void 0 !== params.playlist && (this.playlist ? this.playlist && this.playlist.id !== params.playlist.id && (this.playlist = params.playlist) : this.playlist = params.playlist, this.pages = {}, this.emit("content:changed", params), true);
   };
   /** @type {function(!Object): undefined} */
   context.exports = init;
-}, function (context, canCreateDiscussions, i) {
+}, function(context, canCreateDiscussions, i) {
   var service = {
-    store: {},
-    size: 0,
-    set: function (name, bin, options) {
+    store : {},
+    size : 0,
+    set : function(name, bin, options) {
       var obj;
       var term;
       var a = this;
@@ -4142,45 +4024,45 @@ function debug(content, type) {
         clearTimeout(term.timeout);
       }
       obj = {
-        value: bin,
-        timeout: -1
+        value : bin,
+        timeout : -1
       };
       if ("number" == typeof options) {
         /** @type {number} */
-        obj.timeout = setTimeout(function () {
+        obj.timeout = setTimeout(function() {
           a.remove(name);
         }, options);
       }
       this.store[name] = obj;
       ++this.size;
     },
-    get: function (key, callback) {
+    get : function(key, callback) {
       return !!this.store[key] && ("function" != typeof callback ? this.store[key].value : void callback(this.store[key].value));
     },
-    remove: function (name) {
+    remove : function(name) {
       --this.size;
       /** @type {null} */
       this.store[name] = null;
     },
-    clear: function () {
+    clear : function() {
       var csize = this.size;
       return this.store = {}, csize;
     }
   };
   context.exports = service;
-}, function (mixin, canCreateDiscussions, $) {
+}, function(mixin, canCreateDiscussions, $) {
   var nav = $(15);
   var problem = $(16);
   mixin.exports = {
-    languageIndex: 0,
-    nextLang: function (canCreateDiscussions) {
+    languageIndex : 0,
+    nextLang : function(canCreateDiscussions) {
       return canCreateDiscussions === nav.languages.length - 1 ? 0 : ++canCreateDiscussions;
     },
-    setLang: function (pluginName) {
+    setLang : function(pluginName) {
       var self = this;
       $(43).load({
-        name: pluginName
-      }, function (i) {
+        name : pluginName
+      }, function(i) {
         if (i) {
           /** @type {number} */
           self.languageIndex = -1;
@@ -4193,7 +4075,7 @@ function debug(content, type) {
       });
     }
   };
-}, function (module, canCreateDiscussions, require) {
+}, function(module, canCreateDiscussions, require) {
   /**
    * @param {!Object} options
    * @return {?}
@@ -4202,7 +4084,6 @@ function debug(content, type) {
     var django = new Vue(options);
     return window.gettext = window._ = django.gettext, window.pgettext = django.pgettext, window.ngettext = django.ngettext, django;
   }
-
   var ProjectConfiguration = require(4);
   var Vue = require(44);
   var config = new ProjectConfiguration;
@@ -4213,9 +4094,9 @@ function debug(content, type) {
    * @param {!Function} next
    * @return {?}
    */
-  config.load = function (options, next) {
+  config.load = function(options, next) {
     var request;
-    return options.ext = options.ext || "json", options.path = options.path || "lang", options.name === config.defaultLanguage ? (initialize(), next(null), false) : (request = new XMLHttpRequest, request.onload = function () {
+    return options.ext = options.ext || "json", options.path = options.path || "lang", options.name === config.defaultLanguage ? (initialize(), next(null), false) : (request = new XMLHttpRequest, request.onload = function() {
       var connectionOptions;
       try {
         /** @type {*} */
@@ -4228,7 +4109,7 @@ function debug(content, type) {
       } catch (e) {
         request.onerror(e);
       }
-    }, request.ontimeout = request.onerror = function (reason) {
+    }, request.ontimeout = request.onerror = function(reason) {
       initialize();
       next(reason);
       if (config.events["error"]) {
@@ -4237,7 +4118,7 @@ function debug(content, type) {
     }, request.open("GET", options.path + "/" + options.name + "." + options.ext, true), request.send(null), true);
   };
   module.exports = config;
-}, function (module$jscomp$0, exports$jscomp$0, __webpack_require__$jscomp$0) {
+}, function(module$jscomp$0, exports$jscomp$0, __webpack_require__$jscomp$0) {
   /**
    * @param {!Object} config$jscomp$2
    * @return {undefined}
@@ -4253,7 +4134,7 @@ function debug(content, type) {
      * @param {?} i
      * @return {?}
      */
-    this.gettext = function (i) {
+    this.gettext = function(i) {
       return data$jscomp$32[""][i] || i;
     };
     /**
@@ -4261,7 +4142,7 @@ function debug(content, type) {
      * @param {?} metric
      * @return {?}
      */
-    this.pgettext = function (forApp, metric) {
+    this.pgettext = function(forApp, metric) {
       return data$jscomp$32[forApp] && data$jscomp$32[forApp][metric] || metric;
     };
     /**
@@ -4270,30 +4151,29 @@ function debug(content, type) {
      * @param {number} value$jscomp$84
      * @return {?}
      */
-    this.ngettext = function (msgId$jscomp$0, plural$jscomp$0, value$jscomp$84) {
+    this.ngettext = function(msgId$jscomp$0, plural$jscomp$0, value$jscomp$84) {
       var n$jscomp$68;
       return data$jscomp$32 && meta$jscomp$0 && data$jscomp$32[""][msgId$jscomp$0] ? data$jscomp$32[""][msgId$jscomp$0][eval("n = " + value$jscomp$84 + "; " + meta$jscomp$0.plural)] : 1 === value$jscomp$84 ? msgId$jscomp$0 : plural$jscomp$0;
     };
   }
-
   /** @type {function(!Object): undefined} */
   Gettext$jscomp$0.prototype.constructor = Gettext$jscomp$0;
   /** @type {function(!Object): undefined} */
   module$jscomp$0.exports = Gettext$jscomp$0;
-}, function (mixin, canCreateDiscussions) {
+}, function(mixin, canCreateDiscussions) {
   /**
    * @param {number} e
    * @param {number} t
    * @return {?}
    */
-  mixin.exports = function (e, t) {
+  mixin.exports = function(e, t) {
     var d;
     var re;
     var title;
     return e ? (re = e.match(/(\d\d\d\d)-(\d\d)-(\d\d)T(\d\d):(\d\d):(\d\d).(\d\d\d)Z/), re.shift(), re.pop(), d = new Date(re[0], re[1] - 1, re[2], re[3], re[4], re[5]), d.setTime(t - d.getTime()), e = d.getTime(), d.getFullYear() > 1970 ? (title = d.getFullYear() - 1970, e = title + " " + ngettext("year", "years", +title) + " " + gettext("ago")) : d.getMonth() > 0 ? (title = d.getMonth() + 1, e = title + " " + ngettext("month", "months", +title) + " " + gettext("ago")) : d.getDate() > 1 ? (title =
       d.getDate(), e = title + " " + ngettext("day", "days", +title) + " " + gettext("ago")) : d.getHours() > 0 ? (title = d.getHours(), e = title + " " + ngettext("hour", "hours", +title) + " " + gettext("ago")) : d.getMinutes() > 0 ? (title = d.getMinutes(), e = title + " " + ngettext("minute", "minutes", +title) + " " + gettext("ago")) : (title = d.getSeconds(), e = title + " " + ngettext("second", "seconds", +title) + " " + gettext("ago")), e) : e;
   };
-}, function (child, canCreateDiscussions, require) {
+}, function(child, canCreateDiscussions, require) {
   var NotFound = require(18);
   var Scope = require(4);
   var request = require(17);
@@ -4307,18 +4187,18 @@ function debug(content, type) {
    * @param {!Object} b
    * @return {?}
    */
-  $scope.cacheKey = function (b) {
+  $scope.cacheKey = function(b) {
     return "c:" + b.category.id + ";p:" + b.page;
   };
   /**
    * @param {!Object} i
    * @return {?}
    */
-  $scope.getPage = function (i) {
+  $scope.getPage = function(i) {
     var formOrder;
     var post;
     var data = this;
-    return i.page = +i.page || 0, i.category = i.category || this.activeCategory, new NotFound(function (each, error) {
+    return i.page = +i.page || 0, i.category = i.category || this.activeCategory, new NotFound(function(each, error) {
       if (formOrder = R.get(data.cacheKey(i))) {
         each(formOrder);
       } else {
@@ -4329,7 +4209,7 @@ function debug(content, type) {
           /** @type {string} */
           post = post + ("&pageToken=" + data.pages[i.page]);
         }
-        request.request("GET", post).then(function (result) {
+        request.request("GET", post).then(function(result) {
           var j;
           var lastCommaTermCount;
           /** @type {!Array} */
@@ -4351,15 +4231,15 @@ function debug(content, type) {
           j = 0;
           for (; j < lastCommaTermCount; ++j) {
             res.push({
-              value: result[j].id,
-              id: result[j].id,
-              title: result[j].snippet.localized.title,
-              icon: result[j].snippet.thumbnails["high"].url
+              value : result[j].id,
+              id : result[j].id,
+              title : result[j].snippet.localized.title,
+              icon : result[j].snippet.thumbnails["high"].url
             });
           }
           R.set(data.cacheKey(i), res, 3E5);
           each(res);
-        })["catch"](function (canCreateDiscussions) {
+        })["catch"](function(canCreateDiscussions) {
         });
       }
     });
@@ -4368,9 +4248,9 @@ function debug(content, type) {
    * @param {string} url
    * @return {?}
    */
-  $scope.getInfo = function (url) {
-    return new NotFound(function (getDefaultState, throwException) {
-      request.request("GET", "channels?part=snippet&id=" + url).then(function (b) {
+  $scope.getInfo = function(url) {
+    return new NotFound(function(getDefaultState, throwException) {
+      request.request("GET", "channels?part=snippet&id=" + url).then(function(b) {
         getDefaultState(JSON.parse(b).items);
       }, throwException);
     });
@@ -4378,12 +4258,12 @@ function debug(content, type) {
   /**
    * @return {?}
    */
-  $scope.getMine = function () {
-    return new NotFound(function (accountSortTool, throwException) {
+  $scope.getMine = function() {
+    return new NotFound(function(accountSortTool, throwException) {
       if (null !== $scope.ownChannel) {
         accountSortTool($scope.ownChannel);
       } else {
-        request.request("GET", "channels?part=snippet&mine=true").then(function (b) {
+        request.request("GET", "channels?part=snippet&mine=true").then(function(b) {
           $scope.ownChannel = JSON.parse(b).items[0];
           $scope.ownChannel.title = $scope.ownChannel.snippet.title;
           $scope.ownChannel.icon = $scope.ownChannel.snippet.thumbnails["default"].url;
@@ -4397,11 +4277,11 @@ function debug(content, type) {
    * @param {string} category
    * @return {?}
    */
-  $scope.setActiveCategory = function (category) {
+  $scope.setActiveCategory = function(category) {
     return !(!category || this.activeCategory.id === category.id) && (this.activeCategory = category, this.pages = {}, void 0 !== this.events["category:changed"] && this.emit("category:changed", category), true);
   };
   child.exports = $scope;
-}, function (module, canCreateDiscussions, context) {
+}, function(module, canCreateDiscussions, context) {
   /**
    * @param {number} index
    * @param {boolean} done
@@ -4415,9 +4295,9 @@ function debug(content, type) {
         /** @type {boolean} */
         N = true;
         self.getPage({
-          page: page - 1,
-          count: 1
-        }, function (canCreateDiscussions, groupExist) {
+          page : page - 1,
+          count : 1
+        }, function(canCreateDiscussions, groupExist) {
           --page;
           --current;
           /** @type {number} */
@@ -4440,16 +4320,15 @@ function debug(content, type) {
         /** @type {boolean} */
         N = true;
         self.getPage({
-          page: current + 1,
-          count: 1
-        }, function (canCreateDiscussions, serializedData) {
-          return serializedData ? void (canCreateDiscussions || 0 === serializedData.length ? (++page, ++current, items[index].data = [], items[index].viewIndex = null, items[index].renderView(0), items[index].$title.innerHTML = "", i = k, id = index, j = k, items[i].$node.style.top = _from_key, items[id].$node.style.top = pos, items[j].focus(), items[index].emit("view:ready")) : (++page, ++current, i = k, id = index, j = k, items[index].data = serializedData, items[index].viewIndex = null, items[index].renderView(0),
+          page : current + 1,
+          count : 1
+        }, function(canCreateDiscussions, serializedData) {
+          return serializedData ? void(canCreateDiscussions || 0 === serializedData.length ? (++page, ++current, items[index].data = [], items[index].viewIndex = null, items[index].renderView(0), items[index].$title.innerHTML = "", i = k, id = index, j = k, items[i].$node.style.top = _from_key, items[id].$node.style.top = pos, items[j].focus(), items[index].emit("view:ready")) : (++page, ++current, i = k, id = index, j = k, items[index].data = serializedData, items[index].viewIndex = null, items[index].renderView(0),
             items[index].emit("view:ready"), items[j].focus())) : void items[index].emit("view:ready");
         });
       }
     }
   }
-
   var options = context(13);
   var Dialog = (context(1), context(33));
   var Store = context(30);
@@ -4460,11 +4339,11 @@ function debug(content, type) {
   /** @type {!Array} */
   var items = [];
   var obj = new Dialog({
-    $node: document.getElementById("pmTabChannelContent"),
-    className: "tab hidden",
-    visible: false,
-    events: {
-      focus: function () {
+    $node : document.getElementById("pmTabChannelContent"),
+    className : "tab hidden",
+    visible : false,
+    events : {
+      focus : function() {
         items[j].focus();
       }
     }
@@ -4496,32 +4375,32 @@ function debug(content, type) {
   var N = true;
   var self = new Date;
   var node = {
-    id: null,
-    title: null
+    id : null,
+    title : null
   };
-  self.addListener("content:changed", function () {
+  self.addListener("content:changed", function() {
     clearTimeout(_takingTooLongTimeout);
     /** @type {number} */
-    _takingTooLongTimeout = setTimeout(function () {
+    _takingTooLongTimeout = setTimeout(function() {
       a.hide();
     }, 1E4);
     if (0 === items.length) {
       items.push(new BoxItem({
-        $node: document.getElementById("pmListChannelVideos0Node"),
-        $body: document.getElementById("pmListChannelVideos0Body"),
-        $title: document.getElementById("pmChannelTitle0"),
-        className: "listMovie0Node",
-        size: 5,
-        viewIndex: 0,
-        focusIndex: 0,
-        type: Store.prototype.TYPE_HORIZONTAL,
-        events: {
-          overflow: function (data) {
+        $node : document.getElementById("pmListChannelVideos0Node"),
+        $body : document.getElementById("pmListChannelVideos0Body"),
+        $title : document.getElementById("pmChannelTitle0"),
+        className : "listMovie0Node",
+        size : 5,
+        viewIndex : 0,
+        focusIndex : 0,
+        type : Store.prototype.TYPE_HORIZONTAL,
+        events : {
+          overflow : function(data) {
             if (data.direction === options.left) {
               d.focus();
             }
           },
-          "view:ready": function () {
+          "view:ready" : function() {
             obj.focusEntry = items[j];
             /** @type {number} */
             items[i].$node.style.top = _from_key;
@@ -4539,24 +4418,24 @@ function debug(content, type) {
             /** @type {boolean} */
             N = false;
           },
-          "view:error": function (undefined) {
+          "view:error" : function(undefined) {
             /** @type {boolean} */
             N = false;
             if ("empty" === undefined) {
               /** @type {!Array} */
               this.data = [{
-                id: "",
-                value: "",
-                publishedAt: "",
-                icon: "img/no.image.png",
-                duration: "",
-                title: gettext("No videos"),
-                channelTitle: "",
-                viewCount: "",
-                locale: {
-                  publishedAt: "",
-                  viewCount: "",
-                  channelTitle: ""
+                id : "",
+                value : "",
+                publishedAt : "",
+                icon : "img/no.image.png",
+                duration : "",
+                title : gettext("No videos"),
+                channelTitle : "",
+                viewCount : "",
+                locale : {
+                  publishedAt : "",
+                  viewCount : "",
+                  channelTitle : ""
                 }
               }];
               /** @type {null} */
@@ -4578,34 +4457,34 @@ function debug(content, type) {
               }
             }
           },
-          "click:item": function (context) {
+          "click:item" : function(context) {
             if (context.$item.data.id) {
               that.setContent({
-                channel: node,
-                video: context.$item.data,
-                playlist: this.data,
-                position: context.$item.index
+                channel : node,
+                video : context.$item.data,
+                playlist : this.data,
+                position : context.$item.index
               });
             }
           }
         }
       }));
       items.push(new BoxItem({
-        $node: document.getElementById("pmListChannelVideos1Node"),
-        $body: document.getElementById("pmListChannelVideos1Body"),
-        $title: document.getElementById("pmChannelTitle1"),
-        className: "listMovie1Node",
-        size: 5,
-        viewIndex: 0,
-        focusIndex: 0,
-        type: Store.prototype.TYPE_HORIZONTAL,
-        events: {
-          overflow: function (data) {
+        $node : document.getElementById("pmListChannelVideos1Node"),
+        $body : document.getElementById("pmListChannelVideos1Body"),
+        $title : document.getElementById("pmChannelTitle1"),
+        className : "listMovie1Node",
+        size : 5,
+        viewIndex : 0,
+        focusIndex : 0,
+        type : Store.prototype.TYPE_HORIZONTAL,
+        events : {
+          overflow : function(data) {
             if (data.direction === options.left) {
               d.focus();
             }
           },
-          "view:ready": function () {
+          "view:ready" : function() {
             obj.focusEntry = items[j];
             /** @type {number} */
             items[i].$node.style.top = _from_key;
@@ -4623,24 +4502,24 @@ function debug(content, type) {
             /** @type {boolean} */
             N = false;
           },
-          "view:error": function (undefined) {
+          "view:error" : function(undefined) {
             /** @type {boolean} */
             N = false;
             if ("empty" === undefined) {
               /** @type {!Array} */
               this.data = [{
-                id: "",
-                value: "",
-                publishedAt: "",
-                icon: " ",
-                duration: "",
-                title: " ",
-                channelTitle: "",
-                viewCount: "",
-                locale: {
-                  publishedAt: "",
-                  viewCount: "",
-                  channelTitle: ""
+                id : "",
+                value : "",
+                publishedAt : "",
+                icon : " ",
+                duration : "",
+                title : " ",
+                channelTitle : "",
+                viewCount : "",
+                locale : {
+                  publishedAt : "",
+                  viewCount : "",
+                  channelTitle : ""
                 }
               }];
               /** @type {null} */
@@ -4660,13 +4539,13 @@ function debug(content, type) {
               items[j].focus();
             }
           },
-          "click:item": function (context) {
+          "click:item" : function(context) {
             if (context.$item.data.id) {
               that.setContent({
-                channel: node,
-                video: context.$item.data,
-                playlist: this.data,
-                position: context.$item.index
+                channel : node,
+                video : context.$item.data,
+                playlist : this.data,
+                position : context.$item.index
               });
             }
           }
@@ -4675,7 +4554,7 @@ function debug(content, type) {
       obj.add(items[0]);
       obj.add(items[1]);
       items[0].focus();
-      items[0].addListener("keydown", function (data) {
+      items[0].addListener("keydown", function(data) {
         if (data.code === options.down) {
           process(0, false);
         } else {
@@ -4686,16 +4565,16 @@ function debug(content, type) {
           } else {
             if (data.code === options.playPause) {
               that.setContent({
-                channel: this.model.channel,
-                video: this.$focusItem.data,
-                playlist: this.data,
-                position: this.$focusItem.index
+                channel : this.model.channel,
+                video : this.$focusItem.data,
+                playlist : this.data,
+                position : this.$focusItem.index
               });
             }
           }
         }
       });
-      items[1].addListener("keydown", function (data) {
+      items[1].addListener("keydown", function(data) {
         if (data.code === options.down) {
           process(1, false);
         } else {
@@ -4706,10 +4585,10 @@ function debug(content, type) {
           } else {
             if (data.code === options.playPause) {
               that.setContent({
-                channel: this.model.channel,
-                video: this.$focusItem.data,
-                playlist: this.data,
-                position: this.$focusItem.index
+                channel : this.model.channel,
+                video : this.$focusItem.data,
+                playlist : this.data,
+                position : this.$focusItem.index
               });
             }
           }
@@ -4718,9 +4597,9 @@ function debug(content, type) {
       pos = window.getComputedStyle(items[1].$node).getPropertyValue("top");
     }
     self.getPage({
-      page: 0,
-      count: 1
-    }, function (canCreateDiscussions, groupExist) {
+      page : 0,
+      count : 1
+    }, function(canCreateDiscussions, groupExist) {
       /** @type {number} */
       page = 0;
       /** @type {number} */
@@ -4739,9 +4618,9 @@ function debug(content, type) {
       items[i].emit("view:ready");
       items[j].focus();
       self.getPage({
-        page: 1,
-        count: 1
-      }, function (canCreateDiscussions, groupExist) {
+        page : 1,
+        count : 1
+      }, function(canCreateDiscussions, groupExist) {
         /** @type {!Object} */
         items[id].data = groupExist;
         /** @type {null} */
@@ -4756,14 +4635,14 @@ function debug(content, type) {
    * @param {string} params
    * @return {undefined}
    */
-  obj.activate = function (params) {
+  obj.activate = function(params) {
     if (params) {
       this.show();
       if (items.length) {
         items[j].focus();
       }
       self.channelId = node.id = params.id;
-      self.getInfo({}, function (canCreateDiscussions, scope) {
+      self.getInfo({}, function(canCreateDiscussions, scope) {
         if (!canCreateDiscussions) {
           scope.background = scope.background.split("=")[0] + "=w1920-fcrop64=1,00000000ffffffff-nd-c0xffffffff-rj-k-no";
           /** @type {string} */
@@ -4778,7 +4657,7 @@ function debug(content, type) {
     }
   };
   module.exports = obj;
-}, function (module, canCreateDiscussions, require) {
+}, function(module, canCreateDiscussions, require) {
   /**
    * @param {string} topic
    * @param {!Object} data
@@ -4825,30 +4704,29 @@ function debug(content, type) {
         end = allcookies.indexOf("</a><span", start);
         str = allcookies.substring(start, end);
         ret.push({
-          value: 1,
-          id: tel,
-          channelTitle: data.title,
-          duration: actual,
-          realDuration: actual,
-          viewCount: translate,
-          publishedAt: date,
-          dimension: "",
-          definition: "",
-          title: str,
-          icon: inputText,
-          channelId: data.id,
-          type: "video",
-          locale: {
-            publishedAt: date,
-            viewCount: translate,
-            channelTitle: data.title
+          value : 1,
+          id : tel,
+          channelTitle : data.title,
+          duration : actual,
+          realDuration : actual,
+          viewCount : translate,
+          publishedAt : date,
+          dimension : "",
+          definition : "",
+          title : str,
+          icon : inputText,
+          channelId : data.id,
+          type : "video",
+          locale : {
+            publishedAt : date,
+            viewCount : translate,
+            channelTitle : data.title
           }
         });
       }
     }
     return ret;
   }
-
   /**
    * @return {undefined}
    */
@@ -4858,7 +4736,6 @@ function debug(content, type) {
     this.channelId = null;
     this.pages = {};
   }
-
   var $ = require(49);
   var ajax = $.ajax;
   var NumericType = require(4);
@@ -4871,9 +4748,10 @@ function debug(content, type) {
    * @param {!Function} callback
    * @return {?}
    */
-  self.prototype.getInfo = function (data, callback) {
-    debug('RELEASE - self.prototype.getInfo (4875)');
-    return data = data || {}, !data.channelId && this.channelId && (data.channelId = this.channelId), data.channelId ? void ajax("get", "https://www.youtube.com/" + data.channelId + "/about", function (c, n) {
+  self.prototype.getInfo = function(data, callback) {
+    debug('self.prototype.getInfo');
+    return data = data || {}, !data.channelId && this.channelId && (data.channelId = this.channelId), data.channelId ? void ajax("get", "https://www.youtube.com/" + data.channelId + "/about", function(c, n) {
+      debug('self.prototype.getInfo youtube channelId about');
       var b;
       var a;
       var initialRotation;
@@ -4882,18 +4760,18 @@ function debug(content, type) {
       var d;
       var backgroundAttr;
       return 200 !== n ? void callback({
-        message: "request got bad http status (" + n + ")"
+        message : "request got bad http status (" + n + ")"
       }, {}) : (b = c.indexOf('img class="channel-header-profile-image" src="') + 46, a = c.indexOf('"', b), initialRotation = c.substring(b, a), b = c.indexOf("yt-subscription-button-subscriber-count-branded-horizontal"), b = c.indexOf('title="', b) + 7, a = c.indexOf('"', b), noteValueToDisplay = c.substring(b, a), b = c.indexOf('class="qualified-channel-title-text"'), b = c.indexOf('title="', b) + 7, a = c.indexOf('"', b), t = c.substring(b, a), b = c.indexOf('<div class="about-description'),
         a = c.indexOf('<div class="about-metadata-label', b), d = c.substring(b, a), b = c.indexOf(".hd-banner-image {"), b = c.indexOf("background-image: url(", b) + 22, a = c.indexOf(");", b), backgroundAttr = "http:" + c.substring(b, a), void callback(null, {
-        icon: initialRotation,
-        subscribers: noteValueToDisplay,
-        background: backgroundAttr,
-        title: t,
-        id: data.channelId,
-        description: d
+        icon : initialRotation,
+        subscribers : noteValueToDisplay,
+        background : backgroundAttr,
+        title : t,
+        id : data.channelId,
+        description : d
       }));
     }) : void callback({
-      message: "error: field arguments[0].channelId is empty"
+      message : "error: field arguments[0].channelId is empty"
     }, {});
   };
   /**
@@ -4901,10 +4779,11 @@ function debug(content, type) {
    * @param {!Function} callback
    * @return {?}
    */
-  self.prototype.getPage = function (params, callback) {
-    debug('RELEASE - self.prototype.getPage (4905)');
+  self.prototype.getPage = function(params, callback) {
+    debug('self.prototype.getPage 4763');
     var data = this;
-    return params = params || {}, !params.channelId && this.channelId && (params.channelId = this.channelId), params.page = +params.page || 0, params.channelId ? void (this.pages[params.page] && this.pages[params.page].parseId ? this.pages[params.page].cached ? callback(null, this.pages[params.page].data) : ajax("get", "https://www.youtube.com" + this.pages[params.page].parseId, function (i, a) {
+    return params = params || {}, !params.channelId && this.channelId && (params.channelId = this.channelId), params.page = +params.page || 0, params.channelId ? void(this.pages[params.page] && this.pages[params.page].parseId ? this.pages[params.page].cached ? callback(null, this.pages[params.page].data) : ajax("get", "https://www.youtube.com" + this.pages[params.page].parseId, function(i, a) {
+      debug('self.prototype.getPage youtube.com parseId');
       var post;
       var interestingPoint;
       var c;
@@ -4913,7 +4792,7 @@ function debug(content, type) {
       var p;
       if (200 !== a) {
         return void callback({
-          message: "request got bad http status (" + a + ")"
+          message : "request got bad http status (" + a + ")"
         }, []);
       }
       try {
@@ -4925,64 +4804,64 @@ function debug(content, type) {
         post = "";
       }
       return post ? (post.load_more_widget_html.trim().length > 10 ? (c = post.load_more_widget_html.indexOf('data-uix-load-more-href="/browse_ajax') + 25, e = post.load_more_widget_html.indexOf('"', c), resizewidth = post.load_more_widget_html.substring(c, e).replace(/&amp;/g, "&")) : resizewidth = "", data.pages[params.page + 1] = {
-        parseId: resizewidth,
-        cached: false
+        parseId : resizewidth,
+        cached : false
       }, i.indexOf('class="qualified-channel-title-text"') === -1 ? p = data.pages[0] && data.pages[0].data && data.pages[0].data[0] && data.pages[0].data[0] && data.pages[0].data[0].channelTitle ? data.pages[0].data[0].channelTitle : "" : (c = i.indexOf('class="qualified-channel-title-text"'), c = i.indexOf('title="', c) + 7, e = i.indexOf('"', c), p = i.substring(c, e)), data.pages[params.page].cached = true, data.pages[params.page].data = cb(post.content_html, {
-        id: params.channelId,
-        title: p
+        id : params.channelId,
+        title : p
       }), void callback(null, data.pages[params.page].data)) : void callback({
-        message: "parse error for page id " + data.pages[params.page].parseId,
-        code: interestingPoint
+        message : "parse error for page id " + data.pages[params.page].parseId,
+        code : interestingPoint
       }, []);
     }) : params.page ? this.pages[params.page] && !this.pages[params.page].parseId ? callback(null, []) : callback({
-      message: "wrong page number (page id not found in cache)"
-    }, []) : ajax("get", "https://www.youtube.com/" + params.channelId + "/videos", function (s, a) {
-      debug('RELEASE - ajax get channelId/videos (4940)');
+      message : "wrong page number (page id not found in cache)"
+    }, []) : ajax("get", "https://www.youtube.com/" + params.channelId + "/videos", function(s, a) {
+      debug('ajax get channelId/videos');
       var q;
       var t;
       var index;
       var contents;
       return 200 !== a ? void callback({
-        message: "request got bad http status (" + a + ")"
+        message : "request got bad http status (" + a + ")"
       }, []) : (t = s.indexOf('class="qualified-channel-title-text"'), t = s.indexOf('title="', t) + 7, index = s.indexOf('"', t), contents = s.substring(t, index), t = s.indexOf('data-uix-load-more-href="/browse_ajax') + 25, index = s.indexOf('"', t), data.pages[params.page + 1] = {
-        parseId: s.substring(t, index).replace(/&amp;/g, "&"),
-        cached: false
+        parseId : s.substring(t, index).replace(/&amp;/g, "&"),
+        cached : false
       }, q = s.slice(s.indexOf('id="channels-browse-content-grid"'), s.indexOf("browse-items-load-more-button")), data.pages[0] = {
-        cached: true,
-        parseId: "   ",
-        data: cb(q, {
-          id: params.channelId,
-          title: contents
+        cached : true,
+        parseId : "   ",
+        data : cb(q, {
+          id : params.channelId,
+          title : contents
         })
       }, void callback(null, data.pages[0].data));
     })) : void callback({
-      message: "error: field arguments[0].channelId is empty"
+      message : "error: field arguments[0].channelId is empty"
     }, []);
   };
   /**
    * @return {?}
    */
-  self.prototype.filter = function () {
+  self.prototype.filter = function() {
     return false;
   };
   /** @type {function(): undefined} */
   module.exports = self;
-}, function (module, canCreateDiscussions) {
+}, function(module, canCreateDiscussions) {
   /**
    * @param {?} uri
    * @return {?}
    */
   function parseUri(uri) {
     var o = {
-      strictMode: false,
-      key: ["source", "protocol", "authority", "userInfo", "user", "password", "host", "port", "relative", "path", "directory", "file", "query", "anchor"],
-      q: {
-        name: "queryKey",
-        parser: /(?:^|&)([^&=]*)=?([^&]*)/g
+      strictMode : false,
+      key : ["source", "protocol", "authority", "userInfo", "user", "password", "host", "port", "relative", "path", "directory", "file", "query", "anchor"],
+      q : {
+        name : "queryKey",
+        parser : /(?:^|&)([^&=]*)=?([^&]*)/g
       },
-      parser: {
-        strict: /^(?:([^:\/?#]+):)?(?:\/\/((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?))?((((?:[^?#\/]*\/)*)([^?#]*))(?:\?([^#]*))?(?:#(.*))?)/,
-        loose: /^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+):)?(?:\/\/)?((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/
+      parser : {
+        strict : /^(?:([^:\/?#]+):)?(?:\/\/((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?))?((((?:[^?#\/]*\/)*)([^?#]*))(?:\?([^#]*))?(?:#(.*))?)/,
+        loose : /^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+):)?(?:\/\/)?((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/
       }
     };
     var targets = o.parser[o.strictMode ? "strict" : "loose"].exec(uri);
@@ -4992,13 +4871,12 @@ function debug(content, type) {
     for (; i--;) {
       e[o.key[i]] = targets[i] || "";
     }
-    return e[o.q.name] = {}, e[o.key[12]].replace(o.q.parser, function (canCreateDiscussions, propertyToSet, s) {
+    return e[o.q.name] = {}, e[o.key[12]].replace(o.q.parser, function(canCreateDiscussions, propertyToSet, s) {
       if (propertyToSet) {
         e[o.q.name][propertyToSet] = s;
       }
     }), e;
   }
-
   /**
    * @param {string} type
    * @param {string} uri
@@ -5017,7 +4895,7 @@ function debug(content, type) {
     /** @type {!XMLHttpRequest} */
     var xhr = new XMLHttpRequest;
     "AJAX " + type.toUpperCase() + " " + uri;
-    if (async = async !== false, xhr.onreadystatechange = function () {
+    if (async = async !== false, xhr.onreadystatechange = function() {
       var iconCtx;
       if (4 === xhr.readyState) {
         if (clearTimeout(_takingTooLongTimeout), "json" === undefined && 200 === xhr.status) {
@@ -5042,29 +4920,28 @@ function debug(content, type) {
         }
       }
     }
-    return xhr.send(), _takingTooLongTimeout = setTimeout(function () {
+    return xhr.send(), _takingTooLongTimeout = setTimeout(function() {
       xhr.abort();
       if ("function" == typeof cb) {
         cb(null, 0);
       }
     }, 6E4), xhr;
   }
-
   /** @type {function(string, string, !Function, ?, string, boolean): ?} */
   window.ajax = ajax;
   module.exports = {
-    ajax: ajax,
-    parseUri: parseUri
+    ajax : ajax,
+    parseUri : parseUri
   };
-}, function (module, canCreateDiscussions, $) {
+}, function(module, canCreateDiscussions, $) {
   /**
    * @return {?}
    */
   function init() {
     return data.languageIndex !== key && (me ? (me.show(), inlineEditor2 = data.activePage.activeComponent, me.focus()) : (me = new Definition({
-      visible: false,
-      events: {
-        keydown: function (e) {
+      visible : false,
+      events : {
+        keydown : function(e) {
           var barIndex;
           var context;
           if (e.code === options.ok) {
@@ -5097,7 +4974,6 @@ function debug(content, type) {
     }), me.$body.classList.add("modalExit"), me.$header.innerHTML = gettext("To apply a new language, you should restart the application"), me.$content.innerHTML = "", me.$content.appendChild(item = document.createElement("div")), item.innerText = gettext("Ok"), item.className = "btn confirm" + (enable_keys ? " old" : ""), me.$content.appendChild(item = document.createElement("div")), item.className = "btn back" + (enable_keys ? " old" : ""), item.innerText = gettext("Cancel"), me.$footer.innerHTML =
       "", data.activePage.add(me), searchContactPanel.hide(), me.show(), inlineEditor2 = data.activePage.activeComponent, me.focus()), true);
   }
-
   var p;
   var me;
   var item;
@@ -5112,11 +4988,11 @@ function debug(content, type) {
   /** @type {(Element|null)} */
   var title = document.getElementById("pm");
   var camera = new Menu({
-    $node: document.getElementById("pmTabSettings"),
-    className: "tab",
-    visible: false,
-    events: {
-      show: function () {
+    $node : document.getElementById("pmTabSettings"),
+    className : "tab",
+    visible : false,
+    events : {
+      show : function() {
         /** @type {string} */
         title.style.backgroundImage = "";
       }
@@ -5127,36 +5003,36 @@ function debug(content, type) {
   /** @type {boolean} */
   var enable_keys = ["AuraHD2", "AuraHD3", "AuraHD8", "MAG254", "MAG275", "MAG276", "WR320"].indexOf(instance.deviceModel()) !== -1;
   var key = data.languageIndex;
-  fakeInputElement.addListener("focus", function () {
+  fakeInputElement.addListener("focus", function() {
     init();
   });
   /**
    * @return {undefined}
    */
-  camera.activate = function () {
+  camera.activate = function() {
     var inputel;
     var badge;
     if (!p) {
       badge = $(42);
       inputel = $(54);
       p = new Buffer({
-        $node: document.getElementById("pmSettingsList"),
-        type: Buffer.prototype.TYPE_HORIZONTAL,
-        size: 1,
-        data: [{
-          title: gettext("Language"),
-          value: data.languageIndex,
-          values: action.languagesLocalized,
-          description: gettext("Interface language"),
-          icon: "icon flag",
-          onclick: function (data) {
+        $node : document.getElementById("pmSettingsList"),
+        type : Buffer.prototype.TYPE_HORIZONTAL,
+        size : 1,
+        data : [{
+          title : gettext("Language"),
+          value : data.languageIndex,
+          values : action.languagesLocalized,
+          description : gettext("Interface language"),
+          icon : "icon flag",
+          onclick : function(data) {
             var i = badge.nextLang(this.value);
             this.value = i;
             key = i;
             data.$value.innerText = action.languagesLocalized[i];
           }
         }],
-        render: function (self, obj) {
+        render : function(self, obj) {
           if (!self.ready) {
             self.$container = self.appendChild(document.createElement("div"));
             /** @type {string} */
@@ -5179,9 +5055,9 @@ function debug(content, type) {
           self.$icon.className = obj.icon;
           self.$description.innerText = obj.description;
         },
-        events: {
-          keydown: function (event) {
-            switch (event.code) {
+        events : {
+          keydown : function(event) {
+            switch(event.code) {
               case options.right:
                 break;
               case options.left:
@@ -5194,8 +5070,8 @@ function debug(content, type) {
               case options.ok:
                 if (void 0 !== this.events["click:item"]) {
                   this.emit("click:item", {
-                    $item: this.$focusItem,
-                    event: event
+                    $item : this.$focusItem,
+                    event : event
                   });
                 }
                 break;
@@ -5206,10 +5082,10 @@ function debug(content, type) {
                 }
             }
           },
-          "click:item": function (self) {
+          "click:item" : function(self) {
             self.$item.data.onclick(self.$item);
           },
-          overflow: function (data) {
+          overflow : function(data) {
             if (data.direction === options.left) {
               fakeInputElement.focus();
             }
@@ -5221,7 +5097,7 @@ function debug(content, type) {
        * @param {number} name
        * @return {?}
        */
-      p.renderView = function (name) {
+      p.renderView = function(name) {
         var item;
         var i;
         var data;
@@ -5255,8 +5131,8 @@ function debug(content, type) {
             name++;
           }
           return void 0 !== this.events["move:view"] && this.emit("move:view", {
-            prevIndex: prevIndex,
-            currIndex: getObjArg
+            prevIndex : prevIndex,
+            currIndex : getObjArg
           }), true;
         }
         return false;
@@ -5268,7 +5144,7 @@ function debug(content, type) {
     camera.focusEntry = p;
   };
   module.exports = camera;
-}, function (context, canCreateDiscussions, getVoxel) {
+}, function(context, canCreateDiscussions, getVoxel) {
   /**
    * @param {!Object} e
    * @return {undefined}
@@ -5295,7 +5171,6 @@ function debug(content, type) {
     this.$footer.innerText = "footer";
     this.hide();
   }
-
   var b = getVoxel(52);
   /** @type {!Object} */
   init.prototype = Object.create(b.prototype);
@@ -5303,7 +5178,7 @@ function debug(content, type) {
   init.prototype.constructor = init;
   /** @type {function(!Object): undefined} */
   context.exports = init;
-}, function (module, canCreateDiscussions, promiseSupplier) {
+}, function(module, canCreateDiscussions, promiseSupplier) {
   /**
    * @param {number} that
    * @return {undefined}
@@ -5317,7 +5192,6 @@ function debug(content, type) {
     s.call(this, that);
     this.$node.appendChild(document.createElement("div").appendChild(this.$body).parentNode);
   }
-
   var s = promiseSupplier(24);
   /** @type {!Object} */
   Menu.prototype = Object.create(s.prototype);
@@ -5327,59 +5201,59 @@ function debug(content, type) {
   Menu.prototype.name = "spa-component-modal";
   /** @type {function(number): undefined} */
   module.exports = Menu;
-}, function (module, canCreateDiscussions) {
+}, function(module, canCreateDiscussions) {
   module.exports = {
-    initPlayer: window.top.gSTB.InitPlayer,
-    saveUserData: window.top.gSTB.SaveUserData,
-    loadUserData: window.top.gSTB.LoadUserData,
-    setPosTime: window.top.gSTB.SetPosTime,
-    getPosTime: window.top.gSTB.GetPosTime,
-    play: window.top.gSTB.Play,
-    pause: window.top.gSTB.Pause,
-    continuePlay: window.top.gSTB.Continue,
-    getVolume: window.top.gSTB.GetVolume,
-    setVolume: window.top.gSTB.SetVolume,
-    setNativeStringMode: window.top.gSTB && window.top.gSTB.SetNativeStringMode ? window.top.gSTB.SetNativeStringMode : function () {
+    initPlayer : window.top.gSTB.InitPlayer,
+    saveUserData : window.top.gSTB.SaveUserData,
+    loadUserData : window.top.gSTB.LoadUserData,
+    setPosTime : window.top.gSTB.SetPosTime,
+    getPosTime : window.top.gSTB.GetPosTime,
+    play : window.top.gSTB.Play,
+    pause : window.top.gSTB.Pause,
+    continuePlay : window.top.gSTB.Continue,
+    getVolume : window.top.gSTB.GetVolume,
+    setVolume : window.top.gSTB.SetVolume,
+    setNativeStringMode : window.top.gSTB && window.top.gSTB.SetNativeStringMode ? window.top.gSTB.SetNativeStringMode : function() {
     },
-    setServiceButtonState: window.top.gSTB.EnableServiceButton,
-    setVKButtonState: window.top.gSTB.EnableVKButton,
-    setTvButtonState: window.top.gSTB.EnableTvButton,
-    setAppButtonState: window.top.gSTB.EnableAppButton,
-    hideVK: window.top.gSTB.HideVirtualKeyboard,
-    showVK: window.top.gSTB.ShowVirtualKeyboard,
-    getStandByStatus: window.top.gSTB.GetStandByStatus,
-    setStandByStatus: window.top.gSTB.StandBy,
-    getEnv: window.top.gSTB.GetEnv,
-    isMuted: window.top.gSTB.GetMute,
-    setMute: window.top.gSTB.SetMute,
-    deviceModel: window.top.gSTB.GetDeviceModelExt
+    setServiceButtonState : window.top.gSTB.EnableServiceButton,
+    setVKButtonState : window.top.gSTB.EnableVKButton,
+    setTvButtonState : window.top.gSTB.EnableTvButton,
+    setAppButtonState : window.top.gSTB.EnableAppButton,
+    hideVK : window.top.gSTB.HideVirtualKeyboard,
+    showVK : window.top.gSTB.ShowVirtualKeyboard,
+    getStandByStatus : window.top.gSTB.GetStandByStatus,
+    setStandByStatus : window.top.gSTB.StandBy,
+    getEnv : window.top.gSTB.GetEnv,
+    isMuted : window.top.gSTB.GetMute,
+    setMute : window.top.gSTB.SetMute,
+    deviceModel : window.top.gSTB.GetDeviceModelExt
   };
-}, function (child, canCreateDiscussions, floor) {
+}, function(child, canCreateDiscussions, floor) {
   var startYNew = floor(4);
   var $scope = new startYNew;
   $scope.data = {
-    quality: [gettext("Best"), "720p", "480p", "360p", "240p"],
-    safeSearch: [gettext("Off"), gettext("On")]
+    quality : [gettext("Best"), "720p", "480p", "360p", "240p"],
+    safeSearch : [gettext("Off"), gettext("On")]
   };
   /**
    * @param {string} prop
    * @param {number} i
    * @return {?}
    */
-  $scope.getNext = function (prop, i) {
+  $scope.getNext = function(prop, i) {
     if ($scope.data[prop] && $scope.data[prop][i]) {
       return ++i, $scope.data[prop].length === i && (i = 0), this.emit("changed", {
-        key: prop,
-        value: $scope.data[prop][i],
-        index: i
+        key : prop,
+        value : $scope.data[prop][i],
+        index : i
       }), {
-        value: $scope.data[prop][i],
-        index: i
+        value : $scope.data[prop][i],
+        index : i
       };
     }
   };
   child.exports = $scope;
-}, function (module, canCreateDiscussions, require) {
+}, function(module, canCreateDiscussions, require) {
   /**
    * @param {number} to
    * @param {boolean} str
@@ -5393,9 +5267,9 @@ function debug(content, type) {
         /** @type {boolean} */
         toPlayer = true;
         model.getPage({
-          page: page - 1,
-          count: 1
-        }, function (canCreateDiscussions, groupExist) {
+          page : page - 1,
+          count : 1
+        }, function(canCreateDiscussions, groupExist) {
           --page;
           --current;
           /** @type {number} */
@@ -5419,16 +5293,15 @@ function debug(content, type) {
         /** @type {boolean} */
         toPlayer = true;
         model.getPage({
-          page: current + 1,
-          count: 1
-        }, function (canCreateDiscussions, serializedData) {
-          return serializedData ? void (canCreateDiscussions || 0 === serializedData.length ? (++page, ++current, nodes[to].data = [], nodes[to].viewIndex = null, nodes[to].renderView(0), nodes[to].focusIndex(0), nodes[to].$title.innerHTML = "", k = j, i = to, index = j, nodes[k].$node.style.top = _from_key, nodes[i].$node.style.top = pos, nodes[index].focus(), nodes[to].emit("view:ready")) : (++page, ++current, k = j, i = to, index = j, nodes[to].data = serializedData, nodes[to].viewIndex = null,
+          page : current + 1,
+          count : 1
+        }, function(canCreateDiscussions, serializedData) {
+          return serializedData ? void(canCreateDiscussions || 0 === serializedData.length ? (++page, ++current, nodes[to].data = [], nodes[to].viewIndex = null, nodes[to].renderView(0), nodes[to].focusIndex(0), nodes[to].$title.innerHTML = "", k = j, i = to, index = j, nodes[k].$node.style.top = _from_key, nodes[i].$node.style.top = pos, nodes[index].focus(), nodes[to].emit("view:ready")) : (++page, ++current, k = j, i = to, index = j, nodes[to].data = serializedData, nodes[to].viewIndex = null,
             nodes[to].renderView(0), nodes[to].focusIndex(0), nodes[to].emit("view:ready"))) : void nodes[to].emit("view:ready");
         });
       }
     }
   }
-
   var options = require(13);
   var test = require(1);
   var ctor = require(33);
@@ -5447,25 +5320,25 @@ function debug(content, type) {
   /** @type {number} */
   var index = 0;
   var self = new ctor({
-    $node: document.getElementById("pmTabMainContent"),
-    visible: false,
-    className: "tab hidden",
-    events: {
-      focus: function () {
+    $node : document.getElementById("pmTabMainContent"),
+    visible : false,
+    className : "tab hidden",
+    events : {
+      focus : function() {
         nodes[index].focus();
       },
-      show: function () {
+      show : function() {
         /** @type {string} */
         title.style.backgroundImage = "";
       }
     }
   });
   var d = new Dialog({
-    $node: document.getElementById("pmMainSearch"),
-    $body: document.getElementById("pmMainSearchBody"),
-    className: "tabInputSearch",
-    events: {
-      focus: function () {
+    $node : document.getElementById("pmMainSearch"),
+    $body : document.getElementById("pmMainSearchBody"),
+    className : "tabInputSearch",
+    events : {
+      focus : function() {
         this.setValue("");
         test.route(test.pages.search);
       }
@@ -5490,34 +5363,34 @@ function debug(content, type) {
   /**
    * @return {undefined}
    */
-  self.activate = function () {
+  self.activate = function() {
     this.show();
     clearTimeout(_takingTooLongTimeout);
     /** @type {number} */
-    _takingTooLongTimeout = setTimeout(function () {
+    _takingTooLongTimeout = setTimeout(function() {
       rebaseBtn.hide();
     }, 1E4);
     if (0 === nodes.length) {
       rebaseBtn.show();
       nodes.push(new ViewModel({
-        $node: document.getElementById("pmListMainVideos0Node"),
-        $body: document.getElementById("pmListMainVideos0Body"),
-        $title: document.getElementById("pmMainChannelTitle0"),
-        className: "listMovie0Node",
-        model: new Model({
-          type: "video"
+        $node : document.getElementById("pmListMainVideos0Node"),
+        $body : document.getElementById("pmListMainVideos0Body"),
+        $title : document.getElementById("pmMainChannelTitle0"),
+        className : "listMovie0Node",
+        model : new Model({
+          type : "video"
         }),
-        size: 5,
-        viewIndex: 0,
-        focusIndex: 0,
-        type: ActionClient.prototype.TYPE_HORIZONTAL,
-        events: {
-          overflow: function (data) {
+        size : 5,
+        viewIndex : 0,
+        focusIndex : 0,
+        type : ActionClient.prototype.TYPE_HORIZONTAL,
+        events : {
+          overflow : function(data) {
             if (data.direction === options.left) {
               fbLargeCommandLine.focus();
             }
           },
-          "view:ready": function () {
+          "view:ready" : function() {
             self.focusEntry = nodes[index];
             /** @type {number} */
             nodes[k].$node.style.top = _from_key;
@@ -5535,7 +5408,7 @@ function debug(content, type) {
             /** @type {boolean} */
             toPlayer = false;
           },
-          "view:error": function (undefined) {
+          "view:error" : function(undefined) {
             /** @type {boolean} */
             toPlayer = false;
             if ("empty" === undefined) {
@@ -5562,40 +5435,40 @@ function debug(content, type) {
               }
             }
           },
-          "click:item": function (context) {
+          "click:item" : function(context) {
             if (context.$item.data.id) {
               t.setContent({
-                channel: this.model.channel,
-                video: context.$item.data,
-                playlist: this.data,
-                position: context.$item.index
+                channel : this.model.channel,
+                video : context.$item.data,
+                playlist : this.data,
+                position : context.$item.index
               });
             }
           },
-          focus: function () {
+          focus : function() {
             self.focusEntry = this;
           }
         }
       }));
       nodes.push(new ViewModel({
-        $node: document.getElementById("pmListMainVideos1Node"),
-        $body: document.getElementById("pmListMainVideos1Body"),
-        $title: document.getElementById("pmMainChannelTitle1"),
-        className: "listMovie1Node",
-        model: new Model({
-          type: "video"
+        $node : document.getElementById("pmListMainVideos1Node"),
+        $body : document.getElementById("pmListMainVideos1Body"),
+        $title : document.getElementById("pmMainChannelTitle1"),
+        className : "listMovie1Node",
+        model : new Model({
+          type : "video"
         }),
-        size: 5,
-        viewIndex: 0,
-        focusIndex: 0,
-        type: ActionClient.prototype.TYPE_HORIZONTAL,
-        events: {
-          overflow: function (data) {
+        size : 5,
+        viewIndex : 0,
+        focusIndex : 0,
+        type : ActionClient.prototype.TYPE_HORIZONTAL,
+        events : {
+          overflow : function(data) {
             if (data.direction === options.left) {
               fbLargeCommandLine.focus();
             }
           },
-          "view:ready": function () {
+          "view:ready" : function() {
             self.focusEntry = nodes[index];
             /** @type {number} */
             nodes[k].$node.style.top = _from_key;
@@ -5612,24 +5485,24 @@ function debug(content, type) {
             /** @type {boolean} */
             toPlayer = false;
           },
-          "view:error": function (undefined) {
+          "view:error" : function(undefined) {
             /** @type {boolean} */
             toPlayer = false;
             if ("empty" === undefined) {
               /** @type {!Array} */
               this.data = [{
-                id: "",
-                value: "",
-                publishedAt: "",
-                icon: "img/no.image.png",
-                duration: "",
-                title: gettext("No videos"),
-                channelTitle: "",
-                viewCount: "",
-                locale: {
-                  publishedAt: "",
-                  viewCount: "",
-                  channelTitle: ""
+                id : "",
+                value : "",
+                publishedAt : "",
+                icon : "img/no.image.png",
+                duration : "",
+                title : gettext("No videos"),
+                channelTitle : "",
+                viewCount : "",
+                locale : {
+                  publishedAt : "",
+                  viewCount : "",
+                  channelTitle : ""
                 }
               }];
               /** @type {null} */
@@ -5649,24 +5522,24 @@ function debug(content, type) {
               nodes[index].focus();
             }
           },
-          "click:item": function (context) {
+          "click:item" : function(context) {
             if (context.$item.data.id) {
               t.setContent({
-                channel: this.model.channel,
-                video: context.$item.data,
-                playlist: this.data,
-                position: context.$item.index
+                channel : this.model.channel,
+                video : context.$item.data,
+                playlist : this.data,
+                position : context.$item.index
               });
             }
           },
-          focus: function () {
+          focus : function() {
             self.focusEntry = this;
           }
         }
       }));
       self.add(nodes[0]);
       self.add(nodes[1]);
-      nodes[0].addListener("keydown", function (data) {
+      nodes[0].addListener("keydown", function(data) {
         if (data.code === options.down) {
           process(0, false);
         } else {
@@ -5679,16 +5552,16 @@ function debug(content, type) {
           } else {
             if (data.code === options.playPause) {
               t.setContent({
-                channel: this.model.channel,
-                video: this.$focusItem.data,
-                playlist: this.data,
-                position: this.$focusItem.index
+                channel : this.model.channel,
+                video : this.$focusItem.data,
+                playlist : this.data,
+                position : this.$focusItem.index
               });
             }
           }
         }
       });
-      nodes[1].addListener("keydown", function (data) {
+      nodes[1].addListener("keydown", function(data) {
         if (data.code === options.down) {
           process(1, false);
         } else {
@@ -5701,10 +5574,10 @@ function debug(content, type) {
           } else {
             if (data.code === options.playPause) {
               t.setContent({
-                channel: this.model.channel,
-                video: this.$focusItem.data,
-                playlist: this.data,
-                position: this.$focusItem.index
+                channel : this.model.channel,
+                video : this.$focusItem.data,
+                playlist : this.data,
+                position : this.$focusItem.index
               });
             }
           }
@@ -5712,9 +5585,9 @@ function debug(content, type) {
       });
       pos = window.getComputedStyle(nodes[1].$node).getPropertyValue("top");
       model.getPage({
-        page: 0,
-        count: 1
-      }, function (canCreateDiscussions, groupExist) {
+        page : 0,
+        count : 1
+      }, function(canCreateDiscussions, groupExist) {
         if (canCreateDiscussions) {
           /** @type {!Array} */
           groupExist = [];
@@ -5738,9 +5611,9 @@ function debug(content, type) {
         nodes[k].emit("view:ready");
         nodes[index].focus();
         model.getPage({
-          page: 1,
-          count: 1
-        }, function (canCreateDiscussions, groupExist) {
+          page : 1,
+          count : 1
+        }, function(canCreateDiscussions, groupExist) {
           if (canCreateDiscussions) {
             /** @type {!Array} */
             groupExist = [];
@@ -5764,7 +5637,7 @@ function debug(content, type) {
   };
   self.add(d);
   module.exports = self;
-}, function (module, canCreateDiscussions, require) {
+}, function(module, canCreateDiscussions, require) {
   /**
    * @return {?}
    * @param data
@@ -5843,23 +5716,23 @@ function debug(content, type) {
           i = albumIDwithAuthkey.indexOf("<", p);
           a = albumIDwithAuthkey.substring(p, i);
           items.push({
-            value: 1,
-            playlistId: playlistId,
-            channel: {
-              title: a.substr(0, 100),
-              id: name
+            value : 1,
+            playlistId : playlistId,
+            channel : {
+              title : a.substr(0, 100),
+              id : name
             },
-            title: t.substr(0, 100),
-            icon: awesomeIcon,
-            type: "playlist",
-            channelTitle: a.substr(0, 100),
-            viewCount: " ",
-            duration: " ",
-            publishedAt: " ",
-            locale: {
-              publishedAt: " ",
-              viewCount: " ",
-              channelTitle: a.substr(0, 100)
+            title : t.substr(0, 100),
+            icon : awesomeIcon,
+            type : "playlist",
+            channelTitle : a.substr(0, 100),
+            viewCount : " ",
+            duration : " ",
+            publishedAt : " ",
+            locale : {
+              publishedAt : " ",
+              viewCount : " ",
+              channelTitle : a.substr(0, 100)
             }
           });
         }
@@ -5890,23 +5763,23 @@ function debug(content, type) {
           i = albumIDwithAuthkey.indexOf("</a>", p);
           a = albumIDwithAuthkey.substring(p, i);
           items.push({
-            value: 1,
-            id: packageId,
-            channelTitle: a.substr(0, 100),
-            duration: hide ? "" : n.substr(0, 100),
-            realDuration: hide ? "" : n.substr(0, 100),
-            viewCount: s.substr(0, 100),
-            publishedAt: hide ? "" : r.substr(0, 100),
-            dimension: "",
-            definition: "",
-            title: t.substr(0, 100),
-            icon: awesomeIcon,
-            channelId: name,
-            type: "video",
-            locale: {
-              publishedAt: hide ? "" : r.substr(0, 100),
-              viewCount: s.substr(0, 100),
-              channelTitle: a.substr(0, 100)
+            value : 1,
+            id : packageId,
+            channelTitle : a.substr(0, 100),
+            duration : hide ? "" : n.substr(0, 100),
+            realDuration : hide ? "" : n.substr(0, 100),
+            viewCount : s.substr(0, 100),
+            publishedAt : hide ? "" : r.substr(0, 100),
+            dimension : "",
+            definition : "",
+            title : t.substr(0, 100),
+            icon : awesomeIcon,
+            channelId : name,
+            type : "video",
+            locale : {
+              publishedAt : hide ? "" : r.substr(0, 100),
+              viewCount : s.substr(0, 100),
+              channelTitle : a.substr(0, 100)
             }
           });
         }
@@ -5931,64 +5804,41 @@ function debug(content, type) {
     /** @type {!Array} */
     var items = [];
     data.forEach(function (el) {
-      var publishedAt = el.snippet.publishedAt.replace("T", " ").replace("Z", "");
+      // console.log(JSON.stringify(el));
       var item = {
-        value: 1,
-        id: el.id,
-        channelTitle: el.snippet.channelTitle,
+        value : 1,
+        id : el.id,
+        channelTitle : el.snippet.channelTitle,
         duration: normalizeVideoDuration(el.contentDetails.duration),
         realDuration: el.contentDetails.duration,
         viewCount: el.statistics.viewCount,
-        publishedAt: publishedAt,
+        publishedAt: el.snippet.publishedAt,
         dimension: el.contentDetails.dimension,
         definition: el.contentDetails.definition,
         title: el.snippet.title,
         icon: el.snippet.thumbnails["high"].url,
         channelId: el.snippet.channelId,
-        type: "video",
+        type : "video",
         locale: {
-          publishedAt: publishedAt,
-          viewCount: el.statistics.viewCount,
-          channelTitle: el.snippet.channelTitle
+          publishedAt : el.snippet.publishedAt,
+          viewCount : el.statistics.viewCount,
+          channelTitle : el.snippet.channelTitle
         }
       };
-      //debug(JSON.stringify(item));
-      //debug("================================================================================");
+      console.log(JSON.stringify(item));
       items.push(item);
     });
     return items;
   }
 
-  function createGetVideosListUrl(pageToken) {
-    var key;
-    var date = new Date();
-    switch (date.getHours()) {
-      case 0:
-      case 1:
-      case 2:
-      case 3:
-      case 4:
-      case 5:
-      case 6:
-      case 7:
-      case 8:
-      case 9:
-      case 10:
-      case 11:
-        key = 'AIzaSyDuukStU9IF9_PCK2tl1AbihixMMOyWFuE';
-        break;
-      default:
-        key = 'AIzaSyDuukStU9IF9_PCK2tl1AbihixMMOyWFuE';
-    }
+  function createGetVideosListUrl (pageToken) {
+    var key = 'AIzaSyDjh5DKSn06D1lqhiC6-Zyn1hDtnt6iMKU';
     var url = 'https://www.googleapis.com/youtube/v3/videos' +
       '?key=' + key +
       '&chart=mostPopular' +
-      '&maxResults=20' +
-      '&regionCode=ru' +
-      '&hl=ru-RU' +
       '&part=snippet,contentDetails,statistics';
-    if (pageToken) {
-      url += '&pageToken=' + pageToken;
+    if(pageToken) {
+      url += 'pageToken=' + pageToken;
     }
     return url;
   }
@@ -6000,7 +5850,6 @@ function debug(content, type) {
     NumericType.call(this);
     this.pages = {};
   }
-
   var $ = require(49);
   var ajax = $.ajax;
   var NumericType = require(4);
@@ -6014,9 +5863,13 @@ function debug(content, type) {
    * @param {!Function} callback
    * @return {undefined}
    */
-  Router.prototype.getPage = function (page, callback) {
-    debug('RELEASE - Router.prototype.getPage (6018)');
-    //debug('RELEASE - current page: ' + JSON.stringify(page));
+  Router.prototype.getPage = function(page, callback) {
+    debug('Router.prototype.getPage 5787');
+    debug('current page: ');
+    debug(JSON.stringify(page));
+    debug('this pages: ');
+    debug(JSON.stringify(this.pages));
+    debug('!-------------------------------');
     var state = this;
     /** @type {number} */
     page.page = +page.page || 0;
@@ -6024,32 +5877,32 @@ function debug(content, type) {
       if (this.pages[page.page].cached) {
         callback(null, this.pages[page.page].data);
       } else {
-        ajax("get", "https://www.youtube.com" + this.pages[page.page].parseId, function (result, status) {
-          debug('RELEASE - Router.prototype.getPage ajax page > 0 (6028)');
+        ajax("get", "https://www.youtube.com" + this.pages[page.page].parseId, function(cookie, mmCoreSecondsYear) {
+          debug('Router.prototype.getPage ajax get parseId');
           var data;
           var interestingPoint;
           var a;
           var b;
           var resizewidth;
-          if (200 !== status) {
+          if (200 !== mmCoreSecondsYear) {
             return void callback({
-              message: "request got bad http status (" + status + ")"
+              message : "request got bad http status (" + mmCoreSecondsYear + ")"
             }, []);
           }
           try {
             /** @type {*} */
-            data = JSON.parse(result);
+            data = JSON.parse(cookie);
           } catch (viewportCenter) {
             interestingPoint = viewportCenter;
             /** @type {string} */
             data = "";
           }
           return data ? (data.load_more_widget_html.trim().length > 10 ? (a = data.load_more_widget_html.indexOf('data-uix-load-more-href="') + 25, b = data.load_more_widget_html.indexOf('"', a), resizewidth = data.load_more_widget_html.substring(a, b).replace(/&amp;/g, "&")) : resizewidth = "", state.pages[page.page + 1] = {
-            parseId: resizewidth,
-            cached: false
+            parseId : resizewidth,
+            cached : false
           }, state.pages[page.page].cached = true, state.pages[page.page].data = resolve(data.content_html), void callback(null, state.pages[page.page].data)) : void callback({
-            message: "parse error for page id " + state.pages[page.page].parseId,
-            code: interestingPoint
+            message : "parse error for page id " + state.pages[page.page].parseId,
+            code : interestingPoint
           }, []);
         });
       }
@@ -6059,38 +5912,37 @@ function debug(content, type) {
           callback(null, []);
         } else {
           callback({
-            message: "wrong page number (page id not found in cache)"
+            message : "wrong page number (page id not found in cache)"
           }, []);
         }
       } else {
-        ajax("get", createGetVideosListUrl(), function (result, status) {
-          debug('RELEASE - Router.prototype.getPage ajax page = 0 (6067)');
+        ajax("get", createGetVideosListUrl(), function(result, status) {
+          debug('Router.prototype.getPage ajax get https://www.youtube.com/');
+          var e;
+          var j;
+          var i;
           if (status !== 200) {
             return void callback({
-              message: "request got bad http status (" + status + ")"
+              message : "request got bad http status (" + a + ")"
             }, []);
           } else {
             try {
               var response = JSON.parse(result);
-              state.pages[page.page + 1] = {
-                parseId: response.nextPageToken,
-                cached: false
-              };
-              state.pages[0] = {
-                cached: true,
-                parseId: "   ",
-                data: restructuringData(response.items)
-              };
-              void callback(null, state.pages[0].data);
-            } catch (er) {
-                debug('RELEASE - (6086) ' + er);
-                return window.core.notify({
-                  title: er,
-                  icon: "alert",
-                  type: "warning",
-                  timeout: 5E3
-                });
-              }
+            } catch (e) {
+              return void callback({
+                message : "json parse error"
+              }, []);
+            }
+            state.pages[page.page + 1] = {
+              parseId : response.nextPageToken,
+              cached : false
+            };
+            state.pages[0] = {
+              cached : true,
+              parseId : "   ",
+              data : restructuringData(response.items)
+            };
+            void callback(null, state.pages[0].data);
           }
         });
       }
@@ -6099,12 +5951,12 @@ function debug(content, type) {
   /**
    * @return {?}
    */
-  Router.prototype.filter = function () {
+  Router.prototype.filter = function() {
     return false;
   };
   /** @type {function(): undefined} */
   module.exports = Router;
-}, function (context, canCreateDiscussions, $) {
+}, function(context, canCreateDiscussions, $) {
   var c;
   var notifyComment;
   var a;
@@ -6121,11 +5973,11 @@ function debug(content, type) {
   var v = $(61);
   var Navigation = $(25);
   var element = ($(15), new $realtime({
-    $node: document.getElementById(i)
+    $node : document.getElementById(i)
   }));
   var input = new expected({
-    $node: document.getElementById("psSearch"),
-    $body: document.getElementById("psSearchInput")
+    $node : document.getElementById("psSearch"),
+    $body : document.getElementById("psSearchInput")
   });
   var searchContactPanel = $(27);
   /** @type {boolean} */
@@ -6136,50 +5988,50 @@ function debug(content, type) {
   var ctrl = null;
   /** @type {number} */
   var _takingTooLongTimeout = -1;
-  element.addListener("keydown", function (event) {
+  element.addListener("keydown", function(event) {
     if (event.code === options.back) {
       self.route(self.pages.main);
       /** @type {boolean} */
       event.stop = true;
     }
   });
-  element.addListener("hide", function () {
+  element.addListener("hide", function() {
     searchContactPanel.hide();
   });
-  notifyComment = v(function (action) {
+  notifyComment = v(function(action) {
     postcssUnprocessedInputText = action.value;
     ctrl.model.filter({
-      searchQuery: action.value
+      searchQuery : action.value
     });
     clearTimeout(_takingTooLongTimeout);
     /** @type {number} */
-    _takingTooLongTimeout = setTimeout(function () {
+    _takingTooLongTimeout = setTimeout(function() {
       searchContactPanel.hide();
     }, 5E3);
   }, 1E3);
-  element.addListener("show", function (match) {
-    debug('RELEASE - addListener show (6161)');
+  element.addListener("show", function(match) {
+    debug('addListener show');
     match = match.data || {};
     Navigation.updateView({
-      SEARCH: {
-        icon: "search",
-        visible: false,
-        text: ""
+      SEARCH : {
+        icon : "search",
+        visible : false,
+        text : ""
       },
-      MORE: {
-        icon: "more",
-        visible: false,
-        text: ""
+      MORE : {
+        icon : "more",
+        visible : false,
+        text : ""
       },
-      GUIDE: {
-        icon: "info",
-        visible: false,
-        text: ""
+      GUIDE : {
+        icon : "info",
+        visible : false,
+        text : ""
       },
-      BACK: {
-        icon: "back",
-        visible: true,
-        text: gettext("Back")
+      BACK : {
+        icon : "back",
+        visible : true,
+        text : gettext("Back")
       }
     });
     searchContactPanel.hide();
@@ -6187,13 +6039,13 @@ function debug(content, type) {
       if (x) {
         /** @type {string} */
         window.psSearchIcon.style.display = "block";
-        setTimeout(function () {
+        setTimeout(function() {
           /** @type {string} */
           window.psSearchIcon.style.display = "inline-table";
         }, 0);
       }
       if (!(null !== element.activeComponent && element.activeComponent !== input)) {
-        setTimeout(function () {
+        setTimeout(function() {
           input.focus();
           window.searchInput = input;
           if (match.search) {
@@ -6203,9 +6055,9 @@ function debug(content, type) {
       }
     }
   });
-  (function () {
+  (function() {
     c = $(62);
-    input.addListener("keydown", function (event) {
+    input.addListener("keydown", function(event) {
       if (event.code === options.down) {
         a = input.getCaretPosition();
         c.focus();
@@ -6224,17 +6076,17 @@ function debug(content, type) {
         }
       }
     });
-    input.addListener("input", function (comment) {
+    input.addListener("input", function(comment) {
       ctrl.hide();
       searchContactPanel.show();
       notifyComment(comment);
     });
-    c.addListener("overflow", function (data) {
+    c.addListener("overflow", function(data) {
       if (data.direction === options.up) {
         input.focus();
       }
     });
-    c.addListener("click:item", function (context) {
+    c.addListener("click:item", function(context) {
       if ("symbol" === context.$item.data.className) {
         input.addChar(context.$item.data.value, a);
         ++a;
@@ -6255,21 +6107,21 @@ function debug(content, type) {
         }
       }
     });
-    c.addListener("keydown", function () {
+    c.addListener("keydown", function() {
       notifyComment({
-        value: input.value
+        value : input.value
       });
     });
     ctrl = new RootView({
-      $node: document.getElementById("psListVideos"),
-      model: new model({
-        order: "relevance"
+      $node : document.getElementById("psListVideos"),
+      model : new model({
+        order : "relevance"
       }),
-      className: "movieList",
-      size: 5,
-      events: {
-        keydown: function (event) {
-          switch (event.code) {
+      className : "movieList",
+      size : 5,
+      events : {
+        keydown : function(event) {
+          switch(event.code) {
             case options.down:
               input.focus();
               break;
@@ -6297,47 +6149,47 @@ function debug(content, type) {
               break;
             case options.ok:
               this.emit("click:item", {
-                $item: this.$focusItem,
-                event: event
+                $item : this.$focusItem,
+                event : event
               });
           }
         },
-        "click:item": function (context) {
+        "click:item" : function(context) {
           if ("video" === context.$item.data.type) {
             n.setContent({
-              video: context.$item.data,
-              playlist: this.data,
-              position: context.$item.index
+              video : context.$item.data,
+              playlist : this.data,
+              position : context.$item.index
             });
           } else {
             if ("playlist" === context.$item.data.type) {
               that.getPage({
-                playlistId: context.$item.data.playlistId
-              }, function (canCreateDiscussions, results) {
+                playlistId : context.$item.data.playlistId
+              }, function(canCreateDiscussions, results) {
                 n.setContent({
-                  channel: context.$item.data.channel,
-                  video: results[0],
-                  playlist: results,
-                  position: 0
+                  channel : context.$item.data.channel,
+                  video : results[0],
+                  playlist : results,
+                  position : 0
                 });
               });
             } else {
               if ("channel" === context.$item.data.type) {
                 self.route(self.pages.main, {
-                  channel: context.$item.data
+                  channel : context.$item.data
                 });
               }
             }
           }
         },
-        "view:ready": function () {
+        "view:ready" : function() {
           clearTimeout(_takingTooLongTimeout);
           searchContactPanel.hide();
           this.show();
           this.focusIndex(0);
         }
       },
-      render: function (node, data) {
+      render : function(node, data) {
         var body;
         var n;
         var s;
@@ -6471,7 +6323,7 @@ function debug(content, type) {
     });
   })();
   context.exports = element;
-}, function (context, canCreateDiscussions, parse) {
+}, function(context, canCreateDiscussions, parse) {
   /**
    * @param {!Object} config
    * @return {undefined}
@@ -6491,28 +6343,27 @@ function debug(content, type) {
     config.className = "inputNative " + (config.className || "");
     b.call(this, config);
     this.init(config);
-    this.addListener("keydown", function (event) {
+    this.addListener("keydown", function(event) {
       if (event.code === options.back) {
         /** @type {boolean} */
         event.stop = true;
       }
     });
-    this.$body.addEventListener("input", function (canCreateDiscussions) {
+    this.$body.addEventListener("input", function(canCreateDiscussions) {
       that.value = that.$body.value;
       if (void 0 !== that.events["input"]) {
         that.emit("input", {
-          value: that.$body.value
+          value : that.$body.value
         });
       }
     });
-    this.addListener("focus", function () {
+    this.addListener("focus", function() {
       that.$body.focus();
     });
-    this.addListener("blur", function () {
+    this.addListener("blur", function() {
       that.$body.blur();
     });
   }
-
   var b = parse(31);
   var options = parse(13);
   /** @type {!Object} */
@@ -6523,7 +6374,7 @@ function debug(content, type) {
    * @param {!Object} data
    * @return {undefined}
    */
-  init.prototype.init = function (data) {
+  init.prototype.init = function(data) {
     if (void 0 !== data.type) {
       this.$body.type = this.type = data.type;
     }
@@ -6542,13 +6393,13 @@ function debug(content, type) {
    * @param {number} index
    * @return {undefined}
    */
-  init.prototype.addChar = function (char, index) {
+  init.prototype.addChar = function(char, index) {
     index = void 0 === index ? this.value.length : index;
     this.value = this.value.substring(0, index) + char + this.value.substring(index, this.value.length);
     this.$body.value = this.value;
     if (void 0 !== this.events["input"]) {
       this.emit("input", {
-        value: this.value
+        value : this.value
       });
     }
   };
@@ -6556,14 +6407,14 @@ function debug(content, type) {
    * @param {number} index
    * @return {undefined}
    */
-  init.prototype.removeChar = function (index) {
+  init.prototype.removeChar = function(index) {
     index = void 0 === index ? this.value.length - 1 : index;
     if (this.value.length > 0) {
       this.value = this.value.substring(0, index) + this.value.substring(index + 1, this.value.length);
       this.$body.value = this.value;
       if (void 0 !== this.events["input"]) {
         this.emit("input", {
-          value: this.value
+          value : this.value
         });
       }
     }
@@ -6573,34 +6424,34 @@ function debug(content, type) {
    * @param {number} start
    * @return {undefined}
    */
-  init.prototype.setCaretPosition = function (start) {
+  init.prototype.setCaretPosition = function(start) {
     this.$body.setSelectionRange(start, start);
   };
   /**
    * @return {?}
    */
-  init.prototype.getCaretPosition = function () {
+  init.prototype.getCaretPosition = function() {
     return this.$body.selectionStart;
   };
   /**
    * @param {string} value
    * @return {undefined}
    */
-  init.prototype.setValue = function (value) {
+  init.prototype.setValue = function(value) {
     if (this.value !== value) {
       /** @type {string} */
       this.value = value;
       this.$body.value = this.value;
       if (void 0 !== this.events["input"]) {
         this.emit("input", {
-          value: this.value
+          value : this.value
         });
       }
     }
   };
   /** @type {function(!Object): undefined} */
   context.exports = init;
-}, function (module, canCreateDiscussions, require) {
+}, function(module, canCreateDiscussions, require) {
   /**
    * @param {string} src
    * @return {?}
@@ -6692,23 +6543,23 @@ function debug(content, type) {
           o = cmp.indexOf("<", data);
           r = cmp.substring(data, o);
           items.push({
-            value: 1,
-            playlistId: playlistId,
-            channel: {
-              title: r.substr(0, 100),
-              id: name
+            value : 1,
+            playlistId : playlistId,
+            channel : {
+              title : r.substr(0, 100),
+              id : name
             },
-            title: h.substr(0, 100),
-            icon: awesomeIcon,
-            type: "playlist",
-            channelTitle: r.substr(0, 100),
-            viewCount: " ",
-            duration: " ",
-            publishedAt: " ",
-            locale: {
-              publishedAt: " ",
-              viewCount: " ",
-              channelTitle: r.substr(0, 100)
+            title : h.substr(0, 100),
+            icon : awesomeIcon,
+            type : "playlist",
+            channelTitle : r.substr(0, 100),
+            viewCount : " ",
+            duration : " ",
+            publishedAt : " ",
+            locale : {
+              publishedAt : " ",
+              viewCount : " ",
+              channelTitle : r.substr(0, 100)
             }
           });
         }
@@ -6738,23 +6589,23 @@ function debug(content, type) {
           }
           config = cmp.substring(data, o);
           items.push({
-            value: 1,
-            id: c,
-            channelTitle: r.substr(0, 100),
-            duration: hide ? "" : m.substr(0, 100),
-            realDuration: hide ? "" : m.substr(0, 100),
-            viewCount: config.substr(0, 100),
-            publishedAt: hide ? "" : sum.substr(0, 100),
-            dimension: "",
-            definition: "",
-            title: h.substr(0, 100),
-            icon: awesomeIcon,
-            channelId: name,
-            type: "video",
-            locale: {
-              publishedAt: hide ? "" : sum.substr(0, 100),
-              viewCount: config.substr(0, 100),
-              channelTitle: r.substr(0, 100)
+            value : 1,
+            id : c,
+            channelTitle : r.substr(0, 100),
+            duration : hide ? "" : m.substr(0, 100),
+            realDuration : hide ? "" : m.substr(0, 100),
+            viewCount : config.substr(0, 100),
+            publishedAt : hide ? "" : sum.substr(0, 100),
+            dimension : "",
+            definition : "",
+            title : h.substr(0, 100),
+            icon : awesomeIcon,
+            channelId : name,
+            type : "video",
+            locale : {
+              publishedAt : hide ? "" : sum.substr(0, 100),
+              viewCount : config.substr(0, 100),
+              channelTitle : r.substr(0, 100)
             }
           });
         }
@@ -6777,18 +6628,18 @@ function debug(content, type) {
           o = cmp.indexOf('"', data);
           n = cmp.substring(data, o);
           items.push({
-            value: 1,
-            id: name,
-            title: h.substr(0, 100),
-            icon: awesomeIcon,
-            type: "channel",
-            viewCount: "",
-            commentCount: "",
-            subscriberCount: n.substr(0, 100),
-            hiddenSubscriberCount: "",
-            videoCount: js.substr(0, 100),
-            locale: {
-              subscriberCount: n.substr(0, 100)
+            value : 1,
+            id : name,
+            title : h.substr(0, 100),
+            icon : awesomeIcon,
+            type : "channel",
+            viewCount : "",
+            commentCount : "",
+            subscriberCount : n.substr(0, 100),
+            hiddenSubscriberCount : "",
+            videoCount : js.substr(0, 100),
+            locale : {
+              subscriberCount : n.substr(0, 100)
             }
           });
         }
@@ -6796,7 +6647,6 @@ function debug(content, type) {
     }
     return items;
   }
-
   /**
    * @param {!Object} name
    * @return {undefined}
@@ -6808,7 +6658,6 @@ function debug(content, type) {
     this.searchQuery = "";
     this.filter(name);
   }
-
   var $ = require(49);
   var ajax = $.ajax;
   var NumericType = require(4);
@@ -6821,7 +6670,7 @@ function debug(content, type) {
    * @param {!Function} callback
    * @return {undefined}
    */
-  Router.prototype.getPage = function (page, callback) {
+  Router.prototype.getPage = function(page, callback) {
     var state = this;
     /** @type {number} */
     page.page = +page.page || 0;
@@ -6829,21 +6678,21 @@ function debug(content, type) {
       if (this.pages[page.page].cached) {
         callback(null, this.pages[page.page].data);
       } else {
-        ajax("get", "https://www.youtube.com" + this.pages[page.page].parseId, function (s, a) {
-          debug('RELEASE - Router.prototype.getPage ajax page > 0 (6833)');
+        ajax("get", "https://www.youtube.com" + this.pages[page.page].parseId, function(s, a) {
+          debug('Router.prototype.getPage 6586 youtube.com pardeId');
           var tokens;
           var j;
           var i;
           var resizewidth;
           return 200 !== a ? void callback({
-            message: "request got bad http status (" + a + ")"
+            message : "request got bad http status (" + a + ")"
           }, []) : (j = s.indexOf('class="branded-page-box search-pager'), i = s.indexOf('class="branded-page-v2-secondary-col', j), tokens = s.substring(j, i), tokens = tokens.split('<a href="'), tokens[tokens.length - 1] && tokens[tokens.length - 1].indexOf("\u00bb") !== -1 ? (j = tokens[tokens.length - 1].indexOf('href="/results?') + 6, i = tokens[tokens.length - 1].indexOf('"', j), resizewidth = tokens[tokens.length - 1].substring(j, i).replace("&amp;", "&")) : resizewidth = "", state.pages[page.page +
           1] = {
-            parseId: resizewidth,
-            cached: false
+            parseId : resizewidth,
+            cached : false
           }, tokens = s.slice(s.indexOf('id="item-section-'), s.indexOf('class="branded-page-box search-pager')), state.pages[page.page] = {
-            cached: true,
-            data: parse(tokens)
+            cached : true,
+            data : parse(tokens)
           }, void callback(null, state.pages[page.page].data));
         });
       }
@@ -6853,134 +6702,28 @@ function debug(content, type) {
           callback(null, []);
         } else {
           callback({
-            message: "wrong page number (page id not found in cache)"
+            message : "wrong page number (page id not found in cache)"
           }, []);
         }
       } else {
-        if (this.searchQuery.length) {
-          ajax("get", "https://www.youtube.com/results?&search_query=" + this.searchQuery, function (result, status) {
-            debug('RELEASE - Router.prototype.getPage search_query (6862)');
-            if (200 !== status) {
-              return window.core.notify({
-                title: "Request got bad http status (" + status + ")",
-                icon: "alert",
-                type: "warning",
-                timeout: 5E3
-              });
-            }
-
-            try {
-              var ytInitialData = result.match(/\["ytInitialData"] = ({.+});/);
-              ytInitialData = JSON.parse(ytInitialData[1]);
-              var contents = ytInitialData["contents"]["twoColumnSearchResultsRenderer"]["primaryContents"]["sectionListRenderer"]["contents"][0]["itemSectionRenderer"]["contents"];
-              var len = contents.length;
-              var items = [];
-              var item;
-              var thumbs_count;
-              var publishedAt;
-              var duration;
-              for (var i = 0; i < len; i++) {
-                if (contents[i].hasOwnProperty("videoRenderer")) {
-                  duration = contents[i]["videoRenderer"].hasOwnProperty("lengthText") ? contents[i]["videoRenderer"]["lengthText"]["simpleText"] : "";
-                  if (duration) {
-                    thumbs_count = contents[i]["videoRenderer"]["thumbnail"]["thumbnails"].length;
-                    publishedAt = contents[i]["videoRenderer"].hasOwnProperty("publishedTimeText") ? contents[i]["videoRenderer"]["publishedTimeText"]["simpleText"] : "";
-                    item = {
-                      value: 1,
-                      id: contents[i]["videoRenderer"]["videoId"],
-                      channelTitle: contents[i]["videoRenderer"]["longBylineText"]["runs"][0]["text"],
-                      duration: duration,
-                      realDuration: contents[i]["videoRenderer"]["lengthText"]["accessibility"]["accessibilityData"]["label"],
-                      viewCount: contents[i]["videoRenderer"]["viewCountText"]["simpleText"],
-                      publishedAt: publishedAt,
-                      //dimension: el.contentDetails.dimension,
-                      //definition: el.contentDetails.definition,
-                      title: contents[i]["videoRenderer"]["title"]["runs"][0]["text"],
-                      icon: contents[i]["videoRenderer"]["thumbnail"]["thumbnails"][thumbs_count - 1]["url"],
-                      channelId: contents[i]["videoRenderer"]["longBylineText"]["runs"][0]["navigationEndpoint"]["browseEndpoint"]["browseId"],
-                      type: "video",
-                      locale: {
-                        publishedAt: publishedAt,
-                        viewCount: contents[i]["videoRenderer"]["viewCountText"]["simpleText"],
-                        channelTitle: contents[i]["videoRenderer"]["longBylineText"]["runs"][0]["text"]
-                      }
-                    };
-                    items.push(item);
-                  }
-                } else if (contents[i].hasOwnProperty("shelfRenderer")) {
-                  var items2 = contents[i]["shelfRenderer"]["content"]["verticalListRenderer"]["items"];
-                  var len2 = items2.length;
-                  for (var j = 0; j < len2; j++) {
-                    if (items2[j].hasOwnProperty("videoRenderer")) {
-                      duration = items2[j]["videoRenderer"].hasOwnProperty("lengthText") ? items2[j]["videoRenderer"]["lengthText"]["simpleText"] : "";
-                      if (duration) {
-                        thumbs_count = items2[j]["videoRenderer"]["thumbnail"]["thumbnails"].length;
-                        publishedAt = items2[j]["videoRenderer"].hasOwnProperty("publishedTimeText") ? items2[j]["videoRenderer"]["publishedTimeText"]["simpleText"] : "";
-                        item = {
-                          value: 1,
-                          id: items2[j]["videoRenderer"]["videoId"],
-                          channelTitle: items2[j]["videoRenderer"]["longBylineText"]["runs"][0]["text"],
-                          duration: duration,
-                          realDuration: items2[j]["videoRenderer"]["lengthText"]["accessibility"]["accessibilityData"]["label"],
-                          viewCount: items2[j]["videoRenderer"]["viewCountText"]["simpleText"],
-                          publishedAt: publishedAt,
-                          //dimension: el.contentDetails.dimension,
-                          //definition: el.contentDetails.definition,
-                          title: items2[j]["videoRenderer"]["title"]["runs"][0]["text"],
-                          icon: items2[j]["videoRenderer"]["thumbnail"]["thumbnails"][thumbs_count - 1]["url"],
-                          channelId: items2[j]["videoRenderer"]["longBylineText"]["runs"][0]["navigationEndpoint"]["browseEndpoint"]["browseId"],
-                          type: "video",
-                          locale: {
-                            publishedAt: publishedAt,
-                            viewCount: items2[j]["videoRenderer"]["viewCountText"]["simpleText"],
-                            channelTitle: items2[j]["videoRenderer"]["longBylineText"]["runs"][0]["text"]
-                          }
-                        };
-                        items.push(item);
-                      }
-                    }
-                  }
-                }
-              }
-
-              state.pages[page.page + 1] = {
-                parseId: items.length,
-                cached: false
-              };
-              state.pages[0] = {
-                cached: true,
-                parseId: "/results?search_query=" + state.searchQuery,
-                data: items
-              };
-              void callback(null, state.pages[0].data);
-            } catch (er) {
-              debug('RELEASE - (6957) ' + er);
-              return window.core.notify({
-                title: er,
-                icon: "alert",
-                type: "warning",
-                timeout: 5E3
-              });
-            }
-            /*
-            var tokens;
-            var j;
-            var i;
-            var resizewidth;
-            return 200 !== status ? void callback({
-              message: "request got bad http status (" + status + ")"
-            }, []) : (j = result.indexOf('class="branded-page-box search-pager'), i = result.indexOf('class="branded-page-v2-secondary-col', j), tokens = result.substring(j, i), tokens = tokens.split('<a href="'), tokens[tokens.length - 1] && tokens[tokens.length - 1].indexOf("\u00bb") !== -1 ? (j = tokens[tokens.length - 1].indexOf('href="/results?') + 6, i = tokens[tokens.length - 1].indexOf('"', j), resizewidth = tokens[tokens.length - 1].substring(j, i).replace("&amp;", "&")) : resizewidth = "", state.pages[page.page +
-            1] = {
-              parseId: resizewidth,
-              cached: false
-            }, tokens = result.slice(result.indexOf('id="item-section-'), result.indexOf('class="branded-page-box search-pager')), state.pages[0] = {
-              cached: true,
-              parseId: "/results?search_query=" + state.searchQuery,
-              data: parse(tokens)
-            }, void callback(null, state.pages[0].data));
-            */
-          });
-        }
+        ajax("get", "https://www.youtube.com/results?search_query=" + this.searchQuery, function(s, a) {
+          debug('Router.prototype.getPage 6614 youtube.com search_query');
+          var tokens;
+          var j;
+          var i;
+          var resizewidth;
+          return 200 !== a ? void callback({
+            message : "request got bad http status (" + a + ")"
+          }, []) : (j = s.indexOf('class="branded-page-box search-pager'), i = s.indexOf('class="branded-page-v2-secondary-col', j), tokens = s.substring(j, i), tokens = tokens.split('<a href="'), tokens[tokens.length - 1] && tokens[tokens.length - 1].indexOf("\u00bb") !== -1 ? (j = tokens[tokens.length - 1].indexOf('href="/results?') + 6, i = tokens[tokens.length - 1].indexOf('"', j), resizewidth = tokens[tokens.length - 1].substring(j, i).replace("&amp;", "&")) : resizewidth = "", state.pages[page.page +
+          1] = {
+            parseId : resizewidth,
+            cached : false
+          }, tokens = s.slice(s.indexOf('id="item-section-'), s.indexOf('class="branded-page-box search-pager')), state.pages[0] = {
+            cached : true,
+            parseId : "/results?search_query=" + state.searchQuery,
+            data : parse(tokens)
+          }, void callback(null, state.pages[0].data));
+        });
       }
     }
   };
@@ -6988,14 +6731,14 @@ function debug(content, type) {
    * @param {!Function} params
    * @return {?}
    */
-  Router.prototype.filter = function (params) {
+  Router.prototype.filter = function(params) {
     /** @type {boolean} */
     var t = false;
     return void 0 !== params.searchQuery && this.searchQuery !== params.searchQuery && (t = true, this.searchQuery = params.searchQuery), !!t && (this.pages = {}, this.emit("content:changed", params), true);
   };
   /** @type {function(!Object): undefined} */
   module.exports = Router;
-}, function (module, canCreateDiscussions, require) {
+}, function(module, canCreateDiscussions, require) {
   /**
    * @param {string} fn
    * @param {number} name
@@ -7035,23 +6778,23 @@ function debug(content, type) {
           end = template_string.indexOf('"', index);
           str = template_string.substring(index, end);
           arr.push({
-            value: 1,
-            id: token,
-            channelTitle: str,
-            duration: " ",
-            realDuration: " ",
-            viewCount: " ",
-            publishedAt: " ",
-            dimension: "",
-            definition: "",
-            title: text,
-            icon: awesomeIcon,
-            channelId: name,
-            type: "video",
-            locale: {
-              publishedAt: " ",
-              viewCount: " ",
-              channelTitle: str
+            value : 1,
+            id : token,
+            channelTitle : str,
+            duration : " ",
+            realDuration : " ",
+            viewCount : " ",
+            publishedAt : " ",
+            dimension : "",
+            definition : "",
+            title : text,
+            icon : awesomeIcon,
+            channelId : name,
+            type : "video",
+            locale : {
+              publishedAt : " ",
+              viewCount : " ",
+              channelTitle : str
             }
           });
         }
@@ -7059,7 +6802,6 @@ function debug(content, type) {
     }
     return arr;
   }
-
   /**
    * @return {undefined}
    */
@@ -7069,7 +6811,6 @@ function debug(content, type) {
     /** @type {null} */
     this.playlistId = null;
   }
-
   var $ = require(49);
   var ajax = $.ajax;
   var NumericType = require(4);
@@ -7082,199 +6823,199 @@ function debug(content, type) {
    * @param {!Function} callback
    * @return {?}
    */
-  Router.prototype.getPage = function (data, callback) {
+  Router.prototype.getPage = function(data, callback) {
     var childSection = this;
-    return data.page = data.page || 0, data.playlistId ? (data.playlistId !== this.playlistId && (this.playlistId = data.playlistId, this.pages = {}), data.page ? void callback(null, []) : void (this.pages[0] ? callback(null, this.pages[0].data) : ajax("get", "https://www.youtube.com" + data.playlistId, function (s, a) {
-      debug('RELEASE - Router.prototype.getPage (7088)');
+    return data.page = data.page || 0, data.playlistId ? (data.playlistId !== this.playlistId && (this.playlistId = data.playlistId, this.pages = {}), data.page ? void callback(null, []) : void(this.pages[0] ? callback(null, this.pages[0].data) : ajax("get", "https://www.youtube.com" + data.playlistId, function(s, a) {
+      console.log('Router.prototype.getPage 6733 youtube.com playList');
       var e;
       var j;
       var i;
       var track;
       return 200 !== a ? void callback({
-        message: "request got bad http status (" + a + ")"
+        message : "request got bad http status (" + a + ")"
       }, []) : (j = s.indexOf('<a href="/channel/') + 10, i = s.indexOf('"', j), track = s.substring(j, i), j = s.indexOf('id="playlist-autoscroll-list"'), i = s.indexOf('id="placeholder-player"', j), e = s.slice(j, i), childSection.pages[0] = {
-        cached: true,
-        parseId: data.playlistId.replace(/&amp;/g, "&"),
-        data: resolve(e, track)
+        cached : true,
+        parseId : data.playlistId.replace(/&amp;/g, "&"),
+        data : resolve(e, track)
       }, void callback(null, childSection.pages[0].data));
     }))) : void callback({
-      message: "error: field arguments[0].playlistId is empty"
+      message : "error: field arguments[0].playlistId is empty"
     }, []);
   };
   /**
    * @return {?}
    */
-  Router.prototype.filter = function () {
+  Router.prototype.filter = function() {
     return false;
   };
   /** @type {function(): undefined} */
   module.exports = Router;
-}, function (mixin, canCreateDiscussions) {
+}, function(mixin, canCreateDiscussions) {
   /**
    * @param {!Function} _
    * @param {?} t
    * @return {?}
    */
-  mixin.exports = function (_, t) {
+  mixin.exports = function(_, t) {
     var redrawTimeout;
-    return function () {
+    return function() {
       var andClause = this;
       /** @type {!Arguments} */
       var others = arguments;
       clearTimeout(redrawTimeout);
       /** @type {number} */
-      redrawTimeout = setTimeout(function () {
+      redrawTimeout = setTimeout(function() {
         /** @type {null} */
         redrawTimeout = null;
         _.apply(andClause, others);
       }, t);
     };
   };
-}, function (blob, canCreateDiscussions, unescape) {
+}, function(blob, canCreateDiscussions, unescape) {
   var $first;
   var v = unescape(1);
   var ContentBlock = unescape(63);
   var path = unescape(42);
   var n = unescape(15);
   var content = new ContentBlock({
-    $node: document.getElementById("psKeyboard"),
-    className: "keyList",
-    cycleY: false,
-    events: {
-      "click:item": function (context) {
+    $node : document.getElementById("psKeyboard"),
+    className : "keyList",
+    cycleY : false,
+    events : {
+      "click:item" : function(context) {
         if (context.$item.data.className.indexOf("keyGlobe") !== -1) {
           v.settings.keyboardLanguage = path.nextLang(v.settings.keyboardLanguage);
           /** @type {null} */
           this.viewIndex = null;
           this.init({
-            data: unescape(65)("./" + n.languages[v.settings.keyboardLanguage])
+            data : unescape(65)("./" + n.languages[v.settings.keyboardLanguage])
           });
           this.focusItem($first);
           window.top.gSTB.SetInputLang(n.languages[v.settings.keyboardLanguage]);
         } else {
           if (context.$item.data.className.indexOf("nums") !== -1) {
             this.init({
-              data: [[{
-                value: "1",
-                className: "symbol"
+              data : [[{
+                value : "1",
+                className : "symbol"
               }, {
-                value: "2",
-                className: "symbol"
+                value : "2",
+                className : "symbol"
               }, {
-                value: "3",
-                className: "symbol"
+                value : "3",
+                className : "symbol"
               }, {
-                value: "^",
-                className: "symbol"
+                value : "^",
+                className : "symbol"
               }, {
-                value: "`",
-                className: "symbol"
+                value : "`",
+                className : "symbol"
               }, {
-                value: "!",
-                className: "symbol"
+                value : "!",
+                className : "symbol"
               }, {
-                value: "#",
-                className: "symbol"
+                value : "#",
+                className : "symbol"
               }, {
-                value: "$",
-                className: "symbol"
+                value : "$",
+                className : "symbol"
               }, {
-                value: "%",
-                className: "symbol"
+                value : "%",
+                className : "symbol"
               }], [{
-                value: "4",
-                className: "symbol"
+                value : "4",
+                className : "symbol"
               }, {
-                value: "5",
-                className: "symbol"
+                value : "5",
+                className : "symbol"
               }, {
-                value: "6",
-                className: "symbol"
+                value : "6",
+                className : "symbol"
               }, {
-                value: "&",
-                className: "symbol"
+                value : "&",
+                className : "symbol"
               }, {
-                value: "(",
-                className: "symbol"
+                value : "(",
+                className : "symbol"
               }, {
-                value: ")",
-                className: "symbol"
+                value : ")",
+                className : "symbol"
               }, {
-                value: "*",
-                className: "symbol"
+                value : "*",
+                className : "symbol"
               }, {
-                value: ";",
-                className: "symbol"
+                value : ";",
+                className : "symbol"
               }, {
-                value: ":",
-                className: "symbol"
+                value : ":",
+                className : "symbol"
               }], [{
-                value: "7",
-                className: "symbol"
+                value : "7",
+                className : "symbol"
               }, {
-                value: "8",
-                className: "symbol"
+                value : "8",
+                className : "symbol"
               }, {
-                value: "9",
-                className: "symbol"
+                value : "9",
+                className : "symbol"
               }, {
-                value: "~",
-                className: "symbol"
+                value : "~",
+                className : "symbol"
               }, {
-                value: "/",
-                className: "symbol"
+                value : "/",
+                className : "symbol"
               }, {
-                value: "|",
-                className: "symbol"
+                value : "|",
+                className : "symbol"
               }, {
-                value: "%",
-                className: "symbol"
+                value : "%",
+                className : "symbol"
               }, {
-                value: ":",
-                className: "symbol"
+                value : ":",
+                className : "symbol"
               }, {
-                value: "?",
-                className: "symbol"
+                value : "?",
+                className : "symbol"
               }], [{
-                value: "\u2116",
-                className: "symbol"
+                value : "\u2116",
+                className : "symbol"
               }, {
-                value: "0",
-                className: "symbol"
+                value : "0",
+                className : "symbol"
               }, {
-                value: "[",
-                className: "symbol"
+                value : "[",
+                className : "symbol"
               }, {
-                value: "]",
-                className: "symbol"
+                value : "]",
+                className : "symbol"
               }, {
-                value: '"',
-                className: "symbol"
+                value : '"',
+                className : "symbol"
               }, {
-                value: "'",
-                className: "symbol"
+                value : "'",
+                className : "symbol"
               }, {
-                value: "{",
-                className: "symbol"
+                value : "{",
+                className : "symbol"
               }, {
-                value: "}",
-                className: "symbol"
+                value : "}",
+                className : "symbol"
               }, {
-                value: "ABC",
-                className: "symbol letters"
+                value : "ABC",
+                className : "symbol letters"
               }]]
             });
           } else {
             if (context.$item.data.className.indexOf("letters") !== -1) {
               this.init({
-                data: unescape(65)("./" + n.languages[v.settings.keyboardLanguage])
+                data : unescape(65)("./" + n.languages[v.settings.keyboardLanguage])
               });
             }
           }
         }
       }
     },
-    render: function (fn, el) {
+    render : function(fn, el) {
       if ("keyGlobe" === el.className) {
         fn.innerHTML = n.languagesCodeLocalized[v.settings.keyboardLanguage];
         /** @type {!Object} */
@@ -7287,15 +7028,15 @@ function debug(content, type) {
         fn.className = "item " + el.className;
       }
     },
-    data: unescape(65)("./" + n.languages[v.settings.keyboardLanguage])
+    data : unescape(65)("./" + n.languages[v.settings.keyboardLanguage])
   });
   window.top.gSTB.SetInputLang(n.languages[v.settings.keyboardLanguage]);
   blob.exports = content;
-}, function (module, canCreateDiscussions, factory) {
+}, function(module, canCreateDiscussions, factory) {
   module.exports = factory(64);
   /** @type {string} */
   module.exports.prototype.name = "stb-component-grid";
-}, function (module, canCreateDiscussions, d3MapProjection) {
+}, function(module, canCreateDiscussions, d3MapProjection) {
   /**
    * @param {!Object} config
    * @return {undefined}
@@ -7319,7 +7060,6 @@ function debug(content, type) {
     b.call(this, config);
     this.init(config);
   }
-
   /**
    * @param {!Array} object
    * @return {?}
@@ -7340,40 +7080,46 @@ function debug(content, type) {
           options.rowSpan = options.rowSpan || 1;
         } else {
           options = object[idx][i] = {
-            value: object[idx][i],
-            colSpan: 1,
-            rowSpan: 1
+            value : object[idx][i],
+            colSpan : 1,
+            rowSpan : 1
           };
         }
       }
     }
     return object;
   }
-
   /**
    * @param {!Array} data
-   * @param {number} row
-   * @param {number} col
-   * @param {number} colSpan
-   * @param {number} rowSpan
+   * @param {number} i
+   * @param {number} x
+   * @param {number} y
+   * @param {number} l
    * @param {!Object} a
    * @return {undefined}
    */
-  function drawLine(data, row, col, colSpan, rowSpan, a) {
-    for (var c = col; c < col + rowSpan; c++) {
+  function drawLine(data, i, x, y, l, a) {
+    var c;
+    var l;
+    /** @type {number} */
+    c = x;
+    for (; c < x + l; c++) {
       if (data.length < c + 1) {
         data.push([]);
       }
-      /*for (; void 0 !== data[c][row];) {
-        row++;
-      }*/
-      for (rowSpan = row; rowSpan < row + colSpan; rowSpan++) {
-        if (data[c].length < rowSpan + 1) {
+      for (; void 0 !== data[c][i];) {
+        i++;
+      }
+      /** @type {number} */
+      l = i;
+      for (; l < i + y; l++) {
+        if (data[c].length < l + 1) {
           data[c].push();
         }
-        data[c][rowSpan] = a;
+        /** @type {!Object} */
+        data[c][l] = a;
         if (void 0 === a.x) {
-          a.x = rowSpan;
+          a.x = l;
         }
         if (void 0 === a.y) {
           a.y = c;
@@ -7381,18 +7127,22 @@ function debug(content, type) {
       }
     }
   }
-
   /**
    * @param {!Array} events
    * @return {?}
    */
   function clone(events) {
+    var e;
+    var i;
     var item;
     /** @type {!Array} */
     var result = [];
-
-    for (var e = 0; e < events.length; e++) {
-      for (var i = 0; i < events[e].length; i++) {
+    /** @type {number} */
+    e = 0;
+    for (; e < events.length; e++) {
+      /** @type {number} */
+      i = 0;
+      for (; i < events[e].length; i++) {
         item = events[e][i];
         drawLine(result, i, e, item.colSpan, item.rowSpan, item.$item);
         delete item.$item;
@@ -7400,7 +7150,6 @@ function debug(content, type) {
     }
     return result;
   }
-
   var b = d3MapProjection(24);
   var c = d3MapProjection(14);
   /** @type {!Object} */
@@ -7414,13 +7163,13 @@ function debug(content, type) {
    * @param {!Object} args
    * @return {undefined}
    */
-  Node.prototype.renderItemDefault = function (val, args) {
+  Node.prototype.renderItemDefault = function(val, args) {
     val.innerText = args.value;
   };
   /** @type {function(!Object, !Object): undefined} */
   Node.prototype.renderItem = Node.prototype.renderItemDefault;
   Node.prototype.defaultEvents = {
-    mousewheel: function (event) {
+    mousewheel : function(event) {
       if (event.wheelDeltaY) {
         this.move(event.wheelDeltaY > 0 ? c.up : c.down);
       }
@@ -7428,8 +7177,8 @@ function debug(content, type) {
         this.move(event.wheelDeltaX > 0 ? c.left : c.right);
       }
     },
-    keydown: function (event) {
-      switch (event.code) {
+    keydown : function(event) {
+      switch(event.code) {
         case c.up:
         case c.down:
         case c.right:
@@ -7439,8 +7188,8 @@ function debug(content, type) {
         case c.enter:
           if (this.events["click:item"]) {
             this.emit("click:item", {
-              $item: this.$focusItem,
-              event: event
+              $item : this.$focusItem,
+              event : event
             });
           }
       }
@@ -7450,7 +7199,7 @@ function debug(content, type) {
    * @param {!Object} options
    * @return {undefined}
    */
-  Node.prototype.init = function (options) {
+  Node.prototype.init = function(options) {
     var t;
     var i;
     var row;
@@ -7466,13 +7215,13 @@ function debug(content, type) {
      * @param {string} event
      * @return {undefined}
      */
-    var update = function (event) {
+    var update = function(event) {
       if (this.data.disable !== true) {
         self.focusItem(this);
         if (self.events["click:item"]) {
           self.emit("click:item", {
-            $item: this,
-            event: event
+            $item : this,
+            event : event
           });
         }
       }
@@ -7481,7 +7230,7 @@ function debug(content, type) {
      * @param {string} data
      * @return {undefined}
      */
-    var render = function (data) {
+    var render = function(data) {
       if (data && self.data !== data && (self.data = data, result = true), options.render && self.renderItem !== options.render && (self.renderItem = options.render, result = true), result) {
         /** @type {!Element} */
         self.$table = document.createElement("table");
@@ -7544,7 +7293,7 @@ function debug(content, type) {
       this.translate = options.translate;
     }
     if (options.provider) {
-      fresh = this.provider.get(null, function (imageInfoItem, c) {
+      fresh = this.provider.get(null, function(imageInfoItem, c) {
         if (imageInfoItem && self.events["data:error"]) {
           self.emit("data:error", imageInfoItem);
         }
@@ -7555,7 +7304,7 @@ function debug(content, type) {
       });
       if (this.events["data:get"]) {
         this.emit("data:get", {
-          fresh: fresh
+          fresh : fresh
         });
       }
     } else {
@@ -7566,7 +7315,7 @@ function debug(content, type) {
    * @param {!Object} d
    * @return {?}
    */
-  Node.prototype.defaultTranslate = function (d) {
+  Node.prototype.defaultTranslate = function(d) {
     var id;
     var i;
     var dd;
@@ -7593,7 +7342,7 @@ function debug(content, type) {
    * @param {string} type
    * @return {undefined}
    */
-  Node.prototype.move = function (type) {
+  Node.prototype.move = function(type) {
     var fresh;
     var y = this.focusX;
     var x = this.focusY;
@@ -7604,15 +7353,18 @@ function debug(content, type) {
     /** @type {boolean} */
     var cycle = false;
     for (; s;) {
-      switch (type) {
+      switch(type) {
         case c.up:
           if (x > 0) {
             x--;
           } else {
             if (this.cycleY) {
+              /** @type {number} */
               x = this.map.length - 1;
+              /** @type {boolean} */
               cycle = true;
             }
+            /** @type {boolean} */
             a = true;
           }
           break;
@@ -7621,9 +7373,12 @@ function debug(content, type) {
             x++;
           } else {
             if (this.cycleY) {
+              /** @type {number} */
               x = 0;
+              /** @type {boolean} */
               cycle = true;
             }
+            /** @type {boolean} */
             a = true;
           }
           break;
@@ -7632,9 +7387,12 @@ function debug(content, type) {
             y++;
           } else {
             if (this.cycleX) {
+              /** @type {number} */
               y = 0;
+              /** @type {boolean} */
               cycle = true;
             }
+            /** @type {boolean} */
             a = true;
           }
           break;
@@ -7643,20 +7401,25 @@ function debug(content, type) {
             y--;
           } else {
             if (this.cycleX) {
+              /** @type {number} */
               y = this.map[x].length - 1;
+              /** @type {boolean} */
               cycle = true;
             }
+            /** @type {boolean} */
             a = true;
           }
-          break;
       }
       if (y === this.focusX && x === this.focusY) {
+        /** @type {boolean} */
         s = false;
       }
       if (this.map[x][y] !== this.map[this.focusY][this.focusX] && this.map[x][y].data.disable !== true) {
+        /** @type {boolean} */
         s = false;
       }
       if (a) {
+        /** @type {boolean} */
         s = false;
         if (this.map[x][y].data.disable === true) {
           y = this.focusX;
@@ -7669,7 +7432,7 @@ function debug(content, type) {
     this.focusY = x;
     if (a) {
       if (this.provider) {
-        fresh = this.provider.get(type, function (imageInfoItem, t) {
+        fresh = this.provider.get(type, function(imageInfoItem, t) {
           var collectionName;
           var i;
           if (imageInfoItem && self.events["data:error"]) {
@@ -7693,14 +7456,14 @@ function debug(content, type) {
         });
         if (this.events["data:get"]) {
           this.emit("data:get", {
-            fresh: fresh
+            fresh : fresh
           });
         }
       }
       if (this.events["overflow"]) {
         this.emit("overflow", {
-          direction: type,
-          cycle: cycle
+          direction : type,
+          cycle : cycle
         });
       }
     }
@@ -7709,13 +7472,13 @@ function debug(content, type) {
    * @param {!Object} item
    * @return {?}
    */
-  Node.prototype.focusItem = function (item) {
+  Node.prototype.focusItem = function(item) {
     var x = this.$focusItem;
     return !(!item || x === item || item.data.disable === true) && (null !== x && (x.classList.remove("focus"), this.events["blur:item"] && this.emit("blur:item", {
-      $item: x
+      $item : x
     })), this.focusX = item.x, this.focusY = item.y, this.$focusItem = item, item.classList.add("focus"), this.events["focus:item"] && this.emit("focus:item", {
-      $prev: x,
-      $curr: item
+      $prev : x,
+      $curr : item
     }), true);
   };
   /**
@@ -7723,7 +7486,7 @@ function debug(content, type) {
    * @param {number} options
    * @return {undefined}
    */
-  Node.prototype.markItem = function (index, options) {
+  Node.prototype.markItem = function(index, options) {
     if (options) {
       index.classList.add("mark");
     } else {
@@ -7734,7 +7497,7 @@ function debug(content, type) {
   };
   /** @type {function(!Object): undefined} */
   module.exports = Node;
-}, function (context, canCreateDiscussions, func) {
+}, function(context, canCreateDiscussions, func) {
   /**
    * @param {!Object} val
    * @return {?}
@@ -7742,33 +7505,31 @@ function debug(content, type) {
   function result(val) {
     return func(resolve(val));
   }
-
   /**
    * @param {!Object} x
    * @return {?}
    */
   function resolve(x) {
-    return schemasValue[x] || function () {
+    return schemasValue[x] || function() {
       throw new Error("Cannot find module '" + x + "'.");
     }();
   }
-
   var schemasValue = {
-    "./ar": 66,
-    "./ar.js": 66,
-    "./de": 67,
-    "./de.js": 67,
-    "./en": 68,
-    "./en.js": 68,
-    "./ru": 69,
-    "./ru.js": 69,
-    "./uk": 70,
-    "./uk.js": 70
+    "./ar" : 66,
+    "./ar.js" : 66,
+    "./de" : 67,
+    "./de.js" : 67,
+    "./en" : 68,
+    "./en.js" : 68,
+    "./ru" : 69,
+    "./ru.js" : 69,
+    "./uk" : 70,
+    "./uk.js" : 70
   };
   /**
    * @return {?}
    */
-  result.keys = function () {
+  result.keys = function() {
     return Object.keys(schemasValue);
   };
   /** @type {function(!Object): ?} */
@@ -7777,625 +7538,625 @@ function debug(content, type) {
   context.exports = result;
   /** @type {number} */
   result.id = 65;
-}, function (mixin, canCreateDiscussions) {
+}, function(mixin, canCreateDiscussions) {
   /** @type {!Array} */
   mixin.exports = [[{
-    value: "\u0636",
-    className: "symbol"
+    value : "\u0636",
+    className : "symbol"
   }, {
-    value: "\u0635",
-    className: "symbol"
+    value : "\u0635",
+    className : "symbol"
   }, {
-    value: "\u062b",
-    className: "symbol"
+    value : "\u062b",
+    className : "symbol"
   }, {
-    value: "\u0642",
-    className: "symbol"
+    value : "\u0642",
+    className : "symbol"
   }, {
-    value: "\u0641",
-    className: "symbol"
+    value : "\u0641",
+    className : "symbol"
   }, {
-    value: "\u063a",
-    className: "symbol"
+    value : "\u063a",
+    className : "symbol"
   }, {
-    value: "\u0639",
-    className: "symbol"
+    value : "\u0639",
+    className : "symbol"
   }, {
-    value: "\u0647",
-    className: "symbol"
+    value : "\u0647",
+    className : "symbol"
   }, {
-    value: "\u062e",
-    className: "symbol"
+    value : "\u062e",
+    className : "symbol"
   }, {
-    value: "\u062d",
-    className: "symbol"
+    value : "\u062d",
+    className : "symbol"
   }, {
-    value: "\u062c",
-    className: "symbol"
+    value : "\u062c",
+    className : "symbol"
   }, {
-    value: "Delete",
-    className: "symbol delete wide",
-    colSpan: 2
+    value : "Delete",
+    className : "symbol delete wide",
+    colSpan : 2
   }, {
-    value: "&nbsp;",
-    className: "icon keyDelete"
+    value : "&nbsp;",
+    className : "icon keyDelete"
   }], [{
-    value: "\u062f",
-    className: "symbol"
+    value : "\u062f",
+    className : "symbol"
   }, {
-    value: "\u0634",
-    className: "symbol"
+    value : "\u0634",
+    className : "symbol"
   }, {
-    value: "\u0633",
-    className: "symbol"
+    value : "\u0633",
+    className : "symbol"
   }, {
-    value: "\u064a",
-    className: "symbol"
+    value : "\u064a",
+    className : "symbol"
   }, {
-    value: "\u0628",
-    className: "symbol"
+    value : "\u0628",
+    className : "symbol"
   }, {
-    value: "\u0644",
-    className: "symbol"
+    value : "\u0644",
+    className : "symbol"
   }, {
-    value: "\u0627",
-    className: "symbol"
+    value : "\u0627",
+    className : "symbol"
   }, {
-    value: "\u062a",
-    className: "symbol"
+    value : "\u062a",
+    className : "symbol"
   }, {
-    value: "\u0646",
-    className: "symbol"
+    value : "\u0646",
+    className : "symbol"
   }, {
-    value: "\u0630",
-    className: "symbol"
+    value : "\u0630",
+    className : "symbol"
   }, {
-    value: "\u0645",
-    className: "symbol"
+    value : "\u0645",
+    className : "symbol"
   }, {
-    value: "\u0643",
-    className: "symbol"
+    value : "\u0643",
+    className : "symbol"
   }, {
-    value: "123",
-    className: "symbol nums wide"
+    value : "123",
+    className : "symbol nums wide"
   }, {
-    value: "&nbsp;",
-    className: "keyGlobe"
+    value : "&nbsp;",
+    className : "keyGlobe"
   }], [{
-    value: "\u0637",
-    className: "symbol"
+    value : "\u0637",
+    className : "symbol"
   }, {
-    value: "\u0626",
-    className: "symbol"
+    value : "\u0626",
+    className : "symbol"
   }, {
-    value: "\u0621",
-    className: "symbol"
+    value : "\u0621",
+    className : "symbol"
   }, {
-    value: "\u0624",
-    className: "symbol"
+    value : "\u0624",
+    className : "symbol"
   }, {
-    value: "\u0631",
-    className: "symbol"
+    value : "\u0631",
+    className : "symbol"
   }, {
-    value: "\u0644\u0627",
-    className: "symbol"
+    value : "\u0644\u0627",
+    className : "symbol"
   }, {
-    value: "\u0649",
-    className: "symbol"
+    value : "\u0649",
+    className : "symbol"
   }, {
-    value: "\u0629",
-    className: "symbol"
+    value : "\u0629",
+    className : "symbol"
   }, {
-    value: "\u0648",
-    className: "symbol"
+    value : "\u0648",
+    className : "symbol"
   }, {
-    value: "\u0632",
-    className: "symbol"
+    value : "\u0632",
+    className : "symbol"
   }, {
-    value: "\u0638",
-    className: "symbol"
+    value : "\u0638",
+    className : "symbol"
   }, {
-    value: "&nbsp;",
-    className: "icon keySpace",
-    colSpan: 3
+    value : "&nbsp;",
+    className : "icon keySpace",
+    colSpan : 3
   }]];
-}, function (mixin, canCreateDiscussions) {
+}, function(mixin, canCreateDiscussions) {
   /** @type {!Array} */
   mixin.exports = [[{
-    value: "q",
-    className: "symbol"
+    value : "q",
+    className : "symbol"
   }, {
-    value: "w",
-    className: "symbol"
+    value : "w",
+    className : "symbol"
   }, {
-    value: "e",
-    className: "symbol"
+    value : "e",
+    className : "symbol"
   }, {
-    value: "r",
-    className: "symbol"
+    value : "r",
+    className : "symbol"
   }, {
-    value: "t",
-    className: "symbol"
+    value : "t",
+    className : "symbol"
   }, {
-    value: "z",
-    className: "symbol"
+    value : "z",
+    className : "symbol"
   }, {
-    value: "u",
-    className: "symbol"
+    value : "u",
+    className : "symbol"
   }, {
-    value: "i",
-    className: "symbol"
+    value : "i",
+    className : "symbol"
   }, {
-    value: "o",
-    className: "symbol"
+    value : "o",
+    className : "symbol"
   }, {
-    value: "p",
-    className: "symbol"
+    value : "p",
+    className : "symbol"
   }, {
-    value: "\u00fc",
-    className: "symbol"
+    value : "\u00fc",
+    className : "symbol"
   }, {
-    value: "&nbsp;",
-    className: "icon keyDelete",
-    colSpan: 2
+    value : "&nbsp;",
+    className : "icon keyDelete",
+    colSpan : 2
   }], [{
-    value: "a",
-    className: "symbol"
+    value : "a",
+    className : "symbol"
   }, {
-    value: "s",
-    className: "symbol"
+    value : "s",
+    className : "symbol"
   }, {
-    value: "d",
-    className: "symbol"
+    value : "d",
+    className : "symbol"
   }, {
-    value: "f",
-    className: "symbol"
+    value : "f",
+    className : "symbol"
   }, {
-    value: "g",
-    className: "symbol"
+    value : "g",
+    className : "symbol"
   }, {
-    value: "h",
-    className: "symbol"
+    value : "h",
+    className : "symbol"
   }, {
-    value: "j",
-    className: "symbol"
+    value : "j",
+    className : "symbol"
   }, {
-    value: "k",
-    className: "symbol"
+    value : "k",
+    className : "symbol"
   }, {
-    value: "l",
-    className: "symbol"
+    value : "l",
+    className : "symbol"
   }, {
-    value: "\u00f6",
-    className: "symbol"
+    value : "\u00f6",
+    className : "symbol"
   }, {
-    value: "\u00e4",
-    className: "symbol"
+    value : "\u00e4",
+    className : "symbol"
   }, {
-    value: "Delete",
-    className: "symbol delete",
-    colSpan: 2
+    value : "Delete",
+    className : "symbol delete",
+    colSpan : 2
   }], [{
-    value: "y",
-    className: "symbol"
+    value : "y",
+    className : "symbol"
   }, {
-    value: "x",
-    className: "symbol"
+    value : "x",
+    className : "symbol"
   }, {
-    value: "c",
-    className: "symbol"
+    value : "c",
+    className : "symbol"
   }, {
-    value: "v",
-    className: "symbol"
+    value : "v",
+    className : "symbol"
   }, {
-    value: "b",
-    className: "symbol"
+    value : "b",
+    className : "symbol"
   }, {
-    value: "n",
-    className: "symbol"
+    value : "n",
+    className : "symbol"
   }, {
-    value: "m",
-    className: "symbol"
+    value : "m",
+    className : "symbol"
   }, {
-    value: ".",
-    className: "symbol"
+    value : ".",
+    className : "symbol"
   }, {
-    value: ",",
-    className: "symbol"
+    value : ",",
+    className : "symbol"
   }, {
-    value: "/",
-    className: "symbol"
+    value : "/",
+    className : "symbol"
   }, {
-    value: "@",
-    className: "symbol"
+    value : "@",
+    className : "symbol"
   }, {
-    value: "123",
-    className: "symbol nums"
+    value : "123",
+    className : "symbol nums"
   }, {
-    value: "&nbsp;",
-    className: "keyGlobe"
+    value : "&nbsp;",
+    className : "keyGlobe"
   }], [{
-    value: "&nbsp;",
-    className: "icon keySpace",
-    colSpan: 13
+    value : "&nbsp;",
+    className : "icon keySpace",
+    colSpan : 13
   }]];
-}, function (mixin, canCreateDiscussions) {
+}, function(mixin, canCreateDiscussions) {
   /** @type {!Array} */
   mixin.exports = [[{
-    value: "q",
-    className: "symbol"
+    value : "q",
+    className : "symbol"
   }, {
-    value: "w",
-    className: "symbol"
+    value : "w",
+    className : "symbol"
   }, {
-    value: "e",
-    className: "symbol"
+    value : "e",
+    className : "symbol"
   }, {
-    value: "r",
-    className: "symbol"
+    value : "r",
+    className : "symbol"
   }, {
-    value: "t",
-    className: "symbol"
+    value : "t",
+    className : "symbol"
   }, {
-    value: "y",
-    className: "symbol"
+    value : "y",
+    className : "symbol"
   }, {
-    value: "u",
-    className: "symbol"
+    value : "u",
+    className : "symbol"
   }, {
-    value: "i",
-    className: "symbol"
+    value : "i",
+    className : "symbol"
   }, {
-    value: "o",
-    className: "symbol"
+    value : "o",
+    className : "symbol"
   }, {
-    value: "p",
-    className: "symbol"
+    value : "p",
+    className : "symbol"
   }, {
-    value: "&nbsp;",
-    className: "icon keyDelete",
-    colSpan: 2
+    value : "&nbsp;",
+    className : "icon keyDelete",
+    colSpan : 2
   }], [{
-    value: "a",
-    className: "symbol"
+    value : "a",
+    className : "symbol"
   }, {
-    value: "s",
-    className: "symbol"
+    value : "s",
+    className : "symbol"
   }, {
-    value: "d",
-    className: "symbol"
+    value : "d",
+    className : "symbol"
   }, {
-    value: "f",
-    className: "symbol"
+    value : "f",
+    className : "symbol"
   }, {
-    value: "g",
-    className: "symbol"
+    value : "g",
+    className : "symbol"
   }, {
-    value: "h",
-    className: "symbol"
+    value : "h",
+    className : "symbol"
   }, {
-    value: "j",
-    className: "symbol"
+    value : "j",
+    className : "symbol"
   }, {
-    value: "k",
-    className: "symbol"
+    value : "k",
+    className : "symbol"
   }, {
-    value: "l",
-    className: "symbol"
+    value : "l",
+    className : "symbol"
   }, {
-    value: "-",
-    className: "symbol"
+    value : "-",
+    className : "symbol"
   }, {
-    value: "Delete",
-    className: "symbol delete",
-    colSpan: 2
+    value : "Delete",
+    className : "symbol delete",
+    colSpan : 2
   }], [{
-    value: "z",
-    className: "symbol"
+    value : "z",
+    className : "symbol"
   }, {
-    value: "x",
-    className: "symbol"
+    value : "x",
+    className : "symbol"
   }, {
-    value: "c",
-    className: "symbol"
+    value : "c",
+    className : "symbol"
   }, {
-    value: "v",
-    className: "symbol"
+    value : "v",
+    className : "symbol"
   }, {
-    value: "b",
-    className: "symbol"
+    value : "b",
+    className : "symbol"
   }, {
-    value: "n",
-    className: "symbol"
+    value : "n",
+    className : "symbol"
   }, {
-    value: "m",
-    className: "symbol"
+    value : "m",
+    className : "symbol"
   }, {
-    value: ",",
-    className: "symbol"
+    value : ",",
+    className : "symbol"
   }, {
-    value: ".",
-    className: "symbol"
+    value : ".",
+    className : "symbol"
   }, {
-    value: "/",
-    className: "symbol"
+    value : "/",
+    className : "symbol"
   }, {
-    value: "123",
-    className: "symbol nums"
+    value : "123",
+    className : "symbol nums"
   }, {
-    value: "&nbsp;",
-    className: "keyGlobe"
+    value : "&nbsp;",
+    className : "keyGlobe"
   }], [{
-    value: "&nbsp;",
-    className: "icon keySpace",
-    colSpan: 12
+    value : "&nbsp;",
+    className : "icon keySpace",
+    colSpan : 12
   }]];
-}, function (mixin, canCreateDiscussions) {
+}, function(mixin, canCreateDiscussions) {
   /** @type {!Array} */
   mixin.exports = [[{
-    value: "\u0439",
-    className: "symbol"
+    value : "\u0439",
+    className : "symbol"
   }, {
-    value: "\u0446",
-    className: "symbol"
+    value : "\u0446",
+    className : "symbol"
   }, {
-    value: "\u0443",
-    className: "symbol"
+    value : "\u0443",
+    className : "symbol"
   }, {
-    value: "\u043a",
-    className: "symbol"
+    value : "\u043a",
+    className : "symbol"
   }, {
-    value: "\u0435",
-    className: "symbol"
+    value : "\u0435",
+    className : "symbol"
   }, {
-    value: "\u043d",
-    className: "symbol"
+    value : "\u043d",
+    className : "symbol"
   }, {
-    value: "\u0433",
-    className: "symbol"
+    value : "\u0433",
+    className : "symbol"
   }, {
-    value: "\u0448",
-    className: "symbol"
+    value : "\u0448",
+    className : "symbol"
   }, {
-    value: "\u0449",
-    className: "symbol"
+    value : "\u0449",
+    className : "symbol"
   }, {
-    value: "\u0437",
-    className: "symbol"
+    value : "\u0437",
+    className : "symbol"
   }, {
-    value: "\u0445",
-    className: "symbol"
+    value : "\u0445",
+    className : "symbol"
   }, {
-    value: "\u044a",
-    className: "symbol"
+    value : "\u044a",
+    className : "symbol"
   }, {
-    value: "&nbsp;",
-    className: "icon keyDelete",
-    colSpan: 2
+    value : "&nbsp;",
+    className : "icon keyDelete",
+    colSpan : 2
   }], [{
-    value: "\u0444",
-    className: "symbol"
+    value : "\u0444",
+    className : "symbol"
   }, {
-    value: "\u044b",
-    className: "symbol"
+    value : "\u044b",
+    className : "symbol"
   }, {
-    value: "\u0432",
-    className: "symbol"
+    value : "\u0432",
+    className : "symbol"
   }, {
-    value: "\u0430",
-    className: "symbol"
+    value : "\u0430",
+    className : "symbol"
   }, {
-    value: "\u043f",
-    className: "symbol"
+    value : "\u043f",
+    className : "symbol"
   }, {
-    value: "\u0440",
-    className: "symbol"
+    value : "\u0440",
+    className : "symbol"
   }, {
-    value: "\u043e",
-    className: "symbol"
+    value : "\u043e",
+    className : "symbol"
   }, {
-    value: "\u043b",
-    className: "symbol"
+    value : "\u043b",
+    className : "symbol"
   }, {
-    value: "\u0434",
-    className: "symbol"
+    value : "\u0434",
+    className : "symbol"
   }, {
-    value: "\u0436",
-    className: "symbol"
+    value : "\u0436",
+    className : "symbol"
   }, {
-    value: "\u044d",
-    className: "symbol"
+    value : "\u044d",
+    className : "symbol"
   }, {
-    value: "/",
-    className: "symbol"
+    value : "/",
+    className : "symbol"
   }, {
-    value: "\u0423\u0434\u0430\u043b\u0438\u0442\u044c",
-    className: "symbol delete",
-    colSpan: 2
+    value : "\u0423\u0434\u0430\u043b\u0438\u0442\u044c",
+    className : "symbol delete",
+    colSpan : 2
   }], [{
-    value: "\u044f",
-    className: "symbol"
+    value : "\u044f",
+    className : "symbol"
   }, {
-    value: "\u0447",
-    className: "symbol"
+    value : "\u0447",
+    className : "symbol"
   }, {
-    value: "\u0441",
-    className: "symbol"
+    value : "\u0441",
+    className : "symbol"
   }, {
-    value: "\u043c",
-    className: "symbol"
+    value : "\u043c",
+    className : "symbol"
   }, {
-    value: "\u0438",
-    className: "symbol"
+    value : "\u0438",
+    className : "symbol"
   }, {
-    value: "\u0442",
-    className: "symbol"
+    value : "\u0442",
+    className : "symbol"
   }, {
-    value: "\u044c",
-    className: "symbol"
+    value : "\u044c",
+    className : "symbol"
   }, {
-    value: "\u0431",
-    className: "symbol"
+    value : "\u0431",
+    className : "symbol"
   }, {
-    value: "\u044e",
-    className: "symbol"
+    value : "\u044e",
+    className : "symbol"
   }, {
-    value: "\u0451",
-    className: "symbol"
+    value : "\u0451",
+    className : "symbol"
   }, {
-    value: ".",
-    className: "symbol"
+    value : ".",
+    className : "symbol"
   }, {
-    value: ",",
-    className: "symbol"
+    value : ",",
+    className : "symbol"
   }, {
-    value: "123",
-    className: "symbol nums"
+    value : "123",
+    className : "symbol nums"
   }, {
-    value: "&nbsp;",
-    className: "keyGlobe"
+    value : "&nbsp;",
+    className : "keyGlobe"
   }], [{
-    value: "&nbsp;",
-    className: "icon keySpace",
-    colSpan: 14
+    value : "&nbsp;",
+    className : "icon keySpace",
+    colSpan : 14
   }]];
-}, function (mixin, canCreateDiscussions) {
+}, function(mixin, canCreateDiscussions) {
   /** @type {!Array} */
   mixin.exports = [[{
-    value: "\u0439",
-    className: "symbol"
+    value : "\u0439",
+    className : "symbol"
   }, {
-    value: "\u0446",
-    className: "symbol"
+    value : "\u0446",
+    className : "symbol"
   }, {
-    value: "\u0443",
-    className: "symbol"
+    value : "\u0443",
+    className : "symbol"
   }, {
-    value: "\u043a",
-    className: "symbol"
+    value : "\u043a",
+    className : "symbol"
   }, {
-    value: "\u0435",
-    className: "symbol"
+    value : "\u0435",
+    className : "symbol"
   }, {
-    value: "\u043d",
-    className: "symbol"
+    value : "\u043d",
+    className : "symbol"
   }, {
-    value: "\u0433",
-    className: "symbol"
+    value : "\u0433",
+    className : "symbol"
   }, {
-    value: "\u0448",
-    className: "symbol"
+    value : "\u0448",
+    className : "symbol"
   }, {
-    value: "\u0449",
-    className: "symbol"
+    value : "\u0449",
+    className : "symbol"
   }, {
-    value: "\u0437",
-    className: "symbol"
+    value : "\u0437",
+    className : "symbol"
   }, {
-    value: "\u0445",
-    className: "symbol"
+    value : "\u0445",
+    className : "symbol"
   }, {
-    value: "\u0457",
-    className: "symbol"
+    value : "\u0457",
+    className : "symbol"
   }, {
-    value: "&nbsp;",
-    className: "icon keyDelete",
-    colSpan: 2
+    value : "&nbsp;",
+    className : "icon keyDelete",
+    colSpan : 2
   }], [{
-    value: "\u0444",
-    className: "symbol"
+    value : "\u0444",
+    className : "symbol"
   }, {
-    value: "\u0456",
-    className: "symbol"
+    value : "\u0456",
+    className : "symbol"
   }, {
-    value: "\u0432",
-    className: "symbol"
+    value : "\u0432",
+    className : "symbol"
   }, {
-    value: "\u0430",
-    className: "symbol"
+    value : "\u0430",
+    className : "symbol"
   }, {
-    value: "\u043f",
-    className: "symbol"
+    value : "\u043f",
+    className : "symbol"
   }, {
-    value: "\u0440",
-    className: "symbol"
+    value : "\u0440",
+    className : "symbol"
   }, {
-    value: "\u043e",
-    className: "symbol"
+    value : "\u043e",
+    className : "symbol"
   }, {
-    value: "\u043b",
-    className: "symbol"
+    value : "\u043b",
+    className : "symbol"
   }, {
-    value: "\u0434",
-    className: "symbol"
+    value : "\u0434",
+    className : "symbol"
   }, {
-    value: "\u0436",
-    className: "symbol"
+    value : "\u0436",
+    className : "symbol"
   }, {
-    value: "\u0454",
-    className: "symbol"
+    value : "\u0454",
+    className : "symbol"
   }, {
-    value: "/",
-    className: "symbol"
+    value : "/",
+    className : "symbol"
   }, {
-    value: "\u0423\u0434\u0430\u043b\u0438\u0442\u044c",
-    className: "symbol delete",
-    colSpan: 2
+    value : "\u0423\u0434\u0430\u043b\u0438\u0442\u044c",
+    className : "symbol delete",
+    colSpan : 2
   }], [{
-    value: "\u0491",
-    className: "symbol"
+    value : "\u0491",
+    className : "symbol"
   }, {
-    value: "\u044f",
-    className: "symbol"
+    value : "\u044f",
+    className : "symbol"
   }, {
-    value: "\u0447",
-    className: "symbol"
+    value : "\u0447",
+    className : "symbol"
   }, {
-    value: "\u0441",
-    className: "symbol"
+    value : "\u0441",
+    className : "symbol"
   }, {
-    value: "\u043c",
-    className: "symbol"
+    value : "\u043c",
+    className : "symbol"
   }, {
-    value: "\u0438",
-    className: "symbol"
+    value : "\u0438",
+    className : "symbol"
   }, {
-    value: "\u0442",
-    className: "symbol"
+    value : "\u0442",
+    className : "symbol"
   }, {
-    value: "\u044c",
-    className: "symbol"
+    value : "\u044c",
+    className : "symbol"
   }, {
-    value: "\u0431",
-    className: "symbol"
+    value : "\u0431",
+    className : "symbol"
   }, {
-    value: "\u044e",
-    className: "symbol"
+    value : "\u044e",
+    className : "symbol"
   }, {
-    value: ".",
-    className: "symbol"
+    value : ".",
+    className : "symbol"
   }, {
-    value: ",",
-    className: "symbol"
+    value : ",",
+    className : "symbol"
   }, {
-    value: "123",
-    className: "symbol nums"
+    value : "123",
+    className : "symbol nums"
   }, {
-    value: "&nbsp;",
-    className: "keyGlobe"
+    value : "&nbsp;",
+    className : "keyGlobe"
   }], [{
-    value: "&nbsp;",
-    className: "icon keySpace",
-    colSpan: 14
+    value : "&nbsp;",
+    className : "icon keySpace",
+    colSpan : 14
   }]];
-}, function (mixin, canCreateDiscussions) {
+}, function(mixin, canCreateDiscussions) {
   /**
    * @param {string} e
    * @return {?}
    */
-  mixin.exports = function (e) {
+  mixin.exports = function(e) {
     var data = {};
-    return e.split("&").forEach(function (kv) {
+    return e.split("&").forEach(function(kv) {
       kv = kv.split("=");
       if (2 === kv.length) {
         /** @type {string} */
