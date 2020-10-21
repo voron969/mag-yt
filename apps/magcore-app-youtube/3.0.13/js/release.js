@@ -731,10 +731,10 @@ function debug(content, type) {
 }, function ($, canCreateDiscussions) {
     $.exports = {
         defaultSettings: {
-            safeSearch: 1,
+      safeSearch: 0,
             quality: 0,
             language: "en",
-            languageOverwrite: 1,
+            languageOverwrite: 0,
             keyboardLanguage: 0,
             credentialsIndex: -1,
             refreshToken: null,
@@ -5099,7 +5099,7 @@ function debug(content, type) {
     }
 
     var p;
-    var me; 
+    var me;
     var item;
     var inlineEditor2;
     var options = $(13);
@@ -5938,7 +5938,7 @@ function debug(content, type) {
                 channelTitle: el.snippet.channelTitle,
                 duration: normalizeVideoDuration(el.contentDetails.duration),
                 realDuration: el.contentDetails.duration,
-                viewCount: el.statistics.viewCount,
+                viewCount: el.statistics.viewCount.toLocaleString(),
                 publishedAt: publishedAt,
                 dimension: el.contentDetails.dimension,
                 definition: el.contentDetails.definition,
@@ -5948,7 +5948,7 @@ function debug(content, type) {
                 type: "video",
                 locale: {
                     publishedAt: publishedAt,
-                    viewCount: el.statistics.viewCount,
+                    viewCount: el.statistics.viewCount.toLocaleString(),
                     channelTitle: el.snippet.channelTitle
                 }
             };
@@ -5983,9 +5983,9 @@ function debug(content, type) {
         var url = 'https://www.googleapis.com/youtube/v3/videos' +
             '?key=' + key +
             '&chart=mostPopular' +
-            '&maxResults=20' +
-            '&regionCode=ru' +
-            '&hl=ru-RU' +
+            '&maxResults=30' +
+            '&regionCode=ca' +
+            '&hl=en-US' +
             '&part=snippet,contentDetails,statistics';
         if (pageToken) {
             url += '&pageToken=' + pageToken;
@@ -6872,36 +6872,39 @@ function debug(content, type) {
                         try {
                             var ytInitialData = result.match(/\["ytInitialData"] = ({.+});/);
                             ytInitialData = JSON.parse(ytInitialData[1]);
+                            //debug(JSON.stringify(ytInitialData));
                             var contents = ytInitialData["contents"]["twoColumnSearchResultsRenderer"]["primaryContents"]["sectionListRenderer"]["contents"][0]["itemSectionRenderer"]["contents"];
                             var len = contents.length;
                             var items = [];
-                            var item;
-                            var thumbs_count;
-                            var publishedAt;
-                            var duration;
+                            var duration, thumbs_count, publishedAt, view_count, item, digit, digit_last;
                             for (var i = 0; i < len; i++) {
                                 if (contents[i].hasOwnProperty("videoRenderer")) {
                                     duration = contents[i]["videoRenderer"].hasOwnProperty("lengthText") ? contents[i]["videoRenderer"]["lengthText"]["simpleText"] : "";
                                     if (duration) {
-                                        thumbs_count = contents[i]["videoRenderer"]["thumbnail"]["thumbnails"].length;
+                                        thumbs_count = contents[i]["videoRenderer"].hasOwnProperty("thumbnail") ? contents[i]["videoRenderer"]["thumbnail"]["thumbnails"].length : 0;
                                         publishedAt = contents[i]["videoRenderer"].hasOwnProperty("publishedTimeText") ? contents[i]["videoRenderer"]["publishedTimeText"]["simpleText"] : "";
+                                        if (publishedAt) {
+                                            digit = parseInt(publishedAt);
+                                            digit_last = digit % 10;
+                                        }
+                                        view_count = contents[i]["videoRenderer"].hasOwnProperty("viewCountText") ? parseInt(contents[i]["videoRenderer"]["viewCountText"]["simpleText"].replace(",", "")).toLocaleString() : "";
                                         item = {
                                             value: 1,
                                             id: contents[i]["videoRenderer"]["videoId"],
                                             channelTitle: contents[i]["videoRenderer"]["longBylineText"]["runs"][0]["text"],
                                             duration: duration,
                                             realDuration: contents[i]["videoRenderer"]["lengthText"]["accessibility"]["accessibilityData"]["label"],
-                                            viewCount: contents[i]["videoRenderer"]["viewCountText"]["simpleText"],
+                                            viewCount: view_count,
                                             publishedAt: publishedAt,
                                             //dimension: el.contentDetails.dimension,
                                             //definition: el.contentDetails.definition,
                                             title: contents[i]["videoRenderer"]["title"]["runs"][0]["text"],
-                                            icon: contents[i]["videoRenderer"]["thumbnail"]["thumbnails"][thumbs_count - 1]["url"],
+                                            icon: thumbs_count ? contents[i]["videoRenderer"]["thumbnail"]["thumbnails"][thumbs_count - 1]["url"] : "",
                                             channelId: contents[i]["videoRenderer"]["longBylineText"]["runs"][0]["navigationEndpoint"]["browseEndpoint"]["browseId"],
                                             type: "video",
                                             locale: {
                                                 publishedAt: publishedAt,
-                                                viewCount: contents[i]["videoRenderer"]["viewCountText"]["simpleText"],
+                                                viewCount: view_count,
                                                 channelTitle: contents[i]["videoRenderer"]["longBylineText"]["runs"][0]["text"]
                                             }
                                         };
@@ -6914,8 +6917,13 @@ function debug(content, type) {
                                         if (items2[j].hasOwnProperty("videoRenderer")) {
                                             duration = items2[j]["videoRenderer"].hasOwnProperty("lengthText") ? items2[j]["videoRenderer"]["lengthText"]["simpleText"] : "";
                                             if (duration) {
-                                                thumbs_count = items2[j]["videoRenderer"]["thumbnail"]["thumbnails"].length;
+                                                thumbs_count = items2[j]["videoRenderer"].hasOwnProperty("thumbnail") ? items2[j]["videoRenderer"]["thumbnail"]["thumbnails"].length : 0;
                                                 publishedAt = items2[j]["videoRenderer"].hasOwnProperty("publishedTimeText") ? items2[j]["videoRenderer"]["publishedTimeText"]["simpleText"] : "";
+                                                if (publishedAt) {
+                                                    digit = parseInt(publishedAt);
+                                                    digit_last = digit % 10;
+                                                }
+                                                view_count = items2[j]["videoRenderer"].hasOwnProperty("viewCountText") ? parseInt(items2[j]["videoRenderer"]["viewCountText"]["simpleText"].replace(",", "")).toLocaleString() : "";
                                                 item = {
                                                     value: 1,
                                                     id: items2[j]["videoRenderer"]["videoId"],
@@ -6927,12 +6935,12 @@ function debug(content, type) {
                                                     //dimension: el.contentDetails.dimension,
                                                     //definition: el.contentDetails.definition,
                                                     title: items2[j]["videoRenderer"]["title"]["runs"][0]["text"],
-                                                    icon: items2[j]["videoRenderer"]["thumbnail"]["thumbnails"][thumbs_count - 1]["url"],
+                                                    icon: thumbs_count ? items2[j]["videoRenderer"]["thumbnail"]["thumbnails"][thumbs_count - 1]["url"] : "",
                                                     channelId: items2[j]["videoRenderer"]["longBylineText"]["runs"][0]["navigationEndpoint"]["browseEndpoint"]["browseId"],
                                                     type: "video",
                                                     locale: {
                                                         publishedAt: publishedAt,
-                                                        viewCount: items2[j]["videoRenderer"]["viewCountText"]["simpleText"],
+                                                        viewCount: view_count,
                                                         channelTitle: items2[j]["videoRenderer"]["longBylineText"]["runs"][0]["text"]
                                                     }
                                                 };
