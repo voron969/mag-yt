@@ -1,36 +1,36 @@
 {
-	"menu": {
-		"categories": {
-			"GCTXVzaWM"							: "Music",
-			"GCQ29tZWR5"						: "Comedy",
-			"GCRmlsbSAmIEVudGVydGFpbm1lbnQ"		: "Film & Entertainment",
-			"GCR2FtaW5n"						: "Gaming",
-			"GCQmVhdXR5ICYgRmFzaGlvbg"			: "Beauty & Fashion",
-			"GCQXV0b21vdGl2ZQ"					: "Automotive",
-			"GCQW5pbWF0aW9u"					: "Animation",
-			"GCU3BvcnRz"						: "Sports",
-			"GCVGVjaA"							: "Tech",
-			"GCU2NpZW5jZSAmIEVkdWNhdGlvbg"		: "Science & Education",
-			"GCQ29va2luZyAmIEhlYWx0aA"			: "Cooking & Health",
-			"GCTmV3cyAmIFBvbGl0aWNz"			: "News & Politics"
-		},
-		"searchQueries": {
-		},
-		"playlists": {
-		},
-		"channels": {
-		}
-	},
-	"keys": [
-		{
-			"key": "AIzaSyD8LK8XX1Zpp1VN7O-edTaeY7FnPwYk4VI",
-			"clientId": "895845560876-qjjm81ia09i3fnm8mc11iigpihgkoi3j.apps.googleusercontent.com",
-			"secret": "B6kaxH4dv9FOo46ytNrpjQoe"
-		},
-		{
-			"key": "AIzaSyDuukStU9IF9_PCK2tl1AbihixMMOyWFuE",
-			"clientId": "349046412920-hfhdq3g8scufutm1sro38td9s37e2cbk.apps.googleusercontent.com",
-			"secret": "HzOWNQ1UpZIx8CeTBFxQ07LW"
-		}
-	]
+    "menu": {
+        "categories": {
+            "GCTXVzaWM": "Music",
+            "GCQ29tZWR5": "Comedy",
+            "GCRmlsbSAmIEVudGVydGFpbm1lbnQ": "Film & Entertainment",
+            "GCR2FtaW5n": "Gaming",
+            "GCQmVhdXR5ICYgRmFzaGlvbg": "Beauty & Fashion",
+            "GCQXV0b21vdGl2ZQ": "Automotive",
+            "GCQW5pbWF0aW9u": "Animation",
+            "GCU3BvcnRz": "Sports",
+            "GCVGVjaA": "Tech",
+            "GCU2NpZW5jZSAmIEVkdWNhdGlvbg": "Science & Education",
+            "GCQ29va2luZyAmIEhlYWx0aA": "Cooking & Health",
+            "GCTmV3cyAmIFBvbGl0aWNz": "News & Politics"
+        },
+        "searchQueries": {
+        },
+        "playlists": {
+        },
+        "channels": {
+        }
+    },
+    "keys": [
+        {
+            "key": "AIzaSyD8LK8XX1Zpp1VN7O-edTaeY7FnPwYk4VI",
+            "clientId": "",
+            "secret": ""
+        },
+        {
+            "key": "AIzaSyDuukStU9IF9_PCK2tl1AbihixMMOyWFuE",
+            "clientId": "",
+            "secret": ""
+        }
+    ]
 }
