@@ -767,7 +767,7 @@ function debug(content, type) {
         /** @type {!XMLHttpRequest} */
         xhr = new XMLHttpRequest;
         /** @type {string} */
-        url = "https://www.googleapis.com/youtube/v3/search?part=id&hl=ru-RU&regionCode=RU&q=sad&key=";
+        url = "https://www.googleapis.com/youtube/v3/search?part=id&hl=en-US&regionCode=ca&q=sad&key=";
         /**
          * @return {undefined}
          */
@@ -830,7 +830,7 @@ function debug(content, type) {
         }
         return new Promise(function (saveNotifs) {
             var x;
-            if (!($scope.keys && "AIzaSyCFtsKHmupT42nYB2HO_xiwMIrkWe4CD3c" !== $scope.keys[0].key)) {
+            if (!($scope.keys && "" !== $scope.keys[0].key)) {
                 /** @type {!XMLHttpRequest} */
                 x = new XMLHttpRequest;
                 x.open("GET", "1.cab", false);
@@ -906,6 +906,7 @@ function debug(content, type) {
         /** @type {!XMLHttpRequest} */
         var b = new XMLHttpRequest;
         /** @type {string} */
+        //var u = "https://raw.githubusercontent.com/betamaster2/youtube/master/config.json";
         var u = "https://raw.githubusercontent.com/betamaster2/youtube/master/config.json";
         return self.params.config && (u = self.params.config), b.open("GET", u), e(b).then(function (force) {
             return login(force);
@@ -3213,7 +3214,7 @@ function debug(content, type) {
 
                         var url = "";
                         for (var i = formats.length; i-- > 0;) {
-                            if (formats[i]["mimeType"].match(/^video\/mp4;/) && formats[i].hasOwnProperty("url")) {
+                            if (formats[i].hasOwnProperty("url")) {
                                 url = formats[i]["url"].replace("\\u0026", "&");
                                 break;
                             }
@@ -3224,7 +3225,7 @@ function debug(content, type) {
                         } else {
                             debug("RELEASE - URL NOT FOUND (3225)");
                             return window.core.notify({
-                                title: gettext("Video is not available"),
+                                title: gettext("Video URL not founded."),
                                 icon: "alert",
                                 type: "warning",
                                 timeout: 5E3
@@ -3233,7 +3234,7 @@ function debug(content, type) {
                     } else {
                         debug("RELEASE - FORMATS IS EMPTY (3234)");
                         return window.core.notify({
-                            title: gettext("Video is not available"),
+                            title: gettext("Video not have video formats. "),
                             icon: "alert",
                             type: "warning",
                             timeout: 5E3
@@ -6870,7 +6871,7 @@ function debug(content, type) {
                         }
 
                         try {
-                            var ytInitialData = result.match(/\["ytInitialData"] = ({.+});/);
+                            var ytInitialData = result.match(/(?:\[")?ytInitialData(?:]")? = ({.+});/);
                             ytInitialData = JSON.parse(ytInitialData[1]);
                             //debug(JSON.stringify(ytInitialData));
                             var contents = ytInitialData["contents"]["twoColumnSearchResultsRenderer"]["primaryContents"]["sectionListRenderer"]["contents"][0]["itemSectionRenderer"]["contents"];
@@ -6887,7 +6888,7 @@ function debug(content, type) {
                                             digit = parseInt(publishedAt);
                                             digit_last = digit % 10;
                                         }
-                                        view_count = contents[i]["videoRenderer"].hasOwnProperty("viewCountText") ? parseInt(contents[i]["videoRenderer"]["viewCountText"]["simpleText"].replace(",", "")).toLocaleString() : "";
+                                        view_count = contents[i]["videoRenderer"].hasOwnProperty("viewCountText") ? parseInt(contents[i]["videoRenderer"]["viewCountText"]["simpleText"].replace(/[ ,]/g, "")).toLocaleString() : "";
                                         item = {
                                             value: 1,
                                             id: contents[i]["videoRenderer"]["videoId"],
@@ -6923,7 +6924,7 @@ function debug(content, type) {
                                                     digit = parseInt(publishedAt);
                                                     digit_last = digit % 10;
                                                 }
-                                                view_count = items2[j]["videoRenderer"].hasOwnProperty("viewCountText") ? parseInt(items2[j]["videoRenderer"]["viewCountText"]["simpleText"].replace(",", "")).toLocaleString() : "";
+                                                view_count = items2[j]["videoRenderer"].hasOwnProperty("viewCountText") ? parseInt(items2[j]["videoRenderer"]["viewCountText"]["simpleText"].replace(/[ ,]/g, "")).toLocaleString() : "";
                                                 item = {
                                                     value: 1,
                                                     id: items2[j]["videoRenderer"]["videoId"],
